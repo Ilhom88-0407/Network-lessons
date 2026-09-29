@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>20-bob · IPv6 asoslari</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">20-bob</div><h1 class="title">IPv6 asoslari
+    <small>IPv6 Basics</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>IPv6</b> — 128 bitli manzil, o‘n oltilik yozuvda</li>
+      <li><b>Global unicast</b> — Internetda yo‘naltiriladigan yakka manzil</li>
+      <li><b>Link-local</b> — faqat bitta kanal ichida amal qiladi (FE80::/10)</li>
+      <li><b>Anycast</b> — bitta manzil, eng yaqin qurilma javob beradi</li>
+      <li><b>NDP</b> — qo‘shnini aniqlash; IPv6 da ARP o‘rnini bosadi</li>
+    </ul>
+  </div><h2>1. Nega IPv6 kerak?</h2><ul class="tight">
+    <li><b>IPv4</b> — 32 bit, 1980-yillardan ishlaydi, manzil <mark>tugab bormoqda</mark></li>
+    <li>sozlash noqulay · xavfsizlik va QoS yetarli emas</li>
+    <li><b>IPv6</b> (IPng) — IETF, 1990-yillardan; uzunlik <mark>128 bit</mark></li>
+  </ul><svg class="sk" viewBox="-40 0 680 200" role="img" aria-label="IPv4 va IPv6 manzil uzunligi">
+    <defs>
+      <filter id="r20-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r20-1)">
+      <rect class="s fb" x="30" y="40" width="240" height="30" rx="3"></rect>
+      <path class="s2" d="M90,40 v30 M150,40 v30 M210,40 v30"></path>
+      <rect class="s fg" x="320" y="40" width="256" height="30" rx="3"></rect>
+      <path class="s2" d="M352,40 v30 M384,40 v30 M416,40 v30 M448,40 v30 M480,40 v30 M512,40 v30 M544,40 v30"></path>
+      <path class="dash" d="M296,20 v160"></path>
+    </g>
+    <text x="150" y="26" text-anchor="middle" class="red">IPv4</text>
+    <text x="448" y="26" text-anchor="middle" class="red">IPv6</text>
+    <text x="150" y="94" text-anchor="middle">4 × 8 = 32 bit</text>
+    <text x="448" y="94" text-anchor="middle">8 × 16 = 128 bit</text>
+    <text x="150" y="124" text-anchor="middle" class="sm">o‘nlik, nuqta bilan</text>
+    <text x="448" y="124" text-anchor="middle" class="sm">o‘n oltilik, ikki nuqta bilan</text>
+    <text x="150" y="152" text-anchor="middle" class="sm">192.168.1.1</text>
+    <text x="448" y="152" text-anchor="middle" class="sm">2001:410:0:1::45FF</text>
+    <text x="150" y="182" text-anchor="middle" class="sm">4 294 967 296 manzil</text>
+    <text x="448" y="182" text-anchor="middle" class="grn">3,4 × 10^38 manzil</text>
+  </svg><p class="cap">1-rasm. 32 bit → 128 bit: manzil fazosi to‘rt barobar uzun</p><svg class="sk" viewBox="-40 0 680 230" role="img" aria-label="IPv4 kamchiligi va IPv6 yechimi">
+    <defs>
+      <filter id="r20-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="17" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a20-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r20-2)">
+      <rect class="s fw" x="20" y="30" width="210" height="40" rx="5"></rect>
+      <rect class="s fw" x="20" y="88" width="210" height="40" rx="5"></rect>
+      <rect class="s fw" x="20" y="146" width="210" height="40" rx="5"></rect>
+      <rect class="s fg" x="360" y="30" width="216" height="40" rx="5"></rect>
+      <rect class="s fg" x="360" y="88" width="216" height="40" rx="5"></rect>
+      <rect class="s fg" x="360" y="146" width="216" height="40" rx="5"></rect>
+      <path class="sr" marker-end="url(#a20-1)" d="M244,116 h104"></path>
+    </g>
+    <text x="125" y="20" text-anchor="middle" class="red">IPv4 kamchiligi</text>
+    <text x="468" y="20" text-anchor="middle" class="grn">IPv6 yechimi</text>
+    <text x="125" y="56" text-anchor="middle">manzil tugadi</text>
+    <text x="125" y="114" text-anchor="middle">sozlash qiyin</text>
+    <text x="125" y="172" text-anchor="middle">xavfsizlik · QoS</text>
+    <text x="468" y="56" text-anchor="middle">128 bitli manzil</text>
+    <text x="468" y="114" text-anchor="middle">o‘zi sozlanadi (NDP)</text>
+    <text x="468" y="172" text-anchor="middle">kuchaytirilgan</text>
+    <text x="296" y="100" text-anchor="middle" class="red">IPv6</text>
+    <text x="300" y="214" text-anchor="middle" class="sm">minimal sozlash · kuchaytirilgan xavfsizlik va QoS</text>
+  </svg><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>2. Manzil yozilishi</h2><p class="tight">8 guruh, har biri <b>16 bit</b> — 4 ta o‘n oltilik raqam, ikki nuqta bilan.</p><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="IPv6 manzilni qisqartirish">
+    <defs>
+      <filter id="r20-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a20-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r20-3)">
+      <rect class="s fw" x="30" y="34" width="60" height="28" rx="3"></rect>
+      <rect class="s fw" x="98" y="34" width="60" height="28" rx="3"></rect>
+      <rect class="s fw" x="166" y="34" width="60" height="28" rx="3"></rect>
+      <rect class="s fw" x="234" y="34" width="60" height="28" rx="3"></rect>
+      <rect class="s fw" x="302" y="34" width="60" height="28" rx="3"></rect>
+      <rect class="s fw" x="370" y="34" width="60" height="28" rx="3"></rect>
+      <rect class="s fw" x="438" y="34" width="60" height="28" rx="3"></rect>
+      <rect class="s fw" x="506" y="34" width="60" height="28" rx="3"></rect>
+      <path class="sr" marker-end="url(#a20-2)" d="M298,80 v22"></path>
+      <path class="sr" marker-end="url(#a20-2)" d="M298,140 v22"></path>
+    </g>
+    <text x="30" y="24" class="sm">8 guruh × 16 bit</text>
+    <text x="60" y="54" text-anchor="middle" class="sm">2001</text>
+    <text x="128" y="54" text-anchor="middle" class="sm">0410</text>
+    <text x="196" y="54" text-anchor="middle" class="sm">0000</text>
+    <text x="264" y="54" text-anchor="middle" class="sm">0001</text>
+    <text x="332" y="54" text-anchor="middle" class="sm">0000</text>
+    <text x="400" y="54" text-anchor="middle" class="sm">0000</text>
+    <text x="468" y="54" text-anchor="middle" class="sm">0000</text>
+    <text x="536" y="54" text-anchor="middle" class="sm">45FF</text>
+    <text x="30" y="128" class="sm">boshdagi nollar tushadi</text>
+    <text x="410" y="128" text-anchor="middle">2001:410:0:1:0:0:0:45FF</text>
+    <text x="30" y="188" class="sm">ketma-ket nol guruhlar → ::</text>
+    <text x="410" y="188" text-anchor="middle" class="red">2001:410:0:1::45FF</text>
+    <text x="300" y="220" text-anchor="middle" class="sm">:: bir manzilda faqat bir marta; ma’noli nolni tashlab bo‘lmaydi</text>
+  </svg><h2>3. Manzil tarkibi</h2><svg class="sk" viewBox="0 0 600 170" role="img" aria-label="IPv4 va IPv6 manzil tarkibi">
+    <defs>
+      <filter id="r20-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="11" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r20-4)">
+      <rect class="s fw" x="30" y="38" width="200" height="28" rx="3"></rect>
+      <rect class="s fw" x="230" y="38" width="140" height="28" rx="3"></rect>
+      <rect class="s fb" x="30" y="108" width="250" height="28" rx="3"></rect>
+      <rect class="s fg" x="280" y="108" width="250" height="28" rx="3"></rect>
+    </g>
+    <text x="30" y="30" class="red">IPv4</text>
+    <text x="130" y="58" text-anchor="middle" class="sm">Network ID</text>
+    <text x="300" y="58" text-anchor="middle" class="sm">Host ID</text>
+    <text x="390" y="58" class="sm">maska /24 · sinflar A·B·C</text>
+    <text x="30" y="100" class="red">IPv6</text>
+    <text x="566" y="100" text-anchor="end" class="sm">/64 — prefiks uzunligi, sinflar yo‘q</text>
+    <text x="155" y="128" text-anchor="middle" class="sm">prefiks</text>
+    <text x="405" y="128" text-anchor="middle" class="sm">interfeys ID</text>
+    <text x="155" y="158" text-anchor="middle" class="sm">1234:5678:90AB:CDEF</text>
+    <text x="405" y="158" text-anchor="middle" class="sm">ABCD:EF01:2345:6789</text>
+  </svg><p class="cap">2-rasm. prefiks = tarmoq, interfeys ID = tugun (64 bit)</p><div class="box"><span class="lbl">Mos kelishi:</span> network ID → prefiks, host ID → interfeys ID,
+    maska → prefiks uzunligi.</div><h2>4. Manzil turlari</h2><p class="tight">IPv6’da <mark>broadcast yo‘q</mark> — uning o‘rnini multicast bosadi.</p><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="unicast, multicast va anycast">
+    <defs>
+      <filter id="r20-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="5" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a20-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+      <marker id="a20-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r20-5)">
+      <rect class="s" x="8" y="30" width="186" height="140" rx="12"></rect>
+      <circle class="s fw" cx="42" cy="100" r="13"></circle>
+      <rect class="s fy" x="128" y="46" width="46" height="24" rx="3"></rect>
+      <rect class="s fw" x="128" y="88" width="46" height="24" rx="3"></rect>
+      <rect class="s fw" x="128" y="130" width="46" height="24" rx="3"></rect>
+      <path class="s2" marker-end="url(#a20-3)" d="M56,94 C86,80 104,68 124,60"></path>
+      <rect class="s" x="206" y="30" width="186" height="140" rx="12"></rect>
+      <circle class="s fw" cx="240" cy="100" r="13"></circle>
+      <rect class="s fy" x="326" y="46" width="46" height="24" rx="3"></rect>
+      <rect class="s fy" x="326" y="88" width="46" height="24" rx="3"></rect>
+      <rect class="s fy" x="326" y="130" width="46" height="24" rx="3"></rect>
+      <path class="s2" marker-end="url(#a20-3)" d="M254,94 C284,80 302,68 322,60"></path>
+      <path class="s2" marker-end="url(#a20-3)" d="M254,100 h66"></path>
+      <path class="s2" marker-end="url(#a20-3)" d="M254,106 C284,120 302,132 322,140"></path>
+      <rect class="s" x="404" y="30" width="188" height="140" rx="12"></rect>
+      <circle class="s fw" cx="438" cy="100" r="13"></circle>
+      <rect class="s fw" x="524" y="46" width="46" height="24" rx="3"></rect>
+      <rect class="s fg" x="524" y="88" width="46" height="24" rx="3"></rect>
+      <rect class="s fw" x="524" y="130" width="46" height="24" rx="3"></rect>
+      <path class="sg" marker-end="url(#a20-4)" d="M452,100 h68"></path>
+      <path class="dash" d="M452,94 C482,80 500,68 520,60 M452,106 C482,120 500,132 520,140"></path>
+    </g>
+    <text x="101" y="22" text-anchor="middle" class="red">unicast</text>
+    <text x="299" y="22" text-anchor="middle" class="red">multicast</text>
+    <text x="498" y="22" text-anchor="middle" class="red">anycast</text>
+    <text x="101" y="192" text-anchor="middle" class="sm">bitta interfeysga</text>
+    <text x="299" y="192" text-anchor="middle" class="sm">guruhdagi hammasiga</text>
+    <text x="498" y="192" text-anchor="middle" class="sm">eng yaqin bittasiga</text>
+    <text x="101" y="216" text-anchor="middle" class="sm">IPv4 kabi</text>
+    <text x="299" y="216" text-anchor="middle" class="sm">FF00::/8</text>
+    <text x="498" y="216" text-anchor="middle" class="sm">yangi tur</text>
+    <text x="300" y="244" text-anchor="middle" class="sm">anycast unicast fazosidan olinadi — yozilishi bilan farq qilmaydi</text>
+  </svg><table class="rot">
+    <tbody><tr><th>Turi</th><th>Prefiks</th><th>Izoh</th></tr>
+    <tr><td>belgilanmagan</td><td>::/128</td><td>faqat manba sifatida</td></tr>
+    <tr><td>loopback</td><td>::1/128</td><td>IPv4 127.0.0.1 kabi</td></tr>
+    <tr><td>link-local</td><td>FE80::/10</td><td>linkdan chiqmaydi</td></tr>
+    <tr><td>site-local</td><td>FEC0::/10</td><td>xususiy, kam ishlatiladi</td></tr>
+    <tr><td>global unicast</td><td>2000::/3</td><td>IANA beradi, ommaviy</td></tr>
+    <tr><td>multicast</td><td>FF00::/8</td><td>FF02::1 — hamma tugun, FF02::2 — hamma router</td></tr>
+  </tbody></table><svg class="sk" viewBox="0 0 600 190" role="img" aria-label="solicited-node multicast manzil tuzilishi">
+    <defs>
+      <filter id="r20-10" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="37" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a20-11" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r20-10)">
+      <rect class="s fw" x="24" y="32" width="300" height="28" rx="3"></rect>
+      <rect class="s fy" x="324" y="32" width="130" height="28" rx="3"></rect>
+      <rect class="s fw" x="24" y="104" width="300" height="28" rx="3"></rect>
+      <rect class="s fy" x="324" y="104" width="130" height="28" rx="3"></rect>
+      <path class="sr" marker-end="url(#a20-11)" d="M389,66 v30"></path>
+    </g>
+    <text x="24" y="24" class="sm">unicast manzil: 2000::1</text>
+    <text x="174" y="51" text-anchor="middle" class="sm">oldingi bitlar</text>
+    <text x="389" y="51" text-anchor="middle" class="sm">00:0001</text>
+    <text x="466" y="51" class="sm">oxirgi 24 bit</text>
+    <text x="24" y="96" class="sm">solicited-node multicast</text>
+    <text x="174" y="123" text-anchor="middle" class="sm">FF02:0:0:0:0:1:FF</text>
+    <text x="389" y="123" text-anchor="middle" class="red">00:0001</text>
+    <text x="466" y="123" class="sm">104 bit doimiy</text>
+    <text x="300" y="156" text-anchor="middle" class="grn">2000::1 → FF02::1:FF00:1</text>
+    <text x="300" y="182" text-anchor="middle" class="sm">qo‘shnining MAC manzilini so‘rash va DAD uchun</text>
+  </svg><p class="cap">3-rasm. Har bir unicast manzilning o‘z solicited-node manzili bor</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>5. Interfeys ID — IEEE EUI-64</h2><svg class="sk" viewBox="0 0 600 300" role="img" aria-label="MAC manzildan EUI-64 olish">
+    <defs>
+      <filter id="r20-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="13" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a20-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r20-6)">
+      <rect class="s fw" x="30" y="40" width="130" height="32" rx="3"></rect>
+      <rect class="s fw" x="160" y="40" width="130" height="32" rx="3"></rect>
+      <rect class="s fw" x="30" y="136" width="130" height="32" rx="3"></rect>
+      <rect class="s fy" x="160" y="136" width="90" height="32" rx="3"></rect>
+      <rect class="s fw" x="250" y="136" width="130" height="32" rx="3"></rect>
+      <rect class="s fg" x="30" y="232" width="130" height="32" rx="3"></rect>
+      <rect class="s fy" x="160" y="232" width="90" height="32" rx="3"></rect>
+      <rect class="s fw" x="250" y="232" width="130" height="32" rx="3"></rect>
+      <path class="sr" marker-end="url(#a20-5)" d="M205,78 v50"></path>
+      <path class="sr" marker-end="url(#a20-5)" d="M95,174 v50"></path>
+    </g>
+    <text x="24" y="30" class="sm">MAC — 48 bit: 0012-3400-ABCD</text>
+    <text x="95" y="62" text-anchor="middle" class="sm">00-12-34</text>
+    <text x="225" y="62" text-anchor="middle" class="sm">00-AB-CD</text>
+    <text x="400" y="62" class="sm">yuqori 24 + past 24 bit</text>
+    <text x="95" y="158" text-anchor="middle" class="sm">00-12-34</text>
+    <text x="205" y="158" text-anchor="middle" class="red">FF-FE</text>
+    <text x="335" y="158" text-anchor="middle" class="sm">00-AB-CD</text>
+    <text x="400" y="158" class="sm">o‘rtaga FFFE qo‘shiladi</text>
+    <text x="95" y="254" text-anchor="middle" class="red">02-12-34</text>
+    <text x="205" y="254" text-anchor="middle" class="sm">FF-FE</text>
+    <text x="335" y="254" text-anchor="middle" class="sm">00-AB-CD</text>
+    <text x="400" y="254" class="sm">U/L bit (7-bit) = 1</text>
+    <text x="205" y="292" text-anchor="middle" class="grn">EUI-64: 0212-34FF-FE00-ABCD</text>
+  </svg><p class="cap">4-rasm. 64 bitli interfeys ID MAC manzildan olinadi</p><h2>6. NDP vazifalari</h2><svg class="sk" viewBox="0 0 600 100" role="img" aria-label="NDP ning tort vazifasi">
+    <defs>
+      <filter id="r20-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="23" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r20-7)">
+      <rect class="s fw" x="10" y="20" width="140" height="48" rx="6"></rect>
+      <rect class="s fw" x="155" y="20" width="140" height="48" rx="6"></rect>
+      <rect class="s fw" x="300" y="20" width="140" height="48" rx="6"></rect>
+      <rect class="s fw" x="445" y="20" width="140" height="48" rx="6"></rect>
+    </g>
+    <text x="80" y="44" text-anchor="middle" class="red">manzil aniqlash</text>
+    <text x="225" y="44" text-anchor="middle" class="red">router/prefiks</text>
+    <text x="370" y="44" text-anchor="middle" class="red">avtosozlash</text>
+    <text x="515" y="44" text-anchor="middle" class="red">DAD</text>
+    <text x="80" y="62" text-anchor="middle" class="sm">ARP o‘rnida</text>
+    <text x="225" y="62" text-anchor="middle" class="sm">prefiks va PMTU</text>
+    <text x="370" y="62" text-anchor="middle" class="sm">manzilni o‘zi yasaydi</text>
+    <text x="515" y="62" text-anchor="middle" class="sm">takroriy manzilni topish</text>
+    <text x="300" y="92" text-anchor="middle" class="sm">shu sabab IPv6’da DHCP shart emas</text>
+  </svg><h2>7. NS va NA — qo‘shni MAC manzili</h2><svg class="sk" viewBox="0 0 600 190" role="img" aria-label="NS va NA xabarlari">
+    <defs>
+      <filter id="r20-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="29" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a20-6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a20-7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r20-8)">
+      <rect class="s fw" x="30" y="56" width="72" height="46" rx="4"></rect>
+      <path class="s2" d="M66,102 v10 M48,112 h36"></path>
+      <rect class="s fw" x="474" y="56" width="72" height="46" rx="4"></rect>
+      <path class="s2" d="M510,102 v10 M492,112 h36"></path>
+      <path class="sr" marker-end="url(#a20-6)" d="M108,68 h360"></path>
+      <path class="sg" marker-end="url(#a20-7)" d="M468,94 h-360"></path>
+    </g>
+    <text x="288" y="50" text-anchor="middle" class="red">NS (multicast) — 2001::2 kim?</text>
+    <text x="288" y="118" text-anchor="middle" class="grn">NA (unicast) — MAC manzilim shu</text>
+    <text x="66" y="142" text-anchor="middle">Host A</text>
+    <text x="66" y="164" text-anchor="middle" class="sm">2001::1</text>
+    <text x="510" y="142" text-anchor="middle">Host B</text>
+    <text x="510" y="164" text-anchor="middle" class="sm">2001::2</text>
+    <text x="300" y="164" text-anchor="middle" class="sm">NS faqat B ga boradi — boshqalar tashlab yuboradi</text>
+    <text x="300" y="186" text-anchor="middle" class="sm">javob unicast — multicast trafik kamayadi</text>
+  </svg><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>8. Manzilni o‘zi sozlash</h2><svg class="sk" viewBox="0 0 600 240" role="img" aria-label="RS va RA bilan avtomatik sozlash">
+    <defs>
+      <filter id="r20-9" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="31" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a20-8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a20-9" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+      <marker id="a20-12" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r20-9)">
+      <rect class="s fw" x="30" y="48" width="70" height="44" rx="4"></rect>
+      <path class="s2" d="M65,92 v10 M47,102 h36"></path>
+      <rect class="s fy" x="482" y="52" width="80" height="36" rx="4"></rect>
+      <path class="s2" d="M496,70 h52"></path>
+      <path class="sr" marker-end="url(#a20-8)" d="M106,60 h370"></path>
+      <path class="sg" marker-end="url(#a20-9)" d="M476,84 h-370"></path>
+      <rect class="s fb" x="110" y="160" width="140" height="32" rx="3"></rect>
+      <rect class="s fg" x="274" y="160" width="150" height="32" rx="3"></rect>
+      <path class="s2" d="M256,176 h12 M262,170 v12"></path>
+      <path class="s2" marker-end="url(#a20-12)" d="M430,176 h26"></path>
+    </g>
+    <text x="290" y="42" text-anchor="middle" class="red">RS → FF02::2 (hamma routerlar)</text>
+    <text x="290" y="106" text-anchor="middle" class="grn">RA → FF02::1, prefiks 2001::/64</text>
+    <text x="65" y="130" text-anchor="middle">Host A</text>
+    <text x="522" y="116" text-anchor="middle">RTA</text>
+    <text x="180" y="182" text-anchor="middle" class="sm">prefiks 2001::/64</text>
+    <text x="349" y="182" text-anchor="middle" class="sm">interfeys ID (EUI-64)</text>
+    <text x="462" y="182" class="red">global unicast</text>
+    <text x="280" y="222" text-anchor="middle" class="sm">RA routerdan davriy ravishda ham keladi</text>
+  </svg><p class="cap">5-rasm. RS/RA bilan prefiksni topish, so‘ng manzilni yig‘ish</p><table class="rot">
+    <tbody><tr><th>Buyruq (interfeys ko‘rinishida)</th><th>Nima qiladi</th></tr>
+    <tr><td>ipv6 address 2000::1/64</td><td>qo‘lda global unicast</td></tr>
+    <tr><td>ipv6 address auto</td><td>stateless avtomatik</td></tr>
+    <tr><td>ipv6 address FE80::1 link-local</td><td>qo‘lda link-local</td></tr>
+    <tr><td>ipv6 address auto link-local</td><td>avtomatik link-local</td></tr>
+  </tbody></table><p class="tight">IPv6 sukut bo‘yicha yoqilgan; global manzil berilsa, link-local <mark>o‘zi paydo bo‘ladi</mark>.</p><svg class="sk" viewBox="0 0 600 170" role="img" aria-label="display ipv6 interface natijasi">
+    <defs>
+      <filter id="r20-11" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="43" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r20-11)">
+      <rect class="s fw" x="20" y="20" width="560" height="136" rx="6"></rect>
+      <path class="s2" d="M20,54 h560"></path>
+    </g>
+    <text x="34" y="42" class="red">display ipv6 interface GigabitEthernet 0/0</text>
+    <text x="34" y="74" class="sm">IPv6 is enabled, link-local address is FE80::1</text>
+    <text x="34" y="98" class="sm">Global unicast address(es): 2000::1, subnet is 2000::/64</text>
+    <text x="34" y="122" class="sm">Joined group address(es): FF02::1 · FF02::2 · FF02::1:FF00:1</text>
+    <text x="34" y="146" class="sm">MTU is 1500 bytes · ND DAD is enabled, attempts: 1</text>
+  </svg><p class="cap">6-rasm. Tekshiruv: link-local, global va qo‘shilgan guruh manzillari</p><div class="pg-num">— 5 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>9. Xotira kartasi</h2><svg class="sk" viewBox="0 0 600 220" role="img" aria-label="IPv6 prefikslari va NDP xabarlari">
+    <defs>
+      <filter id="r20-13" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="41" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r20-13)">
+      <rect class="s" x="10" y="26" width="282" height="180" rx="12"></rect>
+      <rect class="s fg" x="24" y="52" width="104" height="26" rx="3"></rect>
+      <rect class="s fb" x="24" y="92" width="104" height="26" rx="3"></rect>
+      <rect class="s fb" x="24" y="132" width="104" height="26" rx="3"></rect>
+      <rect class="s fy" x="24" y="172" width="104" height="26" rx="3"></rect>
+      <rect class="s" x="306" y="26" width="284" height="180" rx="12"></rect>
+      <rect class="s fw" x="320" y="52" width="62" height="26" rx="3"></rect>
+      <rect class="s fw" x="320" y="92" width="62" height="26" rx="3"></rect>
+      <rect class="s fw" x="320" y="132" width="62" height="26" rx="3"></rect>
+      <rect class="s fw" x="320" y="172" width="62" height="26" rx="3"></rect>
+    </g>
+    <text x="151" y="20" text-anchor="middle" class="red">prefikslar</text>
+    <text x="448" y="20" text-anchor="middle" class="red">NDP xabarlari</text>
+    <text x="76" y="72" text-anchor="middle" class="sm">2000::/3</text>
+    <text x="76" y="112" text-anchor="middle" class="sm">FE80::/10</text>
+    <text x="76" y="152" text-anchor="middle" class="sm">FEC0::/10</text>
+    <text x="76" y="192" text-anchor="middle" class="sm">FF00::/8</text>
+    <text x="138" y="72" class="sm">global unicast</text>
+    <text x="138" y="112" class="sm">link-local</text>
+    <text x="138" y="152" class="sm">site-local</text>
+    <text x="138" y="192" class="sm">multicast</text>
+    <text x="351" y="72" text-anchor="middle" class="sm">NS</text>
+    <text x="351" y="112" text-anchor="middle" class="sm">NA</text>
+    <text x="351" y="152" text-anchor="middle" class="sm">RS</text>
+    <text x="351" y="192" text-anchor="middle" class="sm">RA</text>
+    <text x="392" y="72" class="sm">MAC kimda?</text>
+    <text x="392" y="112" class="sm">MAC mana shu</text>
+    <text x="392" y="152" class="sm">router qayerda?</text>
+    <text x="392" y="192" class="sm">prefiks mana shu</text>
+  </svg><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>IPv6 — 128 bit, 8 guruh × 16 bit, o‘n oltilik</li>
+      <li>Qisqartirish: boshdagi nollar va bitta ::</li>
+      <li>Prefiks + interfeys ID (64 bit, EUI-64)</li>
+      <li>unicast · multicast · anycast; broadcast yo‘q</li>
+      <li>NDP: manzil aniqlash, router/prefiks topish, avtosozlash, DAD</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>IPv6 uzunligi? <span class="ans">— 128 bit</span></li>
+    <li>Link-local prefiksi? <span class="ans">— FE80::/10</span></li>
+    <li>:: necha marta ishlatiladi? <span class="ans">— bir marta</span></li>
+    <li>MAC o‘rtasiga nima qo‘shiladi? <span class="ans">— FFFE</span></li>
+    <li>RS va RA manzillari? <span class="ans">— FF02::2 va FF02::1</span></li>
+  </ol><div class="pg-num">— 6 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+
+<!-- ================= 6-sahifa ================= -->
+
+</body>
+</html>

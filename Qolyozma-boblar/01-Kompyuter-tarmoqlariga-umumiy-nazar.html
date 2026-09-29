@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>01-bob · Kompyuter tarmoqlariga umumiy nazar</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">1-bob</div><h1 class="title">Kompyuter tarmoqlariga umumiy nazar
+    <small>Computer Network Overview</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>Tarmoq</b> — bog‘langan, ammo mustaqil kompyuterlar guruhi</li>
+      <li><b>LAN · MAN · WAN</b> — qamrov: bino · shahar ~10 km · davlat</li>
+      <li><b>Topologiya</b> — tugunlarning ulanish shakli (shina, yulduz, halqa)</li>
+      <li><b>Kommutatsiya</b> — kanal band qilinadi yoki paket saqlab uzatiladi</li>
+      <li><b>O‘tkazuvchanlik · kechikish</b> — quvur eni (bit/s) va yo‘l vaqti</li>
+    </ul>
+  </div><h2>1. Tarmoq nima?</h2><p class="tight"><mark>O‘zaro bog‘langan mustaqil kompyuterlar guruhi</mark> <span class="en">(IEEE)</span></p><ul class="tight">
+    <li><b>bog‘langan</b> — aloqa muhiti bor, ma’lumot almashadi</li>
+    <li><b>mustaqil</b> — biri ikkinchisini boshqarmaydi</li>
+  </ul><svg class="sk" viewBox="-60 0 680 250" role="img" aria-label="Tarmoq sxemasi">
+    <defs>
+      <filter id="r01-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+      <marker id="a01-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r01-7)">
+      <!-- bulut -->
+      <path class="s fb" d="M215,95 C205,70 245,55 262,72 C275,50 320,55 325,78 C352,74 362,105 340,116 C330,135 240,138 226,122 C208,118 205,102 215,95 Z"></path>
+      <!-- chiziqlar -->
+      <path class="s2" d="M90,70 C150,72 180,80 216,92"></path>
+      <path class="s2" d="M80,170 C150,168 190,140 222,122"></path>
+      <path class="s2" d="M470,70 C420,74 380,80 345,92"></path>
+      <path class="s2" d="M470,175 C420,168 380,140 344,120"></path>
+      <!-- bosh ofis -->
+      <rect class="s fw" x="435" y="30" width="80" height="46" rx="4"></rect>
+      <path class="s2" d="M448,42 h14 M470,42 h14 M492,42 h14 M448,58 h14 M470,58 h14 M492,58 h14"></path>
+      <!-- filial -->
+      <rect class="s fw" x="440" y="160" width="70" height="40" rx="4"></rect>
+      <path class="s2" d="M452,172 h12 M474,172 h12 M496,172 h12 M452,188 h46"></path>
+      <!-- SOHO: pc -->
+      <rect class="s fw" x="40" y="44" width="52" height="34" rx="3"></rect>
+      <path class="s2" d="M66,78 v8 M52,88 h28"></path>
+      <!-- mobil -->
+      <rect class="s fw" x="48" y="150" width="26" height="44" rx="5"></rect>
+      <path class="s2" d="M56,190 h10"></path>
+    </g>
+    <text x="270" y="102" text-anchor="middle" class="red">INTERNET</text>
+    <text x="475" y="22" text-anchor="middle">bosh ofis</text>
+    <text x="475" y="216" text-anchor="middle">filial</text>
+    <text x="66" y="36" text-anchor="middle">SOHO / uy</text>
+    <text x="61" y="212" text-anchor="middle">mobil</text>
+    <text x="150" y="150" class="sm">kabel · optika · radio</text>
+  </svg><p class="cap">1-rasm. Alohida nuqtalar — bitta tarmoq</p><svg class="sk" viewBox="-35 0 630 130" role="img" aria-label="Axborot orollari va tarmoq">
+    <defs>
+      <filter id="r01-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="17" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a01-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r01-8)">
+      <rect class="s fw" x="24" y="46" width="42" height="28" rx="3"></rect>
+      <rect class="s fw" x="94" y="46" width="42" height="28" rx="3"></rect>
+      <rect class="s fw" x="164" y="46" width="42" height="28" rx="3"></rect>
+      <path class="sr" d="M70,54 l20,12 M90,54 l-20,12 M140,54 l20,12 M160,54 l-20,12"></path>
+      <path class="sg" marker-end="url(#a01-2)" d="M240,60 h60"></path>
+      <rect class="s fw" x="336" y="30" width="42" height="26" rx="3"></rect>
+      <rect class="s fw" x="336" y="72" width="42" height="26" rx="3"></rect>
+      <rect class="s fw" x="470" y="30" width="42" height="26" rx="3"></rect>
+      <rect class="s fw" x="470" y="72" width="42" height="26" rx="3"></rect>
+      <rect class="s fy" x="406" y="52" width="36" height="20" rx="3"></rect>
+      <path class="s2" d="M378,43 C392,48 398,52 406,58 M378,85 C392,80 398,76 406,68
+                          M442,58 C452,52 458,48 470,43 M442,68 C452,76 458,80 470,85"></path>
+    </g>
+    <text x="115" y="28" text-anchor="middle" class="red">axborot orollari</text>
+    <text x="115" y="96" text-anchor="middle" class="sm">alohida ishlaydi</text>
+    <text x="270" y="50" text-anchor="middle" class="grn">tarmoq</text>
+    <text x="424" y="24" text-anchor="middle" class="red">birlashgan resurs</text>
+    <text x="424" y="120" text-anchor="middle" class="sm">hamma bilan hamma aloqada</text>
+  </svg><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>2. Asosiy vazifalari</h2><svg class="sk" viewBox="0 0 560 220" role="img" aria-label="Tarmoqning uchta vazifasi">
+    <defs>
+      <filter id="r01-9" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="3" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a01-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r01-9)">
+      <!-- 1: resurs almashish -->
+      <rect class="s" x="10" y="16" width="170" height="180" rx="12"></rect>
+      <rect class="s fw" x="30" y="60" width="38" height="26" rx="3"></rect><path class="s2" d="M49,86 v6 M38,92 h22"></path>
+      <rect class="s fw" x="122" y="60" width="38" height="26" rx="3"></rect><path class="s2" d="M141,86 v6 M130,92 h22"></path>
+      <rect class="s fy" x="66" y="132" width="58" height="34" rx="4"></rect>
+      <path class="s2" d="M78,132 v-8 h34 v8 M78,152 h34"></path>
+      <path class="s2" marker-end="url(#a01-3)" d="M55,98 C60,118 78,124 88,130"></path>
+      <path class="s2" marker-end="url(#a01-3)" d="M136,98 C131,118 113,124 103,130"></path>
+      <!-- 2: yuk taqsimoti -->
+      <rect class="s" x="195" y="16" width="170" height="180" rx="12"></rect>
+      <rect class="s fw" x="212" y="54" width="34" height="24" rx="3"></rect><path class="s2" d="M229,78 v6 M220,84 h18"></path>
+      <rect class="s fb" x="292" y="40" width="30" height="48" rx="3"></rect><path class="s2" d="M298,52 h18 M298,64 h18 M298,76 h18"></path>
+      <rect class="s fb" x="292" y="112" width="30" height="48" rx="3"></rect><path class="s2" d="M298,124 h18 M298,136 h18 M298,148 h18"></path>
+      <path class="s2" marker-end="url(#a01-3)" d="M248,64 C266,60 276,58 288,58"></path>
+      <path class="s2" marker-end="url(#a01-3)" d="M248,74 C266,96 276,120 288,132"></path>
+      <!-- 3: integratsiya -->
+      <rect class="s" x="380" y="16" width="170" height="180" rx="12"></rect>
+      <path class="s fg" d="M400,86 h110 v42 h-110 z"></path>
+      <path class="s2" d="M400,107 h110"></path>
+      <rect class="s fw" x="396" y="42" width="34" height="24" rx="3"></rect>
+      <path class="s2" d="M446,54 a12,12 0 1,0 24,0 a12,12 0 1,0 -24,0 M458,42 v24"></path>
+      <rect class="s fw" x="484" y="42" width="34" height="24" rx="3"></rect><path class="s2" d="M494,54 l10,-6 v12 z"></path>
+      <path class="s2" marker-end="url(#a01-3)" d="M413,68 v14 M458,68 v14 M501,68 v14"></path>
+      <path class="s2" marker-end="url(#a01-3)" d="M455,130 v28"></path>
+    </g>
+    <text x="95" y="210" text-anchor="middle" class="red">resurs almashish</text>
+    <text x="95" y="126" text-anchor="middle" class="sm">printer · fayl · disk</text>
+    <text x="280" y="210" text-anchor="middle" class="red">yuk taqsimoti</text>
+    <text x="230" y="46" text-anchor="middle" class="sm">so‘rov</text>
+    <text x="465" y="210" text-anchor="middle" class="red">bitta muhitda hamma xizmat</text>
+    <text x="413" y="38" text-anchor="middle" class="sm">data</text>
+    <text x="458" y="38" text-anchor="middle" class="sm">ovoz</text>
+    <text x="501" y="38" text-anchor="middle" class="sm">video</text>
+    <text x="455" y="113" text-anchor="middle">bitta tarmoq</text>
+  </svg><ul class="tight">
+    <li><b>Resurs almashish</b> — dasturiy (fayl, baza) + apparat (printer, modem)</li>
+    <li><b>Taqsimlangan ishlov</b> — masala bo‘linadi, yuk serverlarga taqsimlanadi</li>
+    <li><b>Integratsiyalashgan xizmatlar</b> — data + ovoz + video bitta tarmoqda</li>
+  </ul><h2>3. Rivojlanish bosqichlari</h2><svg class="sk" viewBox="0 0 560 300" role="img" aria-label="Tarmoqlarning rivojlanishi">
+    <defs>
+      <filter id="r01-10" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="11" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a01-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r01-10)">
+      <!-- 1 xost -->
+      <rect class="s fb" x="40" y="42" width="30" height="52" rx="3"></rect>
+      <path class="s2" d="M20,110 h70 M35,94 v16 M75,94 v16"></path>
+      <rect class="s fw" x="12" y="110" width="22" height="16" rx="2"></rect>
+      <rect class="s fw" x="44" y="110" width="22" height="16" rx="2"></rect>
+      <rect class="s fw" x="76" y="110" width="22" height="16" rx="2"></rect>
+      <!-- 2 LAN yulduz -->
+      <rect class="s fy" x="205" y="66" width="44" height="22" rx="3"></rect>
+      <path class="s2" d="M227,88 v22 M227,66 v-20 M205,77 h-26 M249,77 h26"></path>
+      <rect class="s fw" x="212" y="112" width="30" height="18" rx="2"></rect>
+      <rect class="s fw" x="212" y="26" width="30" height="18" rx="2"></rect>
+      <rect class="s fw" x="150" y="68" width="30" height="18" rx="2"></rect>
+      <rect class="s fw" x="275" y="68" width="30" height="18" rx="2"></rect>
+      <!-- 3 LAN + WAN -->
+      <rect class="s fy" x="360" y="40" width="40" height="20" rx="3"></rect>
+      <rect class="s fy" x="470" y="40" width="40" height="20" rx="3"></rect>
+      <path class="s2" d="M400,50 h70"></path>
+      <path class="s2" d="M380,60 v14 M490,60 v14"></path>
+      <rect class="s fw" x="364" y="74" width="32" height="18" rx="2"></rect>
+      <rect class="s fw" x="474" y="74" width="32" height="18" rx="2"></rect>
+      <!-- 4 internet -->
+      <path class="s fb" d="M215,215 C205,192 240,178 258,194 C272,172 315,178 320,200 C346,196 355,225 334,236 C324,254 240,257 227,242 C210,238 206,222 215,215 Z"></path>
+      <path class="s2" d="M150,200 C180,202 196,206 216,212 M420,200 C390,204 360,208 336,214 M200,268 C230,258 250,252 262,246 M370,268 C340,258 318,252 306,246"></path>
+      <rect class="s fw" x="112" y="188" width="38" height="22" rx="3"></rect>
+      <rect class="s fw" x="420" y="188" width="38" height="22" rx="3"></rect>
+      <rect class="s fw" x="162" y="262" width="38" height="22" rx="3"></rect>
+      <rect class="s fw" x="370" y="262" width="38" height="22" rx="3"></rect>
+      <!-- strelkalar -->
+      <path class="sr" marker-end="url(#a01-4)" d="M115,80 C150,74 165,76 190,77"></path>
+      <path class="sr" marker-end="url(#a01-4)" d="M315,78 C332,78 340,76 352,64"></path>
+      <path class="sr" marker-end="url(#a01-4)" d="M430,110 C420,140 340,168 322,182"></path>
+    </g>
+    <text x="78" y="34" text-anchor="middle" class="red">1) xost + terminallar</text>
+    <text x="78" y="142" text-anchor="middle" class="sm">1960-yillar, mainframe</text>
+    <text x="227" y="18" text-anchor="middle" class="red">2) LAN</text>
+    <text x="227" y="148" text-anchor="middle" class="sm">1973 · Ethernet · Metkalf</text>
+    <text x="435" y="30" text-anchor="middle" class="red">3) LAN + WAN</text>
+    <text x="435" y="110" text-anchor="middle" class="sm">operator liniyalari</text>
+    <text x="275" y="222" text-anchor="middle" class="red">4) INTERNET</text>
+    <text x="275" y="292" text-anchor="middle" class="sm">ISP’lar o‘zaro bog‘langan</text>
+  </svg><p class="tight">Turtki: <mark>kompyuter texnikasi</mark> + <mark class="g">aloqa texnologiyalari</mark></p><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>4. LAN · MAN · WAN</h2><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="LAN, MAN va WAN qamrovi">
+    <defs>
+      <filter id="r01-11" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="5" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r01-11)">
+      <!-- LAN -->
+      <rect class="s fg" x="24" y="60" width="130" height="110" rx="10"></rect>
+      <rect class="s fw" x="44" y="92" width="28" height="18" rx="2"></rect>
+      <rect class="s fw" x="106" y="92" width="28" height="18" rx="2"></rect>
+      <rect class="s fy" x="74" y="130" width="34" height="16" rx="3"></rect>
+      <path class="s2" d="M58,110 v12 h34 M120,110 v12 h-28"></path>
+      <!-- MAN -->
+      <rect class="s fb" x="196" y="46" width="160" height="140" rx="12"></rect>
+      <rect class="s fw" x="214" y="80" width="36" height="26" rx="2"></rect>
+      <rect class="s fw" x="302" y="80" width="36" height="26" rx="2"></rect>
+      <rect class="s fw" x="258" y="136" width="36" height="26" rx="2"></rect>
+      <path class="s2" d="M250,94 h52 M232,106 C240,126 250,134 258,142 M320,106 C312,126 302,134 294,142"></path>
+      <!-- WAN -->
+      <rect class="s" x="396" y="30" width="150" height="170" rx="14"></rect>
+      <path class="s fy" d="M414,74 h34 v18 h-34 z M498,74 h34 v18 h-34 z M456,146 h34 v18 h-34 z"></path>
+      <path class="s2" d="M448,83 h50 M424,92 C432,120 448,140 458,148 M520,92 C512,120 496,140 488,148"></path>
+      <path class="dash" d="M470,30 v170"></path>
+    </g>
+    <text x="89" y="52" text-anchor="middle" class="red">LAN</text>
+    <text x="89" y="188" text-anchor="middle" class="sm">bino · bir necha km</text>
+    <text x="276" y="38" text-anchor="middle" class="red">MAN</text>
+    <text x="276" y="204" text-anchor="middle" class="sm">shahar · ~10 km</text>
+    <text x="471" y="22" text-anchor="middle" class="red">WAN</text>
+    <text x="471" y="218" text-anchor="middle" class="sm">viloyat · davlat</text>
+    <text x="471" y="188" text-anchor="middle" class="sm">chegara</text>
+  </svg><table class="rot">
+    <tbody><tr><th></th><th>LAN</th><th>MAN</th><th>WAN</th></tr>
+    <tr><td>Qamrov</td><td>bino</td><td>shahar, ~10 km</td><td>davlat</td></tr>
+    <tr><td>Tezlik</td><td>10 Mbit/s – 10 Gbit/s</td><td>o‘rtacha</td><td>pastroq</td></tr>
+  </tbody></table><h2>5. Topologiyalar</h2><svg class="sk" viewBox="0 0 620 330" role="img" aria-label="Tarmoq topologiyalari">
+    <defs>
+      <filter id="r01-12" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="9" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r01-12)">
+      <!-- shina -->
+      <path class="s" d="M20,70 h150"></path>
+      <path class="s2" d="M45,70 v-22 M85,70 v-22 M125,70 v-22 M155,70 v-22"></path>
+      <circle class="s fw" cx="45" cy="42" r="7"></circle><circle class="s fw" cx="85" cy="42" r="7"></circle>
+      <circle class="s fw" cx="125" cy="42" r="7"></circle><circle class="s fw" cx="155" cy="42" r="7"></circle>
+      <!-- yulduz -->
+      <rect class="s fy" x="270" y="52" width="32" height="18" rx="3"></rect>
+      <path class="s2" d="M286,52 v-22 M286,70 v22 M270,61 h-34 M302,61 h34"></path>
+      <circle class="s fw" cx="286" cy="24" r="7"></circle><circle class="s fw" cx="286" cy="98" r="7"></circle>
+      <circle class="s fw" cx="230" cy="61" r="7"></circle><circle class="s fw" cx="342" cy="61" r="7"></circle>
+      <!-- halqa -->
+      <path class="s" d="M420,60 a58,40 0 1,0 116,0 a58,40 0 1,0 -116,0"></path>
+      <circle class="s fw" cx="478" cy="20" r="7"></circle><circle class="s fw" cx="536" cy="60" r="7"></circle>
+      <circle class="s fw" cx="478" cy="100" r="7"></circle><circle class="s fw" cx="420" cy="60" r="7"></circle>
+      <path class="sr" d="M492,26 C510,32 520,40 528,48"></path>
+      <!-- to'liq mesh -->
+      <circle class="s fw" cx="80" cy="200" r="8"></circle><circle class="s fw" cx="180" cy="200" r="8"></circle>
+      <circle class="s fw" cx="60" cy="280" r="8"></circle><circle class="s fw" cx="200" cy="280" r="8"></circle>
+      <circle class="s fw" cx="130" cy="240" r="8"></circle>
+      <path class="s2" d="M88,202 h84 M80,208 v64 M180,208 v64 M68,276 l120,-68 M92,196 l100,76 M68,284 h124 M130,232 v-24 M122,244 l-54,30 M138,244 l54,30 M138,236 l34,-30"></path>
+      <!-- qisman mesh -->
+      <circle class="s fw" cx="360" cy="200" r="8"></circle><circle class="s fw" cx="470" cy="200" r="8"></circle>
+      <circle class="s fw" cx="340" cy="285" r="8"></circle><circle class="s fw" cx="495" cy="285" r="8"></circle>
+      <circle class="s fw" cx="415" cy="240" r="8"></circle>
+      <path class="s2" d="M368,202 h94 M415,232 l-48,-26 M415,232 l48,-26 M408,247 l-60,32 M424,247 l64,32"></path>
+      <path class="sr" d="M415,232 v-26"></path>
+    </g>
+    <text x="95" y="100" text-anchor="middle" class="red">shina (bus)</text>
+    <text x="95" y="120" text-anchor="middle" class="sm">kabel uzilsa — hammasi to‘xtaydi</text>
+    <text x="286" y="122" text-anchor="middle" class="red">yulduz (star)</text>
+    <text x="286" y="140" text-anchor="middle" class="sm">bitta liniya uzilsa — faqat o‘sha PC</text>
+    <text x="478" y="122" text-anchor="middle" class="red">halqa (ring)</text>
+    <text x="478" y="140" text-anchor="middle" class="sm">bir nuqta uzilsa — halqa buziladi</text>
+    <text x="130" y="318" text-anchor="middle" class="red">to‘liq mesh</text>
+    <text x="130" y="176" text-anchor="middle" class="sm">ishonchli, lekin qimmat</text>
+    <text x="418" y="318" text-anchor="middle" class="red">qisman mesh</text>
+    <text x="418" y="176" text-anchor="middle" class="sm">faqat muhim tugunlar — 2 yo‘l</text>
+  </svg><div class="box"><span class="lbl">Amalda:</span> LAN — yulduz · magistral va WAN — (qisman) mesh</div><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>6. Kanal va paket kommutatsiyasi</h2><svg class="sk" viewBox="0 0 620 280" role="img" aria-label="Kanal va paket kommutatsiyasi">
+    <defs>
+      <filter id="r01-13" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="13" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a01-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r01-13)">
+      <!-- kanal kommutatsiyasi -->
+      <circle class="s fw" cx="40" cy="70" r="14"></circle><circle class="s fw" cx="520" cy="70" r="14"></circle>
+      <circle class="s fw" cx="170" cy="40" r="13"></circle><circle class="s fw" cx="300" cy="40" r="13"></circle><circle class="s fw" cx="420" cy="40" r="13"></circle>
+      <circle class="s fw" cx="170" cy="105" r="13"></circle><circle class="s fw" cx="300" cy="105" r="13"></circle><circle class="s fw" cx="420" cy="105" r="13"></circle>
+      <path class="s2" d="M54,66 L157,44 M183,40 h104 M313,40 h94 M433,44 L506,66
+                          M54,76 L157,101 M183,105 h104 M313,105 h94 M433,101 L506,76
+                          M170,53 v39 M300,53 v39 M420,53 v39"></path>
+      <path class="sr" d="M54,64 L156,42 M184,38 h102 M314,38 h92 M434,42 L506,64"></path>
+      <!-- paket kommutatsiyasi -->
+      <circle class="s fw" cx="40" cy="215" r="14"></circle><circle class="s fw" cx="520" cy="215" r="14"></circle>
+      <circle class="s fw" cx="170" cy="185" r="13"></circle><circle class="s fw" cx="300" cy="185" r="13"></circle><circle class="s fw" cx="420" cy="185" r="13"></circle>
+      <circle class="s fw" cx="170" cy="250" r="13"></circle><circle class="s fw" cx="300" cy="250" r="13"></circle><circle class="s fw" cx="420" cy="250" r="13"></circle>
+      <path class="s2" d="M54,211 L157,189 M183,185 h104 M313,185 h94 M433,189 L506,211
+                          M54,221 L157,246 M183,250 h104 M313,250 h94 M433,246 L506,221
+                          M170,198 v39 M300,198 v39 M420,198 v39"></path>
+      <rect class="s fy" x="104" y="186" width="20" height="14" rx="3"></rect>
+      <rect class="s fy" x="232" y="176" width="20" height="14" rx="3"></rect>
+      <rect class="s fg" x="232" y="243" width="20" height="14" rx="3"></rect>
+      <rect class="s fg" x="350" y="186" width="20" height="14" rx="3"></rect>
+      <rect class="s fy" x="455" y="196" width="20" height="14" rx="3"></rect>
+    </g>
+    <text x="40" y="44" text-anchor="middle" class="sm">A</text>
+    <text x="520" y="44" text-anchor="middle" class="sm">B</text>
+    <text x="280" y="16" text-anchor="middle" class="red">Kanal kommutatsiyasi — yo‘l oldindan band qilinadi</text>
+    <text x="280" y="134" text-anchor="middle" class="sm">PSTN · suhbat tugaguncha kanal band</text>
+    <text x="40" y="190" text-anchor="middle" class="sm">A</text>
+    <text x="520" y="190" text-anchor="middle" class="sm">B</text>
+    <text x="280" y="152" text-anchor="middle" class="red">Paket kommutatsiyasi — har paket o‘z yo‘lidan</text>
+    <text x="114" y="182" text-anchor="middle" class="sm">1</text>
+    <text x="242" y="174" text-anchor="middle" class="sm">2</text>
+    <text x="242" y="270" text-anchor="middle" class="sm">3</text>
+    <text x="400" y="272" text-anchor="middle" class="sm">saqlaydi → uzatadi</text>
+  </svg><div class="two">
+    <div>
+      <p class="tight"><b>Kanal</b></p>
+      <ul class="tight">
+        <li>+ kechikish kichik, barqaror</li>
+        <li>– polosa band turadi</li>
+      </ul>
+    </div>
+    <div>
+      <p class="tight"><b>Paket</b></p>
+      <ul class="tight">
+        <li>+ liniya bo‘lishiladi, resurs tejaladi</li>
+        <li>– kechikish o‘zgaruvchan</li>
+      </ul>
+    </div>
+  </div><h2>7. O‘tkazuvchanlik va kechikish</h2><svg class="sk" viewBox="0 0 560 250" role="img" aria-label="Otkazuvchanlik va kechikish">
+    <defs>
+      <filter id="r01-14" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="21" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a01-6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r01-14)">
+      <!-- quvurlar = polosa -->
+      <path class="s fb" d="M30,42 h110 v10 h-110 z"></path>
+      <path class="s fb" d="M30,66 h110 v20 h-110 z"></path>
+      <path class="s fb" d="M30,100 h110 v34 h-110 z"></path>
+      <!-- kechikish yo'li -->
+      <circle class="s fw" cx="250" cy="196" r="14"></circle>
+      <rect class="s fy" x="330" y="182" width="34" height="26" rx="4"></rect>
+      <rect class="s fy" x="424" y="182" width="34" height="26" rx="4"></rect>
+      <circle class="s fw" cx="520" cy="196" r="14"></circle>
+      <path class="s2" d="M264,196 h64 M364,196 h58 M458,196 h48"></path>
+      <path class="sr" marker-end="url(#a01-6)" d="M286,178 v-16"></path>
+      <path class="sr" marker-end="url(#a01-6)" d="M347,178 v-16"></path>
+      <path class="sr" marker-end="url(#a01-6)" d="M394,178 v-16"></path>
+      <path class="sr" marker-end="url(#a01-6)" d="M441,178 v-16"></path>
+    </g>
+    <text x="85" y="36" text-anchor="middle" class="red">o‘tkazuvchanlik = quvur eni</text>
+    <text x="152" y="52" class="sm">2 Mbit/s</text>
+    <text x="152" y="82" class="sm">100 Mbit/s</text>
+    <text x="152" y="122" class="sm">1 Gbit/s</text>
+    <text x="250" y="230" text-anchor="middle" class="sm">A</text>
+    <text x="520" y="230" text-anchor="middle" class="sm">B</text>
+    <text x="286" y="156" text-anchor="middle" class="sm">tarqalish</text>
+    <text x="347" y="142" text-anchor="middle" class="sm">kommutatsiya</text>
+    <text x="394" y="156" text-anchor="middle" class="sm">kirish</text>
+    <text x="441" y="142" text-anchor="middle" class="sm">navbat</text>
+    <text x="385" y="246" text-anchor="middle" class="red">kechikish = shu vaqtlar yig‘indisi</text>
+    <text x="60" y="160" class="sm">bit/s → kbit/s → Mbit/s → Gbit/s</text>
+  </svg><table class="rot">
+    <tbody><tr><th>SDH</th><td>OC-3</td><td>OC-12</td><td>OC-48</td><td>OC-192</td></tr>
+    <tr><th>Tezlik</th><td>155 Mbit/s</td><td>622 Mbit/s</td><td>2,5 Gbit/s</td><td>10 Gbit/s</td></tr>
+  </tbody></table><p class="tight">Kechikishni <mark>yo‘qotib bo‘lmaydi</mark> — faqat kamaytiriladi.</p><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>8. Standart tashkilotlari</h2><svg class="sk" viewBox="0 0 560 200" role="img" aria-label="Standart tashkilotlari">
+    <defs>
+      <filter id="r01-15" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="31" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r01-15)">
+      <ellipse class="s fy" cx="280" cy="36" rx="74" ry="24"></ellipse>
+      <rect class="s fw" x="20" y="108" width="96" height="46" rx="8"></rect>
+      <rect class="s fw" x="132" y="108" width="96" height="46" rx="8"></rect>
+      <rect class="s fw" x="244" y="108" width="96" height="46" rx="8"></rect>
+      <rect class="s fw" x="356" y="108" width="96" height="46" rx="8"></rect>
+      <rect class="s fw" x="462" y="108" width="82" height="46" rx="8"></rect>
+      <path class="s2" d="M240,48 C180,70 120,86 68,104 M258,58 C230,74 200,90 180,104
+                          M292,58 C292,76 292,90 292,104 M320,52 C356,72 380,90 404,104
+                          M338,44 C400,66 460,88 500,104"></path>
+    </g>
+    <text x="280" y="42" text-anchor="middle" class="red">standartlar</text>
+    <text x="68" y="128" text-anchor="middle">ISO</text>
+    <text x="68" y="146" text-anchor="middle" class="sm">OSI modeli</text>
+    <text x="180" y="128" text-anchor="middle">IEEE</text>
+    <text x="180" y="146" text-anchor="middle" class="sm">802.3 · 802.11</text>
+    <text x="292" y="128" text-anchor="middle">ANSI</text>
+    <text x="292" y="146" text-anchor="middle" class="sm">AQSh milliy</text>
+    <text x="404" y="128" text-anchor="middle">ITU</text>
+    <text x="404" y="146" text-anchor="middle" class="sm">operator aloqasi</text>
+    <text x="503" y="128" text-anchor="middle">IAB</text>
+    <text x="503" y="146" text-anchor="middle" class="sm">IETF · RFC</text>
+    <text x="280" y="186" text-anchor="middle" class="sm">+ EIA/TIA — kabel va ulagichlar (T568A / T568B)</text>
+  </svg><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>Tarmoq = bog‘langan + mustaqil kompyuterlar</li>
+      <li>Vazifa: resurs · yuk taqsimoti · data+ovoz+video</li>
+      <li>Yo‘l: xost → LAN → WAN → Internet</li>
+      <li>Qamrov: LAN (bino) · MAN (~10 km) · WAN (davlat)</li>
+      <li>Kanal = band qilingan yo‘l, paket = saqlab uzatish</li>
+      <li>Ko‘rsatkich: o‘tkazuvchanlik (bit/s) va kechikish (ms)</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>Ta’rifdagi 2 kalit so‘z? <span class="ans">— bog‘langan, mustaqil</span></li>
+    <li>MAN qamrovi? <span class="ans">— shahar, ~10 km</span></li>
+    <li>Ethernet: kim, qachon? <span class="ans">— Metkalf, 1973</span></li>
+    <li>802.11 nima? <span class="ans">— IEEE simsiz LAN</span></li>
+  </ol><div class="pg-num">— 5 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 6-sahifa ================= -->
+
+
+<!-- ================= 8-sahifa ================= -->
+
+</body>
+</html>

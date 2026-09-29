@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>09-bob · Qurilma fayllarini boshqarish</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">9-bob</div><h1 class="title">Qurilma fayllarini boshqarish
+    <small>Network Device File Management</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>Boot fayl</b> — Comware OS obrazi: .bin yoki .ipe</li>
+      <li><b>current-configuration</b> — RAM dagi joriy sozlamalar</li>
+      <li><b>saved-configuration</b> — flashda saqlangan konfiguratsiya</li>
+      <li><b>Savat</b> — o‘chirilgan fayl vaqtincha turadigan joy</li>
+    </ul>
+  </div><h2>1. Fayl turlari va saqlash muhitlari</h2><p class="tight">Qurilma barcha ma’lumotini <mark>fayl ko‘rinishida</mark> saqlaydi.</p><svg class="sk" viewBox="0 0 600 330" role="img" aria-label="ROM, Flash va RAM">
+    <defs>
+      <filter id="r09-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="9" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a09-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r09-1)">
+      <rect class="s" x="20" y="20" width="560" height="296" rx="10"></rect>
+      <rect class="s fb" x="45" y="80" width="140" height="110" rx="6"></rect>
+      <rect class="s fy" x="215" y="80" width="170" height="170" rx="6"></rect>
+      <rect class="s fg" x="415" y="80" width="140" height="170" rx="6"></rect>
+      <rect class="s fw" x="245" y="272" width="110" height="32" rx="4"></rect>
+      <path class="s2" d="M262,272 C210,240 130,210 118,192"></path>
+      <path class="s2" d="M300,272 V252"></path>
+      <path class="s2" d="M338,272 C400,245 468,245 485,252"></path>
+    </g>
+    <text x="300" y="48" text-anchor="middle" class="red">Router / Switch</text>
+    <text x="115" y="100" text-anchor="middle" class="red">ROM</text>
+    <text x="115" y="130" text-anchor="middle">Boot ROM</text>
+    <text x="115" y="158" text-anchor="middle" class="sm">yuklovchi dastur</text>
+    <text x="115" y="182" text-anchor="middle" class="sm">tiklash yo‘li</text>
+    <text x="300" y="100" text-anchor="middle" class="red">Flash / CF</text>
+    <text x="300" y="130" text-anchor="middle" class="sm">.bin / .ipe ilova</text>
+    <text x="300" y="158" text-anchor="middle" class="sm">saved-configuration</text>
+    <text x="300" y="186" text-anchor="middle" class="sm">log fayllar</text>
+    <text x="300" y="214" text-anchor="middle" class="sm">doimiy saqlanadi</text>
+    <text x="300" y="242" text-anchor="middle" class="sm">CF karta yoki ichki</text>
+    <text x="485" y="100" text-anchor="middle" class="red">RAM</text>
+    <text x="485" y="130" text-anchor="middle" class="sm">ishlayotgan OS</text>
+    <text x="485" y="158" text-anchor="middle" class="sm">current-configuration</text>
+    <text x="485" y="186" text-anchor="middle" class="sm">faqat ish uchun</text>
+    <text x="485" y="214" text-anchor="middle" class="sm">o‘chsa — yo‘qoladi</text>
+    <text x="300" y="293" text-anchor="middle">CPU</text>
+  </svg><p class="cap">1-rasm. Uchta muhit: ROM · Flash (CF karta) · RAM</p><ul class="tight">
+    <li><b>ROM</b> — Boot ROM: ilovani izlab yuklaydi, buzilganda tiklaydi</li>
+    <li><b>Flash / CF</b> — ilova, startup konfig va loglar; o‘chirilmaydi</li>
+    <li><b>RAM</b> — ishlayotgan tizim va current-configuration</li>
+  </ul><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><table class="rot">
+    <tbody><tr><th>Boot fayl</th><td>Comware OS — .bin yoki .ipe</td></tr>
+    <tr><th>Konfiguratsiya</th><td>matnli buyruqlar — .cfg</td></tr>
+    <tr><th>Log fayl</th><td>ish jarayonidagi yozuvlar</td></tr>
+  </tbody></table><div class="box"><span class="lbl">Sukut bo‘yicha:</span> ilova va konfig <b>flash</b>dan yuklanadi.</div><h2>2. Fayllar bilan ishlash</h2><svg class="sk" viewBox="0 0 600 290" role="img" aria-label="Katalog, fayl va muhit amallari">
+    <defs>
+      <filter id="r09-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="19" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r09-2)">
+      <rect class="s fb" x="8" y="30" width="188" height="245" rx="8"></rect>
+      <rect class="s fy" x="204" y="30" width="188" height="245" rx="8"></rect>
+      <rect class="s fg" x="400" y="30" width="192" height="245" rx="8"></rect>
+    </g>
+    <text x="102" y="22" text-anchor="middle" class="red">1) katalog</text>
+    <text x="298" y="22" text-anchor="middle" class="red">2) fayl</text>
+    <text x="496" y="22" text-anchor="middle" class="red">3) muhit</text>
+    <text x="20" y="62">mkdir dir</text>
+    <text x="20" y="92">rmdir dir</text>
+    <text x="20" y="122">pwd</text>
+    <text x="20" y="152">cd dir</text>
+    <text x="20" y="182">dir [ /all ]</text>
+    <text x="20" y="240" class="sm">user view’da</text>
+    <text x="20" y="264" class="sm">bajariladi</text>
+    <text x="216" y="62">delete file</text>
+    <text x="216" y="92">undelete file</text>
+    <text x="216" y="122">reset recycle-bin</text>
+    <text x="216" y="152">more file.txt</text>
+    <text x="216" y="182">rename a b</text>
+    <text x="216" y="212">copy a b</text>
+    <text x="216" y="242">move a b</text>
+    <text x="412" y="62">fixdisk device</text>
+    <text x="412" y="92">format device</text>
+    <text x="412" y="122">mount device</text>
+    <text x="412" y="152">umount device</text>
+    <text x="412" y="182">file prompt alert</text>
+    <text x="412" y="212">file prompt quiet</text>
+    <text x="412" y="252" class="sm">alert — sukut bo‘yicha</text>
+  </svg><p class="cap">2-rasm. Uch guruh amal: katalog · fayl · saqlash muhiti</p><h2>3. Savat va butunlay o‘chirish</h2><svg class="sk" viewBox="0 0 600 190" role="img" aria-label="Savat orqali ochirish">
+    <defs>
+      <filter id="r09-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="29" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a09-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r09-3)">
+      <rect class="s fw" x="20" y="70" width="140" height="50" rx="6"></rect>
+      <rect class="s fy" x="230" y="70" width="150" height="50" rx="6"></rect>
+      <rect class="s fw" x="450" y="70" width="130" height="50" rx="6"></rect>
+      <path class="sr" marker-end="url(#a09-3)" d="M162,84 H226"></path>
+      <path class="sr" marker-end="url(#a09-3)" d="M226,106 H164"></path>
+      <path class="sr" marker-end="url(#a09-3)" d="M382,95 H446"></path>
+    </g>
+    <text x="300" y="30" text-anchor="middle" class="red">delete /unreserved — darhol butunlay</text>
+    <text x="194" y="72" text-anchor="middle" class="sm">delete</text>
+    <text x="90" y="100" text-anchor="middle">fayl</text>
+    <text x="305" y="100" text-anchor="middle">savat</text>
+    <text x="194" y="132" text-anchor="middle" class="sm">undelete</text>
+    <text x="515" y="100" text-anchor="middle">bo‘sh joy</text>
+    <text x="414" y="140" text-anchor="middle" class="sm">reset recycle-bin</text>
+    <text x="300" y="176" text-anchor="middle" class="sm">format device → hammasi o‘chadi, tiklanmaydi</text>
+  </svg><div class="box"><span class="lbl">Eslatma:</span> CF karta yoki USB’ni olishdan oldin <b>umount</b> qiling.</div><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><table class="rot">
+    <tbody><tr><th>pwd · cd · dir</th><td>joriy katalog, ko‘chish, ro‘yxat</td></tr>
+    <tr><th>more file.txt</th><td>faqat matnli faylni ko‘rsatadi</td></tr>
+    <tr><th>file prompt quiet</th><td>tasdiq so‘ramaydi (alert — so‘raydi)</td></tr>
+  </tbody></table><h2>4. Konfiguratsiya fayllari</h2><svg class="sk" viewBox="0 0 600 370" role="img" aria-label="Startup va current konfiguratsiya">
+    <defs>
+      <filter id="r09-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="39" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a09-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a09-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r09-4)">
+      <rect class="s fg" x="30" y="50" width="190" height="85" rx="8"></rect>
+      <rect class="s fy" x="380" y="50" width="190" height="85" rx="8"></rect>
+      <path class="sr" marker-end="url(#a09-4)" d="M222,72 H376"></path>
+      <path class="sg" marker-end="url(#a09-5)" d="M376,112 H224"></path>
+      <rect class="s fb" x="250" y="250" width="110" height="52" rx="4"></rect>
+      <path class="s2" d="M262,266 h86 M262,280 h86 M262,292 h50"></path>
+      <path class="sg" marker-end="url(#a09-5)" d="M400,138 C372,180 340,214 354,242"></path>
+      <path class="sg" marker-end="url(#a09-5)" d="M362,246 C420,220 460,180 478,140"></path>
+    </g>
+    <text x="125" y="40" text-anchor="middle" class="red">RAM</text>
+    <text x="125" y="85" text-anchor="middle">current-configuration</text>
+    <text x="125" y="115" text-anchor="middle" class="sm">vaqtinchalik</text>
+    <text x="475" y="40" text-anchor="middle" class="red">Flash</text>
+    <text x="475" y="85" text-anchor="middle">saved-configuration</text>
+    <text x="475" y="115" text-anchor="middle" class="sm">doimiy · .cfg</text>
+    <text x="299" y="62" text-anchor="middle" class="red">save</text>
+    <text x="299" y="140" text-anchor="middle" class="sm">yuklanishda o‘qiladi</text>
+    <text x="316" y="200" text-anchor="middle" class="sm">backup</text>
+    <text x="470" y="200" text-anchor="middle" class="sm">restore</text>
+    <text x="305" y="324" text-anchor="middle" class="sm">TFTP server</text>
+    <text x="470" y="250" text-anchor="middle" class="sm">display current-configuration</text>
+    <text x="470" y="280" text-anchor="middle" class="sm">display this — shu view</text>
+    <text x="470" y="310" text-anchor="middle" class="sm">restore startup-configuration</text>
+    <text x="20" y="180">save</text>
+    <text x="20" y="210">reset saved-configuration</text>
+    <text x="20" y="240">startup saved-configuration</text>
+    <text x="20" y="270">display saved-configuration</text>
+    <text x="20" y="300">display startup</text>
+    <text x="20" y="330">backup startup-configuration</text>
+  </svg><p class="cap">3-rasm. save — RAM’dan Flash’ga; backup/restore — TFTP orqali</p><ul class="tight">
+    <li>Faylda faqat <b>default’dan farq qiluvchi</b> satrlar saqlanadi</li>
+    <li>Bo‘limlar view bo‘yicha, <b>#</b> belgisi bilan ajratiladi</li>
+    <li><b>save</b> qilinmasa — reboot’da o‘zgarishlar yo‘qoladi</li>
+    <li>Fayl ko‘rsatilmasa yoki topilmasa — <b>bo‘sh konfig</b> bilan yuklanadi</li>
+  </ul><table class="rot">
+    <tbody><tr><th>display startup</th><td>hozirgi va keyingi konfig fayli</td></tr>
+    <tr><th>reset saved-configuration</th><td>o‘chiradi → bo‘sh konfig</td></tr>
+    <tr><th>startup saved-configuration</th><td>keyingi yuklanish faylini tanlaydi</td></tr>
+  </tbody></table><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>5. FTP va TFTP</h2><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="FTP va TFTP topologiyasi">
+    <defs>
+      <filter id="r09-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="49" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r09-5)">
+      <rect class="s fw" x="30" y="42" width="58" height="34" rx="3"></rect>
+      <path class="s2" d="M59,76 v6 M45,82 h28"></path>
+      <rect class="s fy" x="470" y="44" width="90" height="34" rx="4"></rect>
+      <path class="s fb" d="M252,52 C242,34 274,26 288,38 C300,22 334,28 336,46 C356,46 358,72 340,76 C330,92 266,92 256,78 C240,74 240,58 252,52 Z"></path>
+      <path class="s2" d="M88,60 H250 M346,60 H470"></path>
+      <rect class="s fy" x="30" y="152" width="90" height="34" rx="4"></rect>
+      <rect class="s fw" x="490" y="152" width="58" height="34" rx="3"></rect>
+      <path class="s2" d="M519,186 v6 M505,192 h28"></path>
+      <path class="s fb" d="M252,162 C242,144 274,136 288,148 C300,132 334,138 336,156 C356,156 358,182 340,186 C330,202 266,202 256,188 C240,184 240,168 252,162 Z"></path>
+      <path class="s2" d="M120,170 H250 M346,170 H490"></path>
+    </g>
+    <text x="300" y="24" text-anchor="middle" class="red">FTP — TCP, qurilma klient ham, server ham</text>
+    <text x="300" y="64" text-anchor="middle" class="sm">IP tarmoq</text>
+    <text x="59" y="98" text-anchor="middle" class="sm">PC</text>
+    <text x="515" y="98" text-anchor="middle" class="sm">FTP server / klient</text>
+    <text x="300" y="128" text-anchor="middle" class="red">TFTP — UDP, faqat klient boshlaydi</text>
+    <text x="300" y="174" text-anchor="middle" class="sm">IP tarmoq</text>
+    <text x="75" y="210" text-anchor="middle" class="sm">TFTP klient</text>
+    <text x="519" y="212" text-anchor="middle" class="sm">TFTP server</text>
+  </svg><h2>6. Buyruqlar</h2><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="FTP va TFTP buyruqlari">
+    <defs>
+      <filter id="r09-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="59" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r09-6)">
+      <rect class="s fy" x="8" y="26" width="290" height="190" rx="6"></rect>
+      <rect class="s fb" x="302" y="26" width="290" height="190" rx="6"></rect>
+    </g>
+    <text x="153" y="18" text-anchor="middle" class="red">qurilma — FTP server</text>
+    <text x="447" y="18" text-anchor="middle" class="red">qurilma — TFTP klient</text>
+    <text x="20" y="50">ftp server enable</text>
+    <text x="20" y="76">local-user h3c</text>
+    <text x="20" y="102">password simple xxx</text>
+    <text x="20" y="128">service-type ftp</text>
+    <text x="20" y="154">display ftp-server</text>
+    <text x="20" y="182" class="sm">PC’da: ftp 192.168.0.1</text>
+    <text x="20" y="206" class="sm">so‘ng put / get</text>
+    <text x="314" y="50">tftp 192.168.0.10 get f.cfg</text>
+    <text x="314" y="76">tftp 192.168.0.10 put f.cfg</text>
+    <text x="314" y="102">tftp 192.168.0.10 sget f.bin</text>
+    <text x="314" y="134" class="sm">sget → avval xotiraga,</text>
+    <text x="314" y="158" class="sm">keyin flash’ga yoziladi</text>
+    <text x="314" y="182" class="sm">xato bo‘lsa eski fayl saqlanadi</text>
+    <text x="314" y="206" class="sm">rejimlar: binary va ASCII</text>
+  </svg><div class="box"><span class="lbl">Yangilash yo‘llari:</span>
+    <ul class="dash tight">
+      <li>CLI’dan TFTP yoki FTP bilan</li>
+      <li>Boot ROM menyusi + Ethernet port → TFTP / FTP</li>
+      <li>Boot ROM menyusi + console port → XMODEM</li>
+    </ul>
+  </div><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>7. Yuklanish jarayoni</h2><svg class="sk" viewBox="0 0 600 240" role="img" aria-label="Qurilmaning yuklanish jarayoni">
+    <defs>
+      <filter id="r09-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="69" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a09-7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r09-7)">
+      <rect class="s fw" x="8" y="30" width="100" height="40" rx="5"></rect>
+      <rect class="s fw" x="126" y="30" width="110" height="40" rx="5"></rect>
+      <rect class="s fb" x="254" y="30" width="120" height="40" rx="5"></rect>
+      <rect class="s fy" x="392" y="30" width="150" height="40" rx="14"></rect>
+      <rect class="s fw" x="392" y="96" width="150" height="34" rx="5"></rect>
+      <rect class="s fy" x="380" y="156" width="175" height="38" rx="14"></rect>
+      <rect class="s fg" x="196" y="156" width="150" height="38" rx="5"></rect>
+      <rect class="s fg" x="196" y="200" width="150" height="34" rx="5"></rect>
+      <rect class="s fw" x="14" y="156" width="90" height="38" rx="5"></rect>
+      <rect class="s fw" x="40" y="92" width="230" height="42" rx="5"></rect>
+      <path class="s2" marker-end="url(#a09-7)" d="M108,50 H122"></path>
+      <path class="s2" marker-end="url(#a09-7)" d="M236,50 H250"></path>
+      <path class="s2" marker-end="url(#a09-7)" d="M374,50 H388"></path>
+      <path class="s2" marker-end="url(#a09-7)" d="M467,70 V93"></path>
+      <path class="s2" marker-end="url(#a09-7)" d="M467,130 V153"></path>
+      <path class="s2" marker-end="url(#a09-7)" d="M380,175 H350"></path>
+      <path class="s2" marker-end="url(#a09-7)" d="M196,175 H108"></path>
+      <path class="s2" marker-end="url(#a09-7)" d="M400,194 C380,206 360,212 350,216"></path>
+      <path class="s2" marker-end="url(#a09-7)" d="M196,217 C150,215 120,200 108,190"></path>
+      <path class="s2" marker-end="url(#a09-7)" d="M390,70 C350,96 320,104 276,110"></path>
+    </g>
+    <text x="58" y="55" text-anchor="middle">Quvvat</text>
+    <text x="181" y="48" text-anchor="middle">POST</text>
+    <text x="181" y="66" text-anchor="middle" class="sm">apparat testi</text>
+    <text x="314" y="55" text-anchor="middle">Boot ROM</text>
+    <text x="467" y="55" text-anchor="middle">ilova fayli?</text>
+    <text x="467" y="118" text-anchor="middle">ilovani yuklash</text>
+    <text x="467" y="180" text-anchor="middle">startup-config?</text>
+    <text x="271" y="180" text-anchor="middle">saqlangan konfig</text>
+    <text x="271" y="222" text-anchor="middle">default konfig</text>
+    <text x="59" y="180" text-anchor="middle" class="red">CLI</text>
+    <text x="155" y="110" text-anchor="middle">Boot ROM menyusi</text>
+    <text x="155" y="128" text-anchor="middle" class="sm">Ctrl+B — 6 soniya ichida</text>
+    <text x="300" y="84" text-anchor="middle" class="sm">topilmadi</text>
+    <text x="492" y="88" text-anchor="middle" class="sm">topildi</text>
+    <text x="362" y="168" text-anchor="middle" class="sm">bor</text>
+    <text x="398" y="210" text-anchor="middle" class="sm">yo‘q</text>
+  </svg><table class="rot">
+    <tbody><tr><th>boot-loader file file-url</th><td>keyingi yuklanish ilovasi</td></tr>
+    <tr><th>display boot-loader</th><td>hozirgi va keyingi fayl</td></tr>
+    <tr><th>reboot</th><td>darhol qayta yuklash</td></tr>
+    <tr><th>schedule reboot at hh:mm</th><td>belgilangan vaqtda</td></tr>
+  </tbody></table><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>Fayllar: boot (.bin/.ipe) · konfig (.cfg) · log</li>
+      <li>ROM — Boot ROM, Flash — doimiy, RAM — vaqtinchalik</li>
+      <li>save: current → saved; reset saved-configuration — o‘chiradi</li>
+      <li>FTP — TCP, TFTP — UDP (get / put / sget)</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>Konfig fayl kengaytmasi? <span class="ans">— .cfg</span></li>
+    <li>Reboot’da nima yo‘qoladi? <span class="ans">— saqlanmagan current-configuration</span></li>
+    <li>TFTP qaysi transportda? <span class="ans">— UDP</span></li>
+    <li>sget nima uchun xavfsiz? <span class="ans">— eski fayl ustiga yozilmaydi</span></li>
+  </ol><div class="pg-num">— 5 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+</body>
+</html>

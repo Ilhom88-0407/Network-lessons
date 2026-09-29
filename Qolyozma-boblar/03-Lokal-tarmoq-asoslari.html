@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>03-bob · Lokal tarmoq asoslari</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">3-bob</div><h1 class="title">Lokal tarmoq asoslari
+    <small>LAN Fundamentals</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>LAN</b> — bino yoki kampus ichidagi lokal tarmoq (1- va 2-qatlam)</li>
+      <li><b>MAC adres</b> — tarmoq kartasining 48 bitli apparat manzili</li>
+      <li><b>Kadr (frame)</b> — kanal qatlamining ma’lumot birligi</li>
+      <li><b>CSMA/CD</b> — tinglab uzatish, to‘qnashuvni sezib qayta yuborish</li>
+      <li><b>Kolliziya domeni</b> — signallar to‘qnashadigan umumiy hudud</li>
+      <li><b>Hub · kommutator</b> — signalni takrorlaydi · kadrni saqlab uzatadi</li>
+    </ul>
+  </div><h2>1. LAN va OSI modeli</h2><p class="tight">LAN texnologiyalari <mark>faqat 1- va 2-qatlamga</mark> tegishli.</p><svg class="sk" viewBox="-50 0 700 230" role="img" aria-label="LAN va OSI qatlamlari">
+    <defs>
+      <filter id="r03-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r03-1)">
+      <rect class="s fw" x="20" y="30" width="140" height="36" rx="3"></rect>
+      <rect class="s fy" x="20" y="70" width="140" height="76" rx="3"></rect>
+      <rect class="s fb" x="20" y="150" width="140" height="46" rx="3"></rect>
+      <rect class="s fw" x="240" y="30" width="330" height="36" rx="3"></rect>
+      <rect class="s fg" x="240" y="70" width="330" height="36" rx="3"></rect>
+      <rect class="s fy" x="240" y="110" width="330" height="36" rx="3"></rect>
+      <rect class="s fb" x="240" y="150" width="330" height="46" rx="3"></rect>
+      <path class="s2" d="M160,48 h78 M160,88 h78 M160,128 h78 M160,172 h78"></path>
+    </g>
+    <text x="90" y="22" text-anchor="middle" class="red">OSI</text>
+    <text x="405" y="22" text-anchor="middle" class="red">LAN</text>
+    <text x="90" y="54" text-anchor="middle">Tarmoq</text>
+    <text x="90" y="114" text-anchor="middle">Kanal</text>
+    <text x="90" y="180" text-anchor="middle">Fizik</text>
+    <text x="405" y="54" text-anchor="middle" class="sm">IP · IPX</text>
+    <text x="405" y="94" text-anchor="middle" class="sm">LLC — 802.2 / SNAP</text>
+    <text x="405" y="134" text-anchor="middle" class="sm">MAC — 802.3 · 802.4 · 802.5 · 802.11</text>
+    <text x="405" y="170" text-anchor="middle" class="sm">koaksial · juftlik · optika · RJ-45</text>
+    <text x="405" y="190" text-anchor="middle" class="sm">radio</text>
+    <text x="300" y="218" text-anchor="middle" class="sm">kanal qatlami = LLC + MAC</text>
+  </svg><p class="cap">1-rasm. LLC hamma uchun bir xil, MAC — muhitga qarab</p><h2>2. LAN texnologiyalari</h2><svg class="sk" viewBox="-58 0 716 180" role="img" aria-label="Ethernet, token ring va FDDI">
+    <defs>
+      <filter id="r03-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="11" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a03-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r03-2)">
+      <rect class="s fy" x="46" y="60" width="70" height="24" rx="3"></rect>
+      <rect class="s fw" x="20" y="110" width="34" height="20" rx="2"></rect>
+      <rect class="s fw" x="64" y="110" width="34" height="20" rx="2"></rect>
+      <rect class="s fw" x="108" y="110" width="34" height="20" rx="2"></rect>
+      <path class="s2" d="M37,110 C40,98 52,90 60,84 M81,110 v-26 M125,110 C122,98 110,90 102,84"></path>
+      <path class="s" d="M240,90 a60,42 0 1,0 120,0 a60,42 0 1,0 -120,0"></path>
+      <circle class="s fw" cx="300" cy="48" r="8"></circle>
+      <circle class="s fw" cx="360" cy="90" r="8"></circle>
+      <circle class="s fw" cx="300" cy="132" r="8"></circle>
+      <circle class="s fw" cx="240" cy="90" r="8"></circle>
+      <rect class="s fy" x="322" y="52" width="20" height="12" rx="2"></rect>
+      <path class="sr" marker-end="url(#a03-2)" d="M314,44 C330,50 344,62 352,74"></path>
+      <path class="s" d="M450,90 a52,40 0 1,0 104,0 a52,40 0 1,0 -104,0"></path>
+      <path class="s2" d="M462,90 a40,30 0 1,0 80,0 a40,30 0 1,0 -80,0"></path>
+    </g>
+    <text x="81" y="150" text-anchor="middle" class="red">Ethernet</text>
+    <text x="81" y="172" text-anchor="middle" class="sm">802.3 — g‘olib</text>
+    <text x="300" y="158" text-anchor="middle" class="red">Token Ring</text>
+    <text x="300" y="176" text-anchor="middle" class="sm">802.5 · 4/16 Mbit/s</text>
+    <text x="502" y="150" text-anchor="middle" class="red">FDDI</text>
+    <text x="502" y="172" text-anchor="middle" class="sm">100 Mbit/s · qo‘sh halqa</text>
+  </svg><p class="cap">2-rasm. Token — ruxsat belgisi; FDDI — optik qo‘sh halqa</p><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>3. Erta Ethernet</h2><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="10BASE5, 10BASE2 va 10BASE-T">
+    <defs>
+      <filter id="r03-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="13" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r03-3)">
+      <path class="s" d="M40,48 h240"></path>
+      <path class="s2" d="M40,43 h240 M40,53 h240"></path>
+      <rect class="s fy" x="68" y="42" width="14" height="12" rx="2"></rect>
+      <rect class="s fy" x="138" y="42" width="14" height="12" rx="2"></rect>
+      <rect class="s fy" x="208" y="42" width="14" height="12" rx="2"></rect>
+      <path class="s2" d="M75,54 v20 M145,54 v20 M215,54 v20"></path>
+      <rect class="s fw" x="60" y="74" width="30" height="18" rx="2"></rect>
+      <rect class="s fw" x="130" y="74" width="30" height="18" rx="2"></rect>
+      <rect class="s fw" x="200" y="74" width="30" height="18" rx="2"></rect>
+      <path class="s2" d="M40,124 h240 M40,128 h240"></path>
+      <rect class="s fy" x="68" y="120" width="12" height="12" rx="2"></rect>
+      <rect class="s fy" x="138" y="120" width="12" height="12" rx="2"></rect>
+      <rect class="s fy" x="208" y="120" width="12" height="12" rx="2"></rect>
+      <path class="s2" d="M74,132 v14 M144,132 v14 M214,132 v14"></path>
+      <rect class="s fw" x="59" y="146" width="30" height="18" rx="2"></rect>
+      <rect class="s fw" x="129" y="146" width="30" height="18" rx="2"></rect>
+      <rect class="s fw" x="199" y="146" width="30" height="18" rx="2"></rect>
+      <rect class="s fy" x="118" y="186" width="64" height="22" rx="3"></rect>
+      <rect class="s fw" x="40" y="228" width="30" height="18" rx="2"></rect>
+      <rect class="s fw" x="94" y="228" width="30" height="18" rx="2"></rect>
+      <rect class="s fw" x="148" y="228" width="30" height="18" rx="2"></rect>
+      <rect class="s fw" x="202" y="228" width="30" height="18" rx="2"></rect>
+      <path class="s2" d="M130,208 C120,216 90,224 62,228 M142,208 C138,216 118,224 110,228
+                          M152,208 C154,216 160,222 166,228 M166,208 C180,216 200,222 216,228"></path>
+    </g>
+    <text x="150" y="26" text-anchor="middle" class="red">10BASE5</text>
+    <text x="430" y="42" text-anchor="middle" class="sm">yo‘g‘on koaksial · 500 m</text>
+    <text x="430" y="62" text-anchor="middle" class="sm">transiver orqali ulanadi</text>
+    <text x="150" y="106" text-anchor="middle" class="red">10BASE2</text>
+    <text x="430" y="120" text-anchor="middle" class="sm">ingichka koaksial · 200 m</text>
+    <text x="430" y="140" text-anchor="middle" class="sm">BNC T-ulagich</text>
+    <text x="150" y="180" text-anchor="middle" class="red">10BASE-T</text>
+    <text x="430" y="188" text-anchor="middle" class="sm">juftlik CAT-5 · RJ-45 · 100 m</text>
+    <text x="430" y="208" text-anchor="middle" class="sm">yulduz · markazda hub</text>
+    <text x="430" y="228" text-anchor="middle" class="sm">oson quriladi, nosozlik topiladi</text>
+  </svg><p class="cap">3-rasm. Shina → yulduz: bitta uzilish endi hammani to‘xtatmaydi</p><table class="rot">
+    <tbody><tr><th>Nom</th><th>Tezlik</th><th>Muhit</th><th>Masofa</th></tr>
+    <tr><td>10BASE5</td><td>10 Mbit/s</td><td>yo‘g‘on koaksial</td><td>500 m</td></tr>
+    <tr><td>10BASE2</td><td>10 Mbit/s</td><td>ingichka koaksial</td><td>200 m</td></tr>
+    <tr><td>10BASE-T</td><td>10 Mbit/s</td><td>o‘ralgan juftlik</td><td>100 m</td></tr>
+  </tbody></table><h2>4. Hub</h2><svg class="sk" viewBox="0 0 600 190" role="img" aria-label="Hub fizik yulduz lekin mantiqiy shina">
+    <defs>
+      <filter id="r03-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="19" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a03-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r03-4)">
+      <rect class="s fy" x="100" y="70" width="60" height="24" rx="3"></rect>
+      <rect class="s fw" x="58" y="36" width="34" height="20" rx="2"></rect>
+      <rect class="s fw" x="168" y="36" width="34" height="20" rx="2"></rect>
+      <rect class="s fw" x="58" y="118" width="34" height="20" rx="2"></rect>
+      <rect class="s fw" x="168" y="118" width="34" height="20" rx="2"></rect>
+      <path class="s2" d="M120,70 C112,62 100,58 92,52 M140,70 C148,62 160,58 168,52
+                          M120,94 C112,104 100,112 92,120 M140,94 C148,104 160,112 168,120"></path>
+      <path class="sg" marker-end="url(#a03-4)" d="M250,90 h50"></path>
+      <path class="s" d="M330,90 h230"></path>
+      <rect class="s fw" x="350" y="36" width="34" height="20" rx="2"></rect>
+      <rect class="s fw" x="430" y="36" width="34" height="20" rx="2"></rect>
+      <rect class="s fw" x="390" y="118" width="34" height="20" rx="2"></rect>
+      <rect class="s fw" x="490" y="118" width="34" height="20" rx="2"></rect>
+      <path class="s2" d="M367,56 v34 M447,56 v34 M407,118 v-28 M507,118 v-28"></path>
+    </g>
+    <text x="130" y="14" text-anchor="middle" class="sm">hub — fizik qatlam</text>
+    <text x="445" y="20" text-anchor="middle" class="sm">bir vaqtda faqat bittasi uzatadi</text>
+    <text x="275" y="76" text-anchor="middle" class="sm">teng</text>
+    <text x="275" y="114" text-anchor="middle" class="sm">yarim dupleks</text>
+    <text x="130" y="180" text-anchor="middle" class="red">fizik: yulduz</text>
+    <text x="445" y="180" text-anchor="middle" class="red">mantiqiy: shina</text>
+  </svg><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>5. MDI/MDIX va kabel</h2><svg class="sk" viewBox="0 0 600 350" role="img" aria-label="Togri va kesishgan kabel">
+    <defs>
+      <filter id="r03-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="23" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r03-5)">
+      <rect class="s fw" x="60" y="50" width="30" height="130" rx="3"></rect>
+      <rect class="s fw" x="210" y="50" width="30" height="130" rx="3"></rect>
+      <path class="s2" d="M90,74 h120 M90,106 h120 M90,138 h120 M90,170 h120"></path>
+      <rect class="s fw" x="360" y="50" width="30" height="130" rx="3"></rect>
+      <rect class="s fw" x="510" y="50" width="30" height="130" rx="3"></rect>
+      <path class="sr" d="M390,74 C430,78 450,134 510,138 M390,106 C430,112 450,166 510,170"></path>
+      <path class="s2" d="M390,138 C430,134 450,78 510,74 M390,170 C430,164 450,112 510,106"></path>
+    </g>
+    <text x="150" y="30" text-anchor="middle" class="red">to‘g‘ri kabel</text>
+    <text x="50" y="79" text-anchor="middle" class="sm">1</text>
+    <text x="50" y="111" text-anchor="middle" class="sm">2</text>
+    <text x="50" y="143" text-anchor="middle" class="sm">3</text>
+    <text x="50" y="175" text-anchor="middle" class="sm">6</text>
+    <text x="250" y="79" text-anchor="middle" class="sm">1</text>
+    <text x="250" y="111" text-anchor="middle" class="sm">2</text>
+    <text x="250" y="143" text-anchor="middle" class="sm">3</text>
+    <text x="250" y="175" text-anchor="middle" class="sm">6</text>
+    <text x="150" y="206" text-anchor="middle" class="sm">MDI — MDIX</text>
+    <text x="150" y="230" text-anchor="middle" class="sm">PC — kommutator porti</text>
+    <text x="450" y="30" text-anchor="middle" class="red">kesishgan kabel</text>
+    <text x="350" y="79" text-anchor="middle" class="sm">1</text>
+    <text x="350" y="111" text-anchor="middle" class="sm">2</text>
+    <text x="350" y="143" text-anchor="middle" class="sm">3</text>
+    <text x="350" y="175" text-anchor="middle" class="sm">6</text>
+    <text x="550" y="79" text-anchor="middle" class="sm">3</text>
+    <text x="550" y="111" text-anchor="middle" class="sm">6</text>
+    <text x="550" y="143" text-anchor="middle" class="sm">1</text>
+    <text x="550" y="175" text-anchor="middle" class="sm">2</text>
+    <text x="450" y="206" text-anchor="middle" class="sm">MDI — MDI</text>
+    <text x="450" y="230" text-anchor="middle" class="sm">PC — PC · switch — switch</text>
+    <text x="300" y="276" text-anchor="middle" class="red">H3C kommutatorlarida auto MDI/MDIX</text>
+    <text x="300" y="308" text-anchor="middle" class="sm">juftlik: 8 tomir = 4 juft, uchida RJ-45</text>
+  </svg><p class="cap">4-rasm. Kesishganda 1–3 va 2–6 kontaktlar almashadi</p><table class="rot">
+    <tbody><tr><th>to‘g‘ri</th><td>MDI — MDIX</td><td>PC—switch, router—switch</td></tr>
+    <tr><th>kesishgan</th><td>MDI — MDI</td><td>PC—PC, switch—switch</td></tr>
+    <tr><th>auto</th><td>port o‘zi tanlaydi</td><td>kabel turi ahamiyatsiz</td></tr>
+  </tbody></table><ul class="tight">
+    <li><b>UTP</b> — arzon, o‘rnatish oson, himoya kuchsiz</li>
+    <li><b>STP</b> — metall ekran, qimmat, EMI dan himoya</li>
+    <li>kategoriya 3 · 4 · 5 · 5e · 6 — eng ko‘p <mark>CAT-5</mark></li>
+  </ul><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>6. CSMA/CD</h2><svg class="sk" viewBox="0 0 600 320" role="img" aria-label="CSMA/CD bosqichlari">
+    <defs>
+      <filter id="r03-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="29" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a03-6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+      <marker id="a03-7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r03-6)">
+      <path class="s" d="M40,48 h520"></path>
+      <rect class="s fw" x="120" y="56" width="36" height="20" rx="2"></rect>
+      <rect class="s fw" x="282" y="56" width="36" height="20" rx="2"></rect>
+      <rect class="s fw" x="444" y="56" width="36" height="20" rx="2"></rect>
+      <path class="s2" d="M138,56 v-8 M300,56 v-8 M462,56 v-8"></path>
+      <path class="dash" d="M166,50 a14,14 0 0,1 0,18 M176,44 a22,22 0 0,1 0,30"></path>
+      <path class="s" d="M40,122 h520"></path>
+      <rect class="s fw" x="60" y="130" width="36" height="20" rx="2"></rect>
+      <rect class="s fw" x="480" y="130" width="36" height="20" rx="2"></rect>
+      <path class="s2" d="M78,130 v-8 M498,130 v-8"></path>
+      <path class="s2" marker-end="url(#a03-6)" d="M100,122 h160"></path>
+      <path class="s2" marker-end="url(#a03-6)" d="M476,122 h-160"></path>
+      <path class="sr" d="M284,108 l28,28 M312,108 l-28,28 M298,102 v40 M278,122 h40"></path>
+      <path class="s" d="M40,196 h520"></path>
+      <rect class="s fw" x="60" y="204" width="36" height="20" rx="2"></rect>
+      <rect class="s fw" x="480" y="204" width="36" height="20" rx="2"></rect>
+      <path class="s2" d="M78,204 v-8 M498,204 v-8"></path>
+      <path class="sr" d="M268,186 a14,14 0 0,0 0,20 M254,180 a22,22 0 0,0 0,32
+                          M332,186 a14,14 0 0,1 0,20 M346,180 a22,22 0 0,1 0,32"></path>
+      <path class="s" d="M40,272 h520"></path>
+      <rect class="s fw" x="60" y="280" width="36" height="20" rx="2"></rect>
+      <rect class="s fw" x="480" y="280" width="36" height="20" rx="2"></rect>
+      <path class="s2" d="M78,280 v-8 M498,280 v-8"></path>
+      <path class="sg" marker-end="url(#a03-7)" d="M100,272 h170"></path>
+    </g>
+    <text x="300" y="26" text-anchor="middle" class="red">1) tinglash — kanal bo‘shmi?</text>
+    <text x="300" y="100" text-anchor="middle" class="red">2) ikkitasi birdan yuboradi — to‘qnashuv</text>
+    <text x="300" y="174" text-anchor="middle" class="red">3) to‘xtatadi va jam signali</text>
+    <text x="300" y="250" text-anchor="middle" class="red">4) tasodifiy backoff</text>
+    <text x="78" y="294" text-anchor="middle" class="sm">3</text>
+    <text x="498" y="294" text-anchor="middle" class="sm">7</text>
+    <text x="300" y="316" text-anchor="middle" class="sm">kichik backoff — birinchi yuboradi</text>
+  </svg><p class="cap">5-rasm. Eshit → yubor → to‘qnashuvni sez → kut → qayta yubor</p><h2>7. Kolliziya domeni</h2><svg class="sk" viewBox="0 0 600 180" role="img" aria-label="Repeaterlar bilan kengaytirish va kolliziya domeni">
+    <defs>
+      <filter id="r03-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="31" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r03-8)">
+      <ellipse class="dash" cx="290" cy="79" rx="268" ry="54"></ellipse>
+      <path class="s" d="M40,79 h70 M140,79 h70 M240,79 h70 M340,79 h70 M440,79 h70"></path>
+      <rect class="s fy" x="110" y="70" width="30" height="18" rx="3"></rect>
+      <rect class="s fy" x="210" y="70" width="30" height="18" rx="3"></rect>
+      <rect class="s fy" x="310" y="70" width="30" height="18" rx="3"></rect>
+      <rect class="s fy" x="410" y="70" width="30" height="18" rx="3"></rect>
+      <rect class="s fw" x="58" y="100" width="34" height="18" rx="2"></rect>
+      <rect class="s fw" x="258" y="100" width="34" height="18" rx="2"></rect>
+      <rect class="s fw" x="458" y="100" width="34" height="18" rx="2"></rect>
+      <path class="s2" d="M75,100 v-21 M275,100 v-21 M475,100 v-21"></path>
+    </g>
+    <text x="290" y="22" text-anchor="middle" class="red">5-4-3: 5 segment · 4 repeater · 3 ta host uchun</text>
+    <text x="290" y="150" text-anchor="middle" class="sm">hammasi bitta kolliziya domeni</text>
+    <text x="290" y="172" text-anchor="middle" class="sm">tavsiya: domenda 50 tagacha stansiya</text>
+  </svg><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>8. MAC adres · unicast va broadcast</h2><svg class="sk" viewBox="0 0 600 280" role="img" aria-label="MAC adres tuzilishi va kadr turlari">
+    <defs>
+      <filter id="r03-9" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="37" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r03-9)">
+      <rect class="s fb" x="80" y="40" width="200" height="32" rx="2"></rect>
+      <rect class="s fy" x="280" y="40" width="200" height="32" rx="2"></rect>
+      <path class="s" d="M30,196 h250"></path>
+      <rect class="s fw" x="40" y="210" width="52" height="24" rx="2"></rect>
+      <rect class="s fw" x="130" y="210" width="52" height="24" rx="2"></rect>
+      <rect class="s fw" x="220" y="210" width="52" height="24" rx="2"></rect>
+      <path class="s2" d="M66,210 v-14 M156,210 v-14 M246,210 v-14"></path>
+      <rect class="s fy" x="34" y="182" width="40" height="12" rx="2"></rect>
+      <path class="sr" d="M52,244 l14,12 M66,244 l-14,12 M226,244 l14,12 M240,244 l-14,12"></path>
+      <path class="sg" d="M146,250 l8,8 l16,-18"></path>
+      <path class="s" d="M330,196 h250"></path>
+      <rect class="s fw" x="340" y="210" width="52" height="24" rx="2"></rect>
+      <rect class="s fw" x="430" y="210" width="52" height="24" rx="2"></rect>
+      <rect class="s fw" x="520" y="210" width="52" height="24" rx="2"></rect>
+      <path class="s2" d="M366,210 v-14 M456,210 v-14 M546,210 v-14"></path>
+      <rect class="s fy" x="334" y="182" width="40" height="12" rx="2"></rect>
+      <path class="sg" d="M356,250 l8,8 l16,-18 M446,250 l8,8 l16,-18 M536,250 l8,8 l16,-18"></path>
+    </g>
+    <text x="280" y="26" text-anchor="middle" class="red">MAC = 48 bit = 12 o‘n oltilik raqam</text>
+    <text x="180" y="62" text-anchor="middle" class="sm">24 bit OUI</text>
+    <text x="380" y="62" text-anchor="middle" class="sm">24 bit EUI</text>
+    <text x="180" y="92" text-anchor="middle" class="sm">00-E0-FC</text>
+    <text x="380" y="92" text-anchor="middle" class="sm">01-23-45</text>
+    <text x="180" y="114" text-anchor="middle" class="sm">IEEE beradi</text>
+    <text x="380" y="114" text-anchor="middle" class="sm">vendor beradi</text>
+    <text x="300" y="140" text-anchor="middle" class="sm">ROM ichida, har karta uchun yagona</text>
+    <text x="150" y="168" text-anchor="middle" class="red">unicast — bitta hostga</text>
+    <text x="450" y="168" text-anchor="middle" class="red">broadcast — hammaga</text>
+    <text x="150" y="272" text-anchor="middle" class="sm">DMAC mos kelsa — qabul, aks holda tashlanadi</text>
+    <text x="450" y="272" text-anchor="middle" class="sm">FFFF.FFFF.FFFF</text>
+  </svg><p class="cap">6-rasm. OUI — IEEE, EUI — ishlab chiqaruvchi</p><h2>9. Tez Ethernet</h2><table class="rot">
+    <tbody><tr><th>Nom</th><th>Muhit</th><th>Masofa</th><th>Standart</th></tr>
+    <tr><td>100BASE-TX</td><td>2 juft CAT-5</td><td>100 m</td><td>802.3u</td></tr>
+    <tr><td>100BASE-FX</td><td>ko‘p modli optika</td><td>2000 m</td><td>802.3u</td></tr>
+    <tr><td>1000BASE-SX</td><td>ko‘p modli optika</td><td>275 / 550 m</td><td>802.3z</td></tr>
+    <tr><td>1000BASE-LX</td><td>bir modli optika</td><td>550 / 5000 m</td><td>802.3z</td></tr>
+    <tr><td>1000BASE-T</td><td>4 juft CAT-5</td><td>100 m</td><td>802.3ab</td></tr>
+  </tbody></table><div class="pg-num">— 5 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>10. Hub va kommutator</h2><svg class="sk" viewBox="0 0 600 200" role="img" aria-label="Hub va kommutatorda kolliziya domenlari">
+    <defs>
+      <filter id="r03-10" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="41" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r03-10)">
+      <ellipse class="dash" cx="128" cy="96" rx="118" ry="62"></ellipse>
+      <rect class="s fy" x="100" y="86" width="56" height="22" rx="3"></rect>
+      <rect class="s fw" x="40" y="44" width="34" height="18" rx="2"></rect>
+      <rect class="s fw" x="180" y="44" width="34" height="18" rx="2"></rect>
+      <rect class="s fw" x="40" y="134" width="34" height="18" rx="2"></rect>
+      <rect class="s fw" x="180" y="134" width="34" height="18" rx="2"></rect>
+      <path class="s2" d="M114,86 C104,76 84,66 74,62 M142,86 C152,76 172,66 182,62
+                          M114,108 C104,120 84,128 74,134 M142,108 C152,120 172,128 182,134"></path>
+      <circle class="dash" cx="357" cy="53" r="30"></circle>
+      <circle class="dash" cx="497" cy="53" r="30"></circle>
+      <circle class="dash" cx="357" cy="143" r="30"></circle>
+      <circle class="dash" cx="497" cy="143" r="30"></circle>
+      <rect class="s fy" x="400" y="86" width="56" height="22" rx="3"></rect>
+      <rect class="s fw" x="340" y="44" width="34" height="18" rx="2"></rect>
+      <rect class="s fw" x="480" y="44" width="34" height="18" rx="2"></rect>
+      <rect class="s fw" x="340" y="134" width="34" height="18" rx="2"></rect>
+      <rect class="s fw" x="480" y="134" width="34" height="18" rx="2"></rect>
+      <path class="s2" d="M414,86 C404,76 384,66 374,62 M442,86 C452,76 472,66 482,62
+                          M414,108 C404,120 384,128 374,134 M442,108 C452,120 472,128 482,134"></path>
+    </g>
+    <text x="128" y="14" text-anchor="middle" class="sm">hub — signalni takrorlaydi</text>
+    <text x="428" y="14" text-anchor="middle" class="sm">switch — kadrni saqlab uzatadi</text>
+    <text x="128" y="194" text-anchor="middle" class="red">1 kolliziya domeni</text>
+    <text x="428" y="194" text-anchor="middle" class="red">har port — alohida domen</text>
+  </svg><h2>11. WLAN — 802.11</h2><svg class="sk" viewBox="0 0 600 185" role="img" aria-label="2,4 GHz kanallar va CSMA/CA">
+    <defs>
+      <filter id="r03-11" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="43" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r03-11)">
+      <path class="s" d="M30,92 h540"></path>
+      <path class="dash" d="M68,92 q30,-42 60,0 M106,92 q30,-42 60,0 M144,92 q30,-42 60,0
+                            M182,92 q30,-42 60,0 M258,92 q30,-42 60,0 M296,92 q30,-42 60,0
+                            M334,92 q30,-42 60,0 M372,92 q30,-42 60,0 M448,92 q30,-42 60,0
+                            M486,92 q30,-42 60,0"></path>
+      <path class="sr fy" d="M30,92 q30,-46 60,0 z"></path>
+      <path class="sr fy" d="M220,92 q30,-46 60,0 z"></path>
+      <path class="sr fy" d="M410,92 q30,-46 60,0 z"></path>
+    </g>
+    <text x="300" y="24" text-anchor="middle" class="red">2,4 GHz · 13 kanal · har biri 22 MHz</text>
+    <text x="60" y="112" text-anchor="middle" class="sm">1</text>
+    <text x="250" y="112" text-anchor="middle" class="sm">6</text>
+    <text x="440" y="112" text-anchor="middle" class="sm">11</text>
+    <text x="300" y="136" text-anchor="middle" class="grn">kesishmaydigan kanallar: 1 · 6 · 11</text>
+    <text x="300" y="162" text-anchor="middle" class="red">CSMA/CA — to‘qnashuvdan qochish</text>
+    <text x="300" y="182" text-anchor="middle" class="sm">DIFS + tasodifiy backoff + MAC ACK</text>
+  </svg><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>LAN = OSI ning fizik va kanal qatlami; kanal = LLC + MAC</li>
+      <li>Ethernet — 802.3, bugungi kunda yagona hukmron</li>
+      <li>CSMA/CD: eshit · yubor · sez · kut · qayta yubor</li>
+      <li>MAC — 48 bit; broadcast FFFF.FFFF.FFFF</li>
+      <li>Switch har portni alohida kolliziya domeniga ajratadi</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>10BASE-T masofasi? <span class="ans">— 100 m</span></li>
+    <li>MAC uzunligi va bo‘linishi? <span class="ans">— 48 bit = OUI 24 + EUI 24</span></li>
+    <li>WLAN da kesishmaydigan kanallar? <span class="ans">— 1, 6, 11</span></li>
+  </ol><div class="pg-num">— 6 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+
+<!-- ================= 6-sahifa ================= -->
+
+</body>
+</html>

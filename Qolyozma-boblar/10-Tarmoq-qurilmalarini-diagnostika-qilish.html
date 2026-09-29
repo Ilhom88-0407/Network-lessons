@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>10-bob · Tarmoq qurilmalarini diagnostika qilish</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">10-bob</div><h1 class="title">Tarmoq qurilmalarini diagnostika qilish
+    <small>Basic Network Device Debugging</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>ping</b> — ICMP echo bilan ulanish borligini tekshiradi</li>
+      <li><b>tracert</b> — paket o‘tgan routerlar yo‘lini ko‘rsatadi</li>
+      <li><b>TTL</b> — paket umri, har bir routerda 1 ga kamayadi</li>
+      <li><b>debugging</b> — tizim ishini batafsil kuzatish rejimi</li>
+    </ul>
+  </div><h2>1. ping — ulanishni tekshirish</h2><p class="tight"><mark>ICMP</mark> ustida ishlaydi: manba <b>echo request</b>, manzil <b>echo reply</b>.</p><ul class="tight">
+    <li>javob keldi — manzilning <b>IP qatlami</b> ishlayapti</li>
+    <li>javob yo‘q — <b>destination unreachable</b> yoki <b>timeout</b></li>
+  </ul><svg class="sk" viewBox="0 0 620 225" role="img" aria-label="Ping ishlash sxemasi">
+    <defs>
+      <filter id="r10-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+      <marker id="a10-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+      <marker id="a10-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r10-1)">
+      <rect class="s fy" x="30" y="95" width="72" height="36" rx="5"></rect>
+      <rect class="s fy" x="274" y="95" width="72" height="36" rx="5"></rect>
+      <rect class="s fy" x="518" y="95" width="72" height="36" rx="5"></rect>
+      <path class="s2" d="M102,113 h172 M346,113 h172"></path>
+      <path class="sg" marker-end="url(#a10-1)" d="M110,70 h400"></path>
+      <path class="sr" marker-end="url(#a10-2)" d="M510,158 h-400"></path>
+      <path class="s2" d="M554,131 v16"></path>
+    </g>
+    <text x="66" y="119" text-anchor="middle">RTA</text>
+    <text x="310" y="119" text-anchor="middle">RTB</text>
+    <text x="554" y="119" text-anchor="middle">RTC</text>
+    <text x="310" y="62" text-anchor="middle" class="grn">echo request</text>
+    <text x="310" y="184" text-anchor="middle" class="red">echo reply</text>
+    <text x="66" y="85" text-anchor="middle" class="red">ping 192.168.3.1</text>
+    <text x="140" y="106" text-anchor="middle" class="sm">192.168.1.1</text>
+    <text x="234" y="106" text-anchor="middle" class="sm">192.168.1.2</text>
+    <text x="386" y="106" text-anchor="middle" class="sm">192.168.2.1</text>
+    <text x="480" y="106" text-anchor="middle" class="sm">192.168.2.2</text>
+    <text x="554" y="166" text-anchor="middle" class="sm">192.168.3.1</text>
+  </svg><p class="cap">1-rasm. RTA → RTC: so‘rov ketadi, javob qaytadi</p><svg class="sk" viewBox="0 0 620 150" role="img" aria-label="ICMP echo request va echo reply">
+    <defs>
+      <filter id="r10-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="17" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r10-2)">
+      <rect class="s fw" x="40" y="42" width="250" height="38" rx="3"></rect>
+      <path class="s2" d="M130,42 v38"></path>
+      <rect class="s fw" x="330" y="42" width="250" height="38" rx="3"></rect>
+      <path class="s2" d="M420,42 v38"></path>
+      <path class="s fy" d="M130,42 h160 v38 h-160 z"></path>
+      <path class="s fg" d="M420,42 h160 v38 h-160 z"></path>
+    </g>
+    <text x="85" y="66" text-anchor="middle" class="sm">IP sarlavha</text>
+    <text x="210" y="66" text-anchor="middle" class="sm">echo request</text>
+    <text x="375" y="66" text-anchor="middle" class="sm">IP sarlavha</text>
+    <text x="500" y="66" text-anchor="middle" class="sm">echo reply</text>
+    <text x="165" y="30" text-anchor="middle" class="red">so‘rov</text>
+    <text x="455" y="30" text-anchor="middle" class="grn">javob</text>
+    <text x="310" y="130" text-anchor="middle" class="sm">ICMP — IP ichida, protocol = 1</text>
+  </svg><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>2. ping natijasini o‘qish</h2><svg class="sk" viewBox="0 0 620 210" role="img" aria-label="Ping buyrugining natijasi">
+    <defs>
+      <filter id="r10-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="3" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r10-3)">
+      <rect class="s fw" x="16" y="16" width="300" height="178" rx="6"></rect>
+      <path class="s2" d="M30,98 h270"></path>
+      <path class="dash" d="M330,30 v150"></path>
+    </g>
+    <text x="30" y="44" class="sm">[RTA]ping 192.168.3.1</text>
+    <text x="30" y="68" class="sm">56 bytes from 192.168.3.1:</text>
+    <text x="30" y="88" class="sm">icmp_seq=0 ttl=64 time=1.8 ms</text>
+    <text x="30" y="122" class="sm">5 packets transmitted,</text>
+    <text x="30" y="144" class="sm">5 packets received,</text>
+    <text x="30" y="166" class="sm">0.0% packet loss</text>
+    <text x="30" y="188" class="sm">min/avg/max = 0.9/1.4/1.8 ms</text>
+    <text x="350" y="44" class="red">icmp_seq — tartib raqami</text>
+    <text x="350" y="76">ttl — qolgan hop zaxirasi</text>
+    <text x="350" y="108">time — borib-kelish vaqti</text>
+    <text x="350" y="140" class="red">packet loss — yo‘qotish %</text>
+    <text x="350" y="176" class="sm">sukut bo‘yicha 5 ta so‘rov</text>
+  </svg><p class="cap">2-rasm. Har satr — bitta javob, oxirida statistika</p><h2>3. ping kalitlari</h2><table class="rot">
+    <tbody><tr><th>-c</th><td>so‘rov soni · 5</td><th>-s</th><td>uzunlik · 56 bayt</td></tr>
+    <tr><th>-t</th><td>timeout · 2000 ms</td><th>-h</th><td>TTL · 255</td></tr>
+    <tr><th>-m</th><td>interval · 200 ms</td><th>-a</th><td>manba IP</td></tr>
+  </tbody></table><p class="tight"><b>-f</b> — bo‘lakka bo‘lmaslik (MTU sinovi) · <b>-q</b> — faqat statistika</p><h2>4. tracert — yo‘lni ko‘rish</h2><svg class="sk" viewBox="0 0 620 275" role="img" aria-label="Tracert ishlash sxemasi">
+    <defs>
+      <filter id="r10-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="11" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a10-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+      <marker id="a10-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r10-4)">
+      <rect class="s fy" x="30" y="60" width="64" height="30" rx="4"></rect>
+      <rect class="s fy" x="270" y="60" width="64" height="30" rx="4"></rect>
+      <rect class="s fy" x="510" y="60" width="64" height="30" rx="4"></rect>
+      <path class="s2" d="M94,75 h176 M334,75 h176"></path>
+      <path class="sg" marker-end="url(#a10-3)" d="M100,48 h164"></path>
+      <path class="sr" marker-end="url(#a10-4)" d="M264,102 h-164"></path>
+      <rect class="s fy" x="30" y="200" width="64" height="30" rx="4"></rect>
+      <rect class="s fy" x="270" y="200" width="64" height="30" rx="4"></rect>
+      <rect class="s fy" x="510" y="200" width="64" height="30" rx="4"></rect>
+      <path class="s2" d="M94,215 h176 M334,215 h176"></path>
+      <path class="sg" marker-end="url(#a10-3)" d="M100,188 h404"></path>
+      <path class="sr" marker-end="url(#a10-4)" d="M504,242 h-404"></path>
+    </g>
+    <text x="10" y="26" class="red">1-qadam</text>
+    <text x="62" y="80" text-anchor="middle">RTA</text>
+    <text x="302" y="80" text-anchor="middle">RTB</text>
+    <text x="542" y="80" text-anchor="middle">RTC</text>
+    <text x="182" y="40" text-anchor="middle" class="grn">UDP · TTL=1</text>
+    <text x="182" y="120" text-anchor="middle" class="red">TTL exceeded (type 11)</text>
+    <text x="10" y="166" class="red">2-qadam</text>
+    <text x="62" y="220" text-anchor="middle">RTA</text>
+    <text x="302" y="220" text-anchor="middle">RTB</text>
+    <text x="542" y="220" text-anchor="middle">RTC</text>
+    <text x="300" y="180" text-anchor="middle" class="grn">UDP · TTL=2</text>
+    <text x="300" y="260" text-anchor="middle" class="red">port unreachable — manzil topildi</text>
+  </svg><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>5. tracert mexanizmi</h2><ul class="tight">
+    <li>TTL <b>1</b> dan boshlanadi va har so‘rovda <b>1 ga oshadi</b></li>
+    <li>har router TTL ni 1 ga kamaytiradi; <b>0</b> bo‘lsa — <b>TTL exceeded</b></li>
+    <li>manzilga yetsa — <b>port unreachable</b>, izlash to‘xtaydi</li>
+    <li>shu yo‘l bilan <mark>har hopning IP manzili</mark> aniqlanadi</li>
+  </ul><svg class="sk" viewBox="0 0 620 155" role="img" aria-label="TTL qiymatining kamayishi">
+    <defs>
+      <filter id="r10-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="5" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r10-5)">
+      <rect class="s fw" x="20" y="76" width="54" height="30" rx="4"></rect>
+      <rect class="s fy" x="170" y="76" width="54" height="30" rx="4"></rect>
+      <rect class="s fy" x="320" y="76" width="54" height="30" rx="4"></rect>
+      <rect class="s fw" x="470" y="76" width="54" height="30" rx="4"></rect>
+      <path class="s2" d="M74,91 h96 M224,91 h96 M374,91 h96"></path>
+      <path class="sr" d="M112,81 l10,-10 M262,81 l10,-10 M412,81 l10,-10"></path>
+    </g>
+    <text x="47" y="96" text-anchor="middle">RTA</text>
+    <text x="197" y="96" text-anchor="middle">R1</text>
+    <text x="347" y="96" text-anchor="middle">R2</text>
+    <text x="497" y="96" text-anchor="middle">RTC</text>
+    <text x="122" y="64" text-anchor="middle" class="sm">3 → 2</text>
+    <text x="272" y="64" text-anchor="middle" class="sm">2 → 1</text>
+    <text x="422" y="64" text-anchor="middle" class="sm">1 → 0</text>
+    <text x="310" y="28" text-anchor="middle" class="red">TTL = 0 bo‘lgan joy o‘zini bildiradi</text>
+    <text x="310" y="140" text-anchor="middle" class="sm">har hop TTL ni 1 ga kamaytiradi</text>
+  </svg><svg class="sk" viewBox="0 0 620 210" role="img" aria-label="Tracert natijasi">
+    <defs>
+      <filter id="r10-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="13" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r10-6)">
+      <rect class="s fw" x="16" y="14" width="330" height="182" rx="6"></rect>
+      <path class="dash" d="M366,24 v164"></path>
+    </g>
+    <text x="30" y="46" class="sm">[RTA]tracert 192.168.3.1</text>
+    <text x="30" y="74" class="sm">30 hops at most, 52 bytes</text>
+    <text x="30" y="110" class="sm">1  192.168.1.2  0.69 0.50 0.49 ms</text>
+    <text x="30" y="144" class="sm">2  192.168.3.1  1.00 0.90 0.90 ms</text>
+    <text x="30" y="180" class="sm">* — javob kelmadi</text>
+    <text x="386" y="52" class="red">1-hop = RTB</text>
+    <text x="386" y="92">2-hop = manzil</text>
+    <text x="386" y="136" class="sm">har hopga 3 ta sinov</text>
+    <text x="386" y="176" class="sm">uchta vaqt — uch urinish</text>
+  </svg><p class="cap">3-rasm. Yo‘ldagi har tugun bir satr bo‘lib chiqadi</p><table class="rot">
+    <tbody><tr><th>-f</th><td>boshlang‘ich TTL · 1</td><th>-m</th><td>maks TTL · 30</td></tr>
+    <tr><th>-q</th><td>sinov soni · 3</td><th>-p</th><td>UDP port · 33434</td></tr>
+    <tr><th>-w</th><td>timeout · 5000 ms</td><th>-a</th><td>manba IP</td></tr>
+  </tbody></table><h2>6. Tizim diagnostikasi (debugging)</h2><p class="tight">Ko‘p protokol va modullar o‘z diagnostika ma’lumotini beradi. Chiqishni
+    <mark>ikki kalit</mark> boshqaradi.</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 580 230" role="img" aria-label="Ikki kalit: protokol va ekran">
+    <defs>
+      <filter id="r10-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="21" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r10-7)">
+      <rect class="s fb" x="16" y="92" width="104" height="52" rx="6"></rect>
+      <path class="s2" d="M120,118 h30 M212,118 h88 M362,118 h78"></path>
+      <circle class="s fw" cx="150" cy="118" r="6"></circle>
+      <circle class="s fw" cx="212" cy="118" r="6"></circle>
+      <path class="sg" d="M150,118 L212,110"></path>
+      <circle class="s fw" cx="300" cy="118" r="6"></circle>
+      <circle class="s fw" cx="362" cy="118" r="6"></circle>
+      <path class="sg" d="M300,118 L362,110"></path>
+      <rect class="s fw" x="440" y="86" width="94" height="62" rx="5"></rect>
+      <rect class="s fy" x="448" y="94" width="78" height="46" rx="3"></rect>
+      <path class="s2" d="M487,148 v10 M470,158 h34"></path>
+    </g>
+    <text x="68" y="114" text-anchor="middle" class="sm">debug</text>
+    <text x="68" y="134" text-anchor="middle" class="sm">ma’lumot</text>
+    <text x="181" y="146" text-anchor="middle" class="grn">ON</text>
+    <text x="331" y="146" text-anchor="middle" class="grn">ON</text>
+    <text x="181" y="172" text-anchor="middle">protokol debug kaliti</text>
+    <text x="331" y="68" text-anchor="middle">ekran chiqish kaliti</text>
+    <text x="487" y="186" text-anchor="middle" class="sm">terminal</text>
+    <text x="290" y="214" text-anchor="middle" class="red">ikkisi ham ON → ekranda ko‘rinadi</text>
+  </svg><table class="rot">
+    <tbody><tr><th>protokol kaliti</th><th>ekran kaliti</th><th>natija</th></tr>
+    <tr><td>OFF</td><td>ON</td><td>chiqmaydi</td></tr>
+    <tr><td>ON</td><td>OFF</td><td>chiqmaydi</td></tr>
+    <tr><td>ON</td><td>ON</td><td>chiqadi</td></tr>
+  </tbody></table><h2>7. Buyruqlar</h2><table class="rot">
+    <tbody><tr><th>terminal monitor</th><td>konsol monitoringi (sukutda yoniq)</td></tr>
+    <tr><th>terminal debugging</th><td>shu terminalga chiqarish</td></tr>
+    <tr><th>debugging modul</th><td>modul kaliti, masalan debugging ip packet</td></tr>
+    <tr><th>display debugging</th><td>yoqilganlar ro‘yxati</td></tr>
+  </tbody></table><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>8. debugging ip packet natijasi</h2><svg class="sk" viewBox="0 0 400 195" role="img" aria-label="Debug natijasining uch qismi">
+    <defs>
+      <filter id="r10-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="31" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r10-8)">
+      <path class="dash" d="M70,30 v130"></path>
+      <circle class="s fy" cx="70" cy="45" r="12"></circle>
+      <circle class="s fy" cx="70" cy="100" r="12"></circle>
+      <circle class="s fy" cx="70" cy="155" r="12"></circle>
+      <path class="s2" d="M84,45 h10 M84,100 h10 M84,155 h10"></path>
+    </g>
+    <text x="70" y="50" text-anchor="middle" class="sm">1</text>
+    <text x="70" y="105" text-anchor="middle" class="sm">2</text>
+    <text x="70" y="160" text-anchor="middle" class="sm">3</text>
+    <text x="106" y="40" class="red">Sending — lokaldan chiqdi</text>
+    <text x="106" y="62" class="sm">Serial6/0 · protocol = 1 · ttl = 255</text>
+    <text x="106" y="95" class="red">Receiving — interfeysdan keldi</text>
+    <text x="106" y="117" class="sm">manba 192.168.1.2 — bu javob</text>
+    <text x="106" y="150" class="red">Delivering — yuqori qatlamga</text>
+    <text x="106" y="172" class="sm">Reply from 192.168.1.2 · time = 26 ms</text>
+  </svg><p class="cap">4-rasm. Bitta ping uchta qayd beradi: chiqish · kelish · yetkazish</p><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>ping = ICMP echo request + echo reply</li>
+      <li>ping standarti: 5 so‘rov · 56 bayt · timeout 2000 ms</li>
+      <li>tracert = TTL ni oshirib borish; TTL exceeded → har hop bilinadi</li>
+      <li>tracert standarti: maks TTL 30 · 3 sinov · UDP 33434</li>
+      <li>debug chiqishi: protokol kaliti <b>va</b> ekran kaliti — ikkisi ham kerak</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>ping qaysi protokolda? <span class="ans">— ICMP (protocol 1)</span></li>
+    <li>tracert nimadan foydalanadi? <span class="ans">— TTL tugashi</span></li>
+    <li>tracert maks TTL sukutda? <span class="ans">— 30</span></li>
+    <li>Oraliq router nima qaytaradi? <span class="ans">— TTL exceeded, type 11</span></li>
+    <li>debug ko‘rinishi uchun nima kerak? <span class="ans">— ikki kalit ON</span></li>
+  </ol><div class="pg-num">— 5 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+</body>
+</html>

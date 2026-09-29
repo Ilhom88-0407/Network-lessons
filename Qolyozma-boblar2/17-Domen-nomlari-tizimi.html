@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>17-bob · Domen nomlari tizimi</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">17-bob</div><h1 class="title">Domen nomlari tizimi
+    <small>DNS — Domain Name System</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>Domen nomi</b> — xostning odam o‘qiydigan ierarxik nomi</li>
+      <li><b>FQDN</b> — ildizgacha to‘liq yozilgan nom, nuqta bilan tugaydi</li>
+      <li><b>DNS server</b> — nomni IP manzilga aylantirib beradi</li>
+      <li><b>Zona</b> — bitta server javob beradigan nom fazosi bo‘lagi</li>
+      <li><b>Rekursiv so‘rov</b> — server javobni o‘zi topib beradi</li>
+    </ul>
+  </div><h2>1. Nega nom kerak?</h2><p class="tight">IP manzil raqam — esda qolmaydi. Nom <mark>odam uchun</mark>, IP <mark class="g">mashina uchun</mark>.</p><svg class="sk" viewBox="-60 0 720 230" role="img" aria-label="hosts.txt fayl va uning muammosi">
+    <defs>
+      <filter id="r17-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r17-1)">
+      <rect class="s fw" x="40" y="50" width="90" height="40" rx="3"></rect>
+      <rect class="s fw" x="160" y="50" width="90" height="40" rx="3"></rect>
+      <rect class="s fw" x="280" y="50" width="90" height="40" rx="3"></rect>
+      <path class="s fb" d="M440,80 C430,58 466,44 484,60 C498,38 540,44 545,66 C568,62 576,90 556,100 C546,118 466,120 453,106 C436,102 430,88 440,80 Z"></path>
+      <path class="s2" d="M50,90 v42 M170,90 v42 M290,90 v42 M44,132 h398 C452,126 452,116 452,108"></path>
+      <rect class="s fw" x="60" y="140" width="200" height="80" rx="3"></rect>
+      <path class="s2" d="M60,152 h200"></path>
+      <path class="sr" d="M272,170 l22,20 M294,170 l-22,20"></path>
+    </g>
+    <text x="300" y="22" text-anchor="middle" class="red">IP raqamlarini eslab qolish qiyin</text>
+    <text x="85" y="76" text-anchor="middle">Sun</text>
+    <text x="205" y="76" text-anchor="middle">Moon</text>
+    <text x="325" y="76" text-anchor="middle">Earth</text>
+    <text x="85" y="110" text-anchor="middle" class="sm">1.1.1.1</text>
+    <text x="205" y="110" text-anchor="middle" class="sm">1.1.1.3</text>
+    <text x="325" y="110" text-anchor="middle" class="sm">1.1.1.4</text>
+    <text x="498" y="90" text-anchor="middle">Internet</text>
+    <text x="160" y="166" text-anchor="middle" class="red">hosts.txt</text>
+    <text x="160" y="190" text-anchor="middle" class="sm">Sun → 1.1.1.1</text>
+    <text x="160" y="210" text-anchor="middle" class="sm">Moon → 1.1.1.3</text>
+    <text x="438" y="164" text-anchor="middle" class="sm">har xostda o‘z nusxasi, qo‘lda</text>
+    <text x="424" y="206" text-anchor="middle" class="sm">fayl o‘sdi → sinxronlash imkonsiz</text>
+  </svg><p class="cap">1-rasm. Lokal hosts.txt — 1980-yillarda tugagan yo‘l</p><ul class="tight">
+    <li><b>vazifa</b> — nom ↔ IP tarjimasi</li>
+    <li><b>ish tartibi</b> — klient–server, <mark>UDP/TCP port 53</mark></li>
+    <li><b>tuzilma</b> — daraxtsimon taqsimlangan baza</li>
+  </ul><svg class="sk" viewBox="-60 0 720 200" role="img" aria-label="Markazlashgan va taqsimlangan DNS">
+    <defs>
+      <filter id="r17-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="17" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r17-2)">
+      <rect class="s fw" x="60" y="60" width="80" height="44" rx="4"></rect>
+      <path class="s2" d="M70,72 h60 M70,84 h60 M70,96 h60"></path>
+      <rect class="s fw" x="20" y="130" width="36" height="20" rx="2"></rect>
+      <rect class="s fw" x="82" y="130" width="36" height="20" rx="2"></rect>
+      <rect class="s fw" x="144" y="130" width="36" height="20" rx="2"></rect>
+      <path class="s2" d="M38,130 C60,120 80,110 90,106 M100,130 v-24 M162,130 C140,120 120,110 110,106"></path>
+      <path class="sr" d="M66,64 l68,36 M134,64 l-68,36"></path>
+      <rect class="s fy" x="400" y="44" width="60" height="26" rx="3"></rect>
+      <rect class="s fy" x="330" y="96" width="60" height="26" rx="3"></rect>
+      <rect class="s fy" x="410" y="96" width="60" height="26" rx="3"></rect>
+      <rect class="s fy" x="490" y="96" width="60" height="26" rx="3"></rect>
+      <rect class="s fw" x="350" y="146" width="54" height="24" rx="3"></rect>
+      <rect class="s fw" x="440" y="146" width="54" height="24" rx="3"></rect>
+      <path class="s2" d="M420,70 C400,80 380,88 362,94 M430,70 v24 M442,70 C470,80 495,88 516,94
+                          M360,122 v22 M370,122 C400,132 440,140 462,144"></path>
+    </g>
+    <text x="100" y="40" text-anchor="middle" class="red">markazlashgan</text>
+    <text x="100" y="178" text-anchor="middle" class="sm">nosozlik nuqtasi · sekin</text>
+    <text x="470" y="30" text-anchor="middle" class="grn">taqsimlangan daraxt</text>
+    <text x="430" y="62" text-anchor="middle" class="sm">root</text>
+    <text x="360" y="114" text-anchor="middle" class="sm">com</text>
+    <text x="440" y="114" text-anchor="middle" class="sm">cn</text>
+    <text x="520" y="114" text-anchor="middle" class="sm">org</text>
+    <text x="377" y="162" text-anchor="middle" class="sm">h3c</text>
+    <text x="467" y="162" text-anchor="middle" class="sm">sina</text>
+    <text x="300" y="196" text-anchor="middle" class="sm">klient–server · port 53 · UDP/TCP</text>
+  </svg><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>2. Domen nomi tuzilishi</h2><p class="tight">Chapda — eng <b>aniq</b>, o‘ngda — eng <b>umumiy</b>. Nuqta bilan ajratiladi, registr farq qilmaydi.</p><svg class="sk" viewBox="0 0 600 310" role="img" aria-label="Internet nomlar fazosining daraxti">
+    <defs>
+      <filter id="r17-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r17-3)">
+      <circle class="s fy" cx="300" cy="40" r="9"></circle>
+      <rect class="s fy" x="104" y="80" width="52" height="24" rx="3"></rect>
+      <rect class="s fy" x="174" y="80" width="52" height="24" rx="3"></rect>
+      <rect class="s fy" x="244" y="80" width="52" height="24" rx="3"></rect>
+      <rect class="s fy" x="314" y="80" width="52" height="24" rx="3"></rect>
+      <rect class="s fy" x="404" y="80" width="52" height="24" rx="3"></rect>
+      <rect class="s fy" x="494" y="80" width="52" height="24" rx="3"></rect>
+      <path class="s2" d="M294,48 C240,58 180,70 132,78 M296,49 C270,60 220,70 200,78
+                          M299,49 C290,60 280,70 272,78 M301,49 C310,60 330,70 340,78
+                          M304,48 C350,58 400,70 428,78 M306,47 C380,56 470,70 518,78"></path>
+      <rect class="s fw" x="76" y="140" width="48" height="24" rx="3"></rect>
+      <rect class="s fw" x="148" y="140" width="48" height="24" rx="3"></rect>
+      <rect class="s fw" x="376" y="140" width="48" height="24" rx="3"></rect>
+      <rect class="s fw" x="448" y="140" width="48" height="24" rx="3"></rect>
+      <path class="s2" d="M124,104 C112,118 104,130 100,138 M136,104 C152,118 164,130 172,138
+                          M424,104 C412,118 404,130 400,138 M436,104 C452,118 462,130 472,138"></path>
+      <rect class="s fw" x="62" y="200" width="48" height="24" rx="3"></rect>
+      <rect class="s fw" x="134" y="200" width="48" height="24" rx="3"></rect>
+      <rect class="s fw" x="376" y="200" width="48" height="24" rx="3"></rect>
+      <path class="s2" d="M98,164 C92,178 88,190 86,198 M106,164 C124,178 140,190 156,198
+                          M400,164 v34"></path>
+      <rect class="s fw" x="376" y="260" width="48" height="24" rx="3"></rect>
+      <path class="s2" d="M400,224 v34"></path>
+    </g>
+    <text x="300" y="24" text-anchor="middle" class="red">root  «.»</text>
+    <text x="130" y="97" text-anchor="middle" class="sm">com</text>
+    <text x="200" y="97" text-anchor="middle" class="sm">net</text>
+    <text x="270" y="97" text-anchor="middle" class="sm">org</text>
+    <text x="340" y="97" text-anchor="middle" class="sm">edu</text>
+    <text x="430" y="97" text-anchor="middle" class="sm">cn</text>
+    <text x="520" y="97" text-anchor="middle" class="sm">uk</text>
+    <text x="100" y="157" text-anchor="middle" class="sm">h3c</text>
+    <text x="172" y="157" text-anchor="middle" class="sm">cctv</text>
+    <text x="400" y="157" text-anchor="middle" class="sm">com</text>
+    <text x="472" y="157" text-anchor="middle" class="sm">edu</text>
+    <text x="86" y="217" text-anchor="middle" class="sm">www</text>
+    <text x="158" y="217" text-anchor="middle" class="sm">mail</text>
+    <text x="400" y="217" text-anchor="middle" class="sm">h3c</text>
+    <text x="400" y="277" text-anchor="middle" class="sm">www</text>
+    <text x="4" y="97" class="sm">TLD</text>
+    <text x="4" y="157" class="sm">2-daraja</text>
+    <text x="4" y="217" class="sm">3-daraja</text>
+    <text x="4" y="277" class="sm">4-daraja</text>
+    <text x="500" y="277" text-anchor="middle" class="red">www.h3c.com.cn</text>
+    <text x="300" y="302" text-anchor="middle" class="sm">nuqta bilan tugagan to‘liq nom — FQDN</text>
+  </svg><p class="cap">2-rasm. Teskari daraxt: root → TLD → 2-daraja → …</p><table class="rot">
+    <tbody><tr><th>TLD turi</th><th>misol</th></tr>
+    <tr><td>davlat (ISO 3166)</td><td>cn · us · uk — ~200 ta</td></tr>
+    <tr><td>xalqaro</td><td>int</td></tr>
+    <tr><td>umumiy</td><td>com net org edu gov mil + 2000-yil aero biz coop info museum name pro</td></tr>
+  </tbody></table><div class="box"><span class="lbl">Uzunlik:</span> har daraja ≤ 63 bayt, to‘liq nom ≤ 255 bayt</div><h2>3. Nom yechilishi</h2><p class="tight">Dastur <b>resolver</b>ni chaqiradi; yechim <mark>yuqoridan pastga</mark> boradi, lekin ishni asosan lokal server bajaradi.</p><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 410" role="img" aria-label="www.h3c.com.cn nomini yechish bosqichlari">
+    <defs>
+      <filter id="r17-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="11" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a17-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+      <marker id="a17-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r17-4)">
+      <rect class="s fy" x="60" y="40" width="110" height="40" rx="4"></rect>
+      <rect class="s fy" x="210" y="40" width="90" height="40" rx="4"></rect>
+      <rect class="s fy" x="340" y="40" width="100" height="40" rx="4"></rect>
+      <rect class="s fy" x="470" y="40" width="100" height="40" rx="4"></rect>
+      <rect class="s fw" x="20" y="340" width="100" height="46" rx="4"></rect>
+      <rect class="s fg" x="230" y="340" width="130" height="46" rx="4"></rect>
+      <path class="s2" marker-end="url(#a17-1)" d="M122,356 h100"></path>
+      <path class="sg" marker-end="url(#a17-2)" d="M226,374 h-100"></path>
+      <path class="s2" marker-end="url(#a17-1)" d="M268,338 C230,260 160,150 118,86"></path>
+      <path class="sg" marker-end="url(#a17-2)" d="M132,84 C176,156 236,264 278,336"></path>
+      <path class="s2" marker-end="url(#a17-1)" d="M288,338 C268,250 252,150 246,88"></path>
+      <path class="sg" marker-end="url(#a17-2)" d="M262,88 C272,170 292,260 298,336"></path>
+      <path class="s2" marker-end="url(#a17-1)" d="M318,338 C340,250 362,150 374,88"></path>
+      <path class="sg" marker-end="url(#a17-2)" d="M390,88 C388,170 356,260 334,336"></path>
+      <path class="s2" marker-end="url(#a17-1)" d="M348,338 C400,260 470,155 504,88"></path>
+      <path class="sg" marker-end="url(#a17-2)" d="M520,88 C500,170 430,270 362,338"></path>
+    </g>
+    <text x="115" y="64" text-anchor="middle">root server</text>
+    <text x="255" y="64" text-anchor="middle">cn server</text>
+    <text x="390" y="64" text-anchor="middle">com server</text>
+    <text x="520" y="64" text-anchor="middle">h3c server</text>
+    <text x="70" y="368" text-anchor="middle">DNS klient</text>
+    <text x="295" y="362" text-anchor="middle">lokal server</text>
+    <text x="295" y="382" text-anchor="middle" class="sm">ISP / tashkilot</text>
+    <text x="175" y="334" text-anchor="middle" class="red">rekursiv</text>
+    <text x="300" y="140" text-anchor="middle" class="red">iterativ</text>
+    <text x="172" y="352" text-anchor="middle" class="sm">1</text>
+    <text x="172" y="388" text-anchor="middle" class="sm">10</text>
+    <text x="150" y="220" text-anchor="middle" class="sm">2</text>
+    <text x="186" y="248" text-anchor="middle" class="sm">3</text>
+    <text x="240" y="220" text-anchor="middle" class="sm">4</text>
+    <text x="276" y="248" text-anchor="middle" class="sm">5</text>
+    <text x="352" y="220" text-anchor="middle" class="sm">6</text>
+    <text x="388" y="248" text-anchor="middle" class="sm">7</text>
+    <text x="452" y="220" text-anchor="middle" class="sm">8</text>
+    <text x="488" y="248" text-anchor="middle" class="sm">9</text>
+    <text x="150" y="300" text-anchor="middle" class="sm">www.h3c.com.cn</text>
+    <text x="480" y="364" text-anchor="middle" class="sm">9-qadamda IP topiladi</text>
+  </svg><p class="cap">3-rasm. 10 qadam: klient → lokal → root → cn → com → h3c</p><ul class="tight">
+    <li><b>lokal server</b> — klientga yaqin, ko‘p so‘rovni o‘zi yopadi</li>
+    <li><b>root server</b> — nom yechmaydi, faqat TLD serverlari IP’sini beradi</li>
+    <li><b>resolver</b> — klientda ham, serverda ham nom yechuvchi modul</li>
+  </ul><div class="box"><span class="lbl">Qoida:</span> yechim yuqoridan pastga, ammo so‘rovlarning ko‘pini lokal server o‘zi yopadi</div><h2>4. So‘rov rejimlari</h2><p class="tight">Klient → lokal server: odatda <b>rekursiv</b>. Lokal server → root: odatda <b>iterativ</b>.</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="Rekursiv va iterativ sorov">
+    <defs>
+      <filter id="r17-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="23" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a17-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r17-5)">
+      <rect class="dash" x="10" y="32" width="280" height="180" rx="10"></rect>
+      <rect class="s fw" x="30" y="70" width="70" height="36" rx="3"></rect>
+      <rect class="s fy" x="190" y="70" width="80" height="36" rx="3"></rect>
+      <path class="s2" marker-end="url(#a17-3)" d="M104,82 h82"></path>
+      <path class="sg" marker-end="url(#a17-3)" d="M186,98 h-82"></path>
+      <path class="sr" marker-end="url(#a17-3)" d="M230,68 v-20"></path>
+      <rect class="dash" x="310" y="32" width="280" height="180" rx="10"></rect>
+      <rect class="s fw" x="330" y="70" width="70" height="36" rx="3"></rect>
+      <rect class="s fy" x="490" y="70" width="80" height="36" rx="3"></rect>
+      <rect class="s fw" x="490" y="150" width="80" height="32" rx="3"></rect>
+      <path class="s2" marker-end="url(#a17-3)" d="M404,82 h82"></path>
+      <path class="sr" marker-end="url(#a17-3)" d="M486,98 h-82"></path>
+      <path class="s2" marker-end="url(#a17-3)" d="M402,104 C430,140 460,158 486,164"></path>
+    </g>
+    <text x="80" y="24" text-anchor="middle" class="red">rekursiv</text>
+    <text x="380" y="24" text-anchor="middle" class="red">iterativ</text>
+    <text x="65" y="92" text-anchor="middle">klient</text>
+    <text x="230" y="92" text-anchor="middle">lokal</text>
+    <text x="145" y="74" text-anchor="middle" class="sm">so‘rov</text>
+    <text x="145" y="120" text-anchor="middle" class="sm">yakuniy javob</text>
+    <text x="230" y="42" text-anchor="middle" class="sm">boshqa serverlar</text>
+    <text x="365" y="92" text-anchor="middle">klient</text>
+    <text x="530" y="92" text-anchor="middle">lokal</text>
+    <text x="445" y="74" text-anchor="middle" class="sm">so‘rov</text>
+    <text x="445" y="126" text-anchor="middle" class="sm">10.1.1.153 dan so‘ra</text>
+    <text x="530" y="170" text-anchor="middle" class="sm">keyingi</text>
+    <text x="150" y="200" text-anchor="middle" class="sm">javobni server topadi, klient kutadi</text>
+    <text x="450" y="200" text-anchor="middle" class="sm">klient so‘rovni o‘zi takrorlaydi</text>
+  </svg><p class="cap">4-rasm. Rekursiv — «javobni topib beraman», iterativ — «boshqadan so‘ra»</p><h2>5. Teskari so‘rov</h2><svg class="sk" viewBox="0 0 600 200" role="img" aria-label="Teskari sorov va in-addr.arpa domeni">
+    <defs>
+      <filter id="r17-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="29" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a17-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a17-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r17-6)">
+      <rect class="s fw" x="40" y="60" width="100" height="40" rx="3"></rect>
+      <rect class="s fy" x="420" y="60" width="120" height="40" rx="3"></rect>
+      <path class="s2" marker-end="url(#a17-5)" d="M145,74 h268"></path>
+      <path class="sg" marker-end="url(#a17-5)" d="M415,92 h-268"></path>
+      <path class="sr" marker-end="url(#a17-4)" d="M200,155 h48"></path>
+    </g>
+    <text x="300" y="22" text-anchor="middle" class="red">teskari so‘rov — IP dan nom</text>
+    <text x="90" y="86" text-anchor="middle">klient</text>
+    <text x="480" y="86" text-anchor="middle">lokal DNS</text>
+    <text x="280" y="66" text-anchor="middle" class="sm">192.168.1.20 ning nomi?</text>
+    <text x="280" y="114" text-anchor="middle" class="sm">www.abc.com</text>
+    <text x="140" y="160" text-anchor="middle">192.168.1.20</text>
+    <text x="410" y="160" text-anchor="middle">20.1.168.192.in-addr.arpa</text>
+    <text x="300" y="190" text-anchor="middle" class="sm">oktetlar teskari tartibda · PTR yozuvi</text>
+  </svg><p class="cap">5-rasm. in-addr.arpa — IP maxsus domen nomi sifatida</p><h2>6. H3C qurilmasida DNS</h2><svg class="sk" viewBox="0 0 600 200" role="img" aria-label="DNS proxy ishlash sxemasi">
+    <defs>
+      <filter id="r17-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="41" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a17-6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r17-7)">
+      <rect class="s fw" x="30" y="66" width="80" height="40" rx="3"></rect>
+      <rect class="s fy" x="240" y="60" width="110" height="52" rx="5"></rect>
+      <rect class="s fb" x="480" y="60" width="90" height="52" rx="4"></rect>
+      <path class="s2" d="M492,74 h66 M492,86 h66 M492,98 h66"></path>
+      <path class="s2" marker-end="url(#a17-6)" d="M114,80 h122"></path>
+      <path class="sg" marker-end="url(#a17-6)" d="M236,98 h-122"></path>
+      <path class="s2" marker-end="url(#a17-6)" d="M354,80 h122"></path>
+      <path class="sg" marker-end="url(#a17-6)" d="M476,98 h-122"></path>
+      <path class="dash" d="M180,30 v150 M420,30 v150"></path>
+    </g>
+    <text x="70" y="90" text-anchor="middle">klient</text>
+    <text x="295" y="84" text-anchor="middle">router</text>
+    <text x="295" y="104" text-anchor="middle" class="sm">dns proxy</text>
+    <text x="525" y="132" text-anchor="middle">DNS server</text>
+    <text x="300" y="24" text-anchor="middle" class="red">DNS proxy — turli subnetlarni bog‘laydi</text>
+    <text x="120" y="148" text-anchor="middle" class="sm">LAN</text>
+    <text x="300" y="148" text-anchor="middle" class="sm">so‘rovni uzatadi</text>
+    <text x="520" y="148" text-anchor="middle" class="sm">boshqa subnet</text>
+    <text x="300" y="186" text-anchor="middle" class="sm">server IP o‘zgarsa — faqat routerda tuzatiladi</text>
+  </svg><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><table class="rot">
+    <tbody><tr><th>statik</th><td>ip host <i>hostname</i> <i>ip-address</i></td></tr>
+    <tr><th>dinamik</th><td>dns server <i>ip-address</i></td></tr>
+    <tr><th>suffiks</th><td>dns domain <i>domain-name</i></td></tr>
+    <tr><th>proksi</th><td>dns proxy enable</td></tr>
+    <tr><th>ko‘rish</th><td>display ip host · display dns server · display dns domain</td></tr>
+  </tbody></table><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>DNS — nom ↔ IP, klient–server, port 53, UDP/TCP</li>
+      <li>Nomlar fazosi — teskari daraxt: root → TLD → 2-daraja → …</li>
+      <li>Lokal server ko‘p ishni bajaradi, root faqat yo‘l ko‘rsatadi</li>
+      <li>Rekursiv — server topib beradi; iterativ — klient takrorlaydi</li>
+      <li>Teskari so‘rov — in-addr.arpa, PTR yozuvi</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>DNS porti? <span class="ans">— 53, UDP va TCP</span></li>
+    <li>To‘liq nom uzunligi? <span class="ans">— ≤ 255 bayt, daraja ≤ 63</span></li>
+    <li>Root server nima qiladi? <span class="ans">— TLD serverlari IP’sini beradi</span></li>
+    <li>192.168.1.20 teskari nomi? <span class="ans">— 20.1.168.192.in-addr.arpa</span></li>
+  </ol><div class="pg-num">— 5 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+</body>
+</html>

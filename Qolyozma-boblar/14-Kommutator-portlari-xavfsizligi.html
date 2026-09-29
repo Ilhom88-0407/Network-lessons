@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>14-bob · Kommutator portlari xavfsizligi</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">14-bob</div><h1 class="title">Kommutator portlari xavfsizligi
+    <small>Port Security for Switches</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>802.1X</b> — port asosida foydalanuvchini tekshirish protokoli</li>
+      <li><b>Supplicant</b> — kirmoqchi bo‘lgan mijoz (PC) dasturi</li>
+      <li><b>Authenticator</b> — tekshiruvni o‘tkazuvchi kommutator</li>
+      <li><b>RADIUS server</b> — parol va huquqlarni saqlovchi server</li>
+      <li><b>Port izolyatsiyasi</b> — portlar o‘zaro gaplashmaydi, uplink ochiq</li>
+    </ul>
+  </div><h2>1. 802.1X — portda kirish nazorati</h2><p class="tight"><mark>IEEE 802.1X</mark> — port asosida kirishni nazorat qilish
+    <span class="en">(port-based access control)</span>, 2001-y.</p><ul class="tight">
+    <li>802.11 <b>WLAN</b> uchun ishlangan — endi simli LAN’da ham</li>
+    <li>tekshiruvdan o‘tmagan klient uchun port <b>yopiq</b></li>
+  </ul><svg class="sk" viewBox="0 0 600 290" role="img" aria-label="802.1X arxitekturasi: supplicant, authenticator, server">
+    <defs>
+      <filter id="r14-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+      <marker id="a14-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r14-1)">
+      <!-- supplicant -->
+      <rect class="s fw" x="32" y="120" width="60" height="42" rx="3"></rect>
+      <path class="s2" d="M62,162 v10 M46,172 h32"></path>
+      <path class="sg" marker-end="url(#a14-1)" d="M96,141 h136"></path>
+      <!-- port shlagbaumi -->
+      <rect class="s fw" x="238" y="106" width="14" height="72" rx="2"></rect>
+      <path class="sr" d="M245,141 h50"></path>
+      <path class="sr" d="M268,131 l12,10 l-12,10"></path>
+      <!-- authenticator -->
+      <rect class="s fy" x="305" y="114" width="96" height="52" rx="4"></rect>
+      <path class="s2" d="M315,156 h12 M335,156 h12 M355,156 h12 M375,156 h12"></path>
+      <path class="sg" marker-end="url(#a14-1)" d="M405,141 h72"></path>
+      <!-- server -->
+      <rect class="s fw" x="482" y="96" width="58" height="96" rx="4"></rect>
+      <path class="s2" d="M492,118 h38 M492,140 h38 M492,162 h38"></path>
+    </g>
+    <text x="245" y="100" text-anchor="middle" class="sm">port</text>
+    <text x="164" y="130" text-anchor="middle" class="grn">EAPOL</text>
+    <text x="441" y="128" text-anchor="middle" class="grn">RADIUS</text>
+    <text x="62" y="196" text-anchor="middle" class="red">Supplicant</text>
+    <text x="62" y="214" text-anchor="middle" class="sm">802.1X klient</text>
+    <text x="353" y="196" text-anchor="middle" class="red">Authenticator</text>
+    <text x="353" y="214" text-anchor="middle" class="sm">kommutator</text>
+    <text x="511" y="214" text-anchor="middle" class="red">Auth server</text>
+    <text x="511" y="232" text-anchor="middle" class="sm">AAA</text>
+    <text x="300" y="268" text-anchor="middle" class="sm">o‘tmasa — kabeli uzilgandek</text>
+  </svg><p class="cap">1-rasm. Uchta rol: klient — kommutator — server</p><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><ul class="tight">
+    <li><b>Supplicant</b> — 802.1X klienti bor qurilma, EAPOL yuboradi</li>
+    <li><b>Authenticator</b> — kommutator: portni ochadi yoki yopadi</li>
+    <li><b>Auth server</b> — AAA: autentifikatsiya · avtorizatsiya · hisob</li>
+  </ul><div class="box"><span class="lbl">Yo‘nalish:</span> klient ↔ kommutator — EAPOL,
+    kommutator ↔ server — RADIUS.</div><h2>2. Server: lokal yoki masofaviy</h2><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="Lokal va masofaviy autentifikatsiya serveri">
+    <defs>
+      <filter id="r14-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="17" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r14-2)">
+      <!-- lokal -->
+      <rect class="dash" x="30" y="40" width="200" height="122" rx="10"></rect>
+      <rect class="s fw" x="100" y="54" width="44" height="42" rx="3"></rect>
+      <path class="s2" d="M108,66 h28 M108,78 h28 M108,90 h28"></path>
+      <path class="s2" d="M122,96 v16"></path>
+      <rect class="s fy" x="90" y="112" width="80" height="38" rx="4"></rect>
+      <rect class="s fw" x="36" y="176" width="42" height="26" rx="2"></rect>
+      <rect class="s fw" x="180" y="176" width="42" height="26" rx="2"></rect>
+      <path class="s2" d="M100,150 L62,176 M160,150 L198,176"></path>
+      <!-- ajratgich -->
+      <path class="dash" d="M258,18 v192"></path>
+      <!-- masofaviy -->
+      <rect class="s fy" x="300" y="58" width="62" height="26" rx="3"></rect>
+      <rect class="s fy" x="300" y="110" width="62" height="26" rx="3"></rect>
+      <rect class="s fy" x="300" y="162" width="62" height="26" rx="3"></rect>
+      <rect class="s fw" x="470" y="50" width="56" height="82" rx="4"></rect>
+      <path class="s2" d="M480,68 h36 M480,86 h36 M480,104 h36"></path>
+      <path class="s2" d="M362,71 L468,84 M362,123 L468,98 M362,175 L468,112"></path>
+    </g>
+    <text x="130" y="32" text-anchor="middle" class="red">Lokal server</text>
+    <text x="130" y="222" text-anchor="middle" class="sm">kichik tarmoq</text>
+    <text x="430" y="32" text-anchor="middle" class="red">Masofaviy server</text>
+    <text x="497" y="150" text-anchor="middle" class="sm">RADIUS</text>
+    <text x="320" y="204" text-anchor="middle" class="sm">kommutatorlar</text>
+    <text x="436" y="222" text-anchor="middle" class="sm">markazlashgan baza</text>
+  </svg><ul class="tight">
+    <li><b>lokal</b> — kommutator ichida; oz foydalanuvchi, ma’lumot tarqoq</li>
+    <li><b>masofaviy</b> — alohida server; katta tarmoq, bitta baza</li>
+  </ul><h2>3. Kirish nazorati usullari</h2><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="Port asosida va MAC asosida kirish nazorati">
+    <defs>
+      <filter id="r14-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="3" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r14-3)">
+      <!-- port-based -->
+      <rect class="s fy" x="30" y="54" width="64" height="30" rx="3"></rect>
+      <path class="s2" d="M94,69 h60"></path>
+      <rect class="s fw" x="154" y="56" width="50" height="26" rx="3"></rect>
+      <rect class="s fw" x="240" y="30" width="44" height="24" rx="2"></rect>
+      <rect class="s fw" x="240" y="62" width="44" height="24" rx="2"></rect>
+      <rect class="s fw" x="240" y="94" width="44" height="24" rx="2"></rect>
+      <path class="s2" d="M204,64 L238,42 M204,69 h34 M204,74 L238,106"></path>
+      <path class="sg" d="M296,42 l7,8 l13,-16"></path>
+      <path class="sg" d="M296,74 l7,8 l13,-16"></path>
+      <path class="sg" d="M296,106 l7,8 l13,-16"></path>
+      <path class="dash" d="M20,128 h560"></path>
+      <!-- mac-based -->
+      <rect class="s fy" x="30" y="164" width="64" height="30" rx="3"></rect>
+      <path class="s2" d="M94,179 h60"></path>
+      <rect class="s fw" x="154" y="166" width="50" height="26" rx="3"></rect>
+      <rect class="s fw" x="240" y="140" width="44" height="24" rx="2"></rect>
+      <rect class="s fw" x="240" y="172" width="44" height="24" rx="2"></rect>
+      <rect class="s fw" x="240" y="204" width="44" height="24" rx="2"></rect>
+      <path class="s2" d="M204,174 L238,152 M204,179 h34 M204,184 L238,216"></path>
+      <path class="sg" d="M296,152 l7,8 l13,-16"></path>
+      <path class="sg" d="M296,184 l7,8 l13,-16"></path>
+      <path class="sr" d="M296,208 l16,16 M312,208 l-16,16"></path>
+    </g>
+    <text x="62" y="46" text-anchor="middle" class="red">Port-based</text>
+    <text x="62" y="104" text-anchor="middle" class="sm">bitta tekshiruv</text>
+    <text x="440" y="56" text-anchor="middle" class="sm">1-chi o‘tdi — hammasi ochiq</text>
+    <text x="440" y="100" text-anchor="middle" class="sm">u chiqsa — hammasi uziladi</text>
+    <text x="62" y="156" text-anchor="middle" class="red">MAC-based</text>
+    <text x="62" y="214" text-anchor="middle" class="sm">har MAC alohida</text>
+    <text x="440" y="176" text-anchor="middle" class="sm">biri chiqsa — qolgani ishlaydi</text>
+    <text x="440" y="220" text-anchor="middle" class="grn">standart usul</text>
+  </svg><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><table class="rot">
+    <tbody><tr><th></th><th>Port-based</th><th>MAC-based</th></tr>
+    <tr><td>Tekshiruv</td><td>portda bir marta</td><td>har foydalanuvchi</td></tr>
+    <tr><td>Biri chiqsa</td><td>hammasi uziladi</td><td>faqat o‘zi</td></tr>
+  </tbody></table><h2>4. 802.1X ni sozlash</h2><ul class="tight">
+    <li>1) tizim ko‘rinishi: <b>dot1x</b></li>
+    <li>2) port ko‘rinishi: <b>dot1x</b></li>
+    <li>3) <b>local-user</b> nomi <b>class network</b> · <b>service-type lan-access</b> · <b>password simple</b> parol</li>
+  </ul><div class="box"><span class="lbl">Qoida:</span> global va portda — ikkalasida ham yoqilmasa, 802.1X ishlamaydi.</div><svg class="sk" viewBox="0 0 600 260" role="img" aria-label="802.1X sozlash misoli: PC va SWA">
+    <defs>
+      <filter id="r14-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="11" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a14-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r14-4)">
+      <rect class="s fw" x="40" y="100" width="60" height="42" rx="3"></rect>
+      <path class="s2" d="M70,142 v10 M54,152 h32"></path>
+      <path class="s2" d="M100,121 h96"></path>
+      <rect class="s fy" x="200" y="98" width="90" height="46" rx="4"></rect>
+      <path class="sg" d="M196,100 L184,84"></path>
+      <path class="sg" marker-end="url(#a14-2)" d="M292,121 h86"></path>
+      <path class="s fb" d="M392,116 C382,94 418,80 436,96 C450,74 492,80 497,102
+                            C523,98 532,127 511,138 C501,156 418,159 405,144
+                            C388,140 384,124 392,116 Z"></path>
+      <rect class="s fw" x="60" y="180" width="250" height="66" rx="4"></rect>
+      <path class="s2" d="M60,208 h250"></path>
+    </g>
+    <text x="148" y="112" text-anchor="middle" class="sm">G1/0/1</text>
+    <text x="245" y="126" text-anchor="middle" class="red">SWA</text>
+    <text x="200" y="76" text-anchor="middle" class="grn">port ochildi</text>
+    <text x="452" y="124" text-anchor="middle">tarmoq</text>
+    <text x="185" y="172" text-anchor="middle" class="sm">802.1X klient</text>
+    <text x="185" y="196" text-anchor="middle">nom: localuser</text>
+    <text x="185" y="228" text-anchor="middle">parol: hello</text>
+    <text x="455" y="196" text-anchor="middle" class="sm">dot1x — global + portda</text>
+    <text x="455" y="228" text-anchor="middle" class="sm">service-type lan-access</text>
+  </svg><p class="cap">2-rasm. PC → G1/0/1 · lokal 802.1X tekshiruvi</p><h2>5. Port izolyatsiyasi</h2><p class="tight">Bitta <mark>VLAN ichidagi</mark> portlarni ajratadi — VLAN resursi tejaladi.</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="Port izolyatsiyasi: portlar yopiq, uplink ochiq">
+    <defs>
+      <filter id="r14-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="23" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a14-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r14-5)">
+      <rect class="s fy" x="210" y="40" width="180" height="42" rx="4"></rect>
+      <path class="sg" marker-end="url(#a14-3)" d="M392,61 h82"></path>
+      <rect class="s fw" x="480" y="24" width="56" height="76" rx="4"></rect>
+      <path class="s2" d="M490,42 h36 M490,60 h36 M490,78 h36"></path>
+      <rect class="dash" x="40" y="128" width="520" height="80" rx="10"></rect>
+      <rect class="s fw" x="80" y="150" width="56" height="36" rx="3"></rect>
+      <rect class="s fw" x="270" y="150" width="56" height="36" rx="3"></rect>
+      <rect class="s fw" x="460" y="150" width="56" height="36" rx="3"></rect>
+      <path class="s2" d="M240,82 L112,150 M300,82 v68 M360,82 L488,150"></path>
+      <path class="sr" d="M140,168 h40 M212,168 h54"></path>
+      <path class="sr" d="M188,158 l14,20 M202,158 l-14,20"></path>
+      <path class="sr" d="M330,168 h52 M412,168 h44"></path>
+      <path class="sr" d="M390,158 l14,20 M404,158 l-14,20"></path>
+    </g>
+    <text x="300" y="34" text-anchor="middle" class="sm">kommutator</text>
+    <text x="300" y="68" text-anchor="middle" class="red">VLAN 1</text>
+    <text x="435" y="48" text-anchor="middle" class="grn">uplink</text>
+    <text x="508" y="116" text-anchor="middle" class="red">server</text>
+    <text x="108" y="204" text-anchor="middle" class="sm">PCA</text>
+    <text x="298" y="204" text-anchor="middle" class="sm">PCB</text>
+    <text x="488" y="204" text-anchor="middle" class="sm">PCC</text>
+    <text x="180" y="224" text-anchor="middle" class="red">port-isolate group</text>
+  </svg><p class="cap">3-rasm. Guruh a’zolari o‘zaro yopiq, uplink orqali ochiq</p><h2>6. Izolyatsiyani sozlash</h2><ul class="tight">
+    <li>tizim: <b>port-isolate group 1</b> — guruh yaratish</li>
+    <li>port: <b>port-isolate enable group 1</b> — oddiy a’zo</li>
+    <li>port: <b>port-isolate uplink-port</b> — yuqoriga chiqish porti</li>
+  </ul><div class="box"><span class="lbl">Eslatma:</span> 1-guruhni tizim o‘zi yaratadi.</div><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="Port izolyatsiyasi sozlash misoli">
+    <defs>
+      <filter id="r14-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="29" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a14-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r14-6)">
+      <rect class="s fy" x="200" y="36" width="200" height="44" rx="4"></rect>
+      <path class="sg" marker-end="url(#a14-4)" d="M402,54 h64"></path>
+      <rect class="s fw" x="472" y="14" width="56" height="76" rx="4"></rect>
+      <path class="s2" d="M482,32 h36 M482,50 h36 M482,68 h36"></path>
+      <rect class="s fw" x="60" y="150" width="56" height="36" rx="3"></rect>
+      <rect class="s fw" x="272" y="150" width="56" height="36" rx="3"></rect>
+      <rect class="s fw" x="470" y="150" width="56" height="36" rx="3"></rect>
+      <path class="s2" d="M250,80 L92,150 M300,80 v70 M360,80 L498,150"></path>
+      <path class="sr" d="M124,168 h56 M204,168 h60"></path>
+      <path class="sr" d="M186,158 l14,20 M200,158 l-14,20"></path>
+      <path class="sr" d="M336,168 h48 M412,168 h50"></path>
+      <path class="sr" d="M392,158 l14,20 M406,158 l-14,20"></path>
+    </g>
+    <text x="300" y="64" text-anchor="middle" class="red">SWA</text>
+    <text x="434" y="34" text-anchor="middle" class="grn">Eth1/0/1</text>
+    <text x="500" y="122" text-anchor="middle" class="red">server</text>
+    <text x="152" y="118" text-anchor="middle" class="sm">Eth1/0/2</text>
+    <text x="330" y="118" text-anchor="middle" class="sm">Eth1/0/3</text>
+    <text x="428" y="108" text-anchor="middle" class="sm">Eth1/0/4</text>
+    <text x="88" y="204" text-anchor="middle" class="sm">PCA</text>
+    <text x="300" y="204" text-anchor="middle" class="sm">PCB</text>
+    <text x="498" y="204" text-anchor="middle" class="sm">PCC</text>
+    <text x="230" y="226" text-anchor="middle" class="red">2-guruh: Eth1/0/2 – 1/0/4</text>
+  </svg><p class="cap">4-rasm. Uchta PC o‘zaro yopiq, serverga yo‘l ochiq</p><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>802.1X — portda kirish nazorati, IEEE, 2001-y.</li>
+      <li>Rollar: supplicant · authenticator · auth server</li>
+      <li>Server lokal (kichik) yoki masofaviy (katta tarmoq)</li>
+      <li>Usul: port-based yoki MAC-based (standart)</li>
+      <li>Port izolyatsiyasi — bir VLAN ichida portlarni ajratadi</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>802.1X qaysi tashkilot standarti? <span class="ans">— IEEE, 2001-y.</span></li>
+    <li>Uchta rol? <span class="ans">— supplicant, authenticator, server</span></li>
+    <li>Portdagi standart usul? <span class="ans">— MAC-based</span></li>
+    <li>Uplink porti buyrug‘i? <span class="ans">— port-isolate uplink-port</span></li>
+  </ol><div class="pg-num">— 5 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+</body>
+</html>

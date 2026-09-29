@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>08-bob · Buyruq satri bilan ishlash asoslari</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">8-bob</div><h1 class="title">Buyruq satri bilan ishlash asoslari
+    <small>Command Line Operation Basics</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>CLI</b> — buyruq satri, qurilmani boshqarish interfeysi</li>
+      <li><b>Console port</b> — kabel bilan mahalliy ulanish, 9600 bod</li>
+      <li><b>Telnet / SSH</b> — tarmoq orqali kirish: TCP 23 / TCP 22</li>
+      <li><b>Buyruq ko‘rinishi</b> — user-view, system-view, interfeys-view</li>
+    </ul>
+  </div><h2>1. CLI ga ulanish usullari</h2><p class="tight">H3C <mark>Comware</mark> qurilmasi <span class="en">(CLI)</span> — 4 ta asosiy kirish yo‘li.</p><svg class="sk" viewBox="0 0 600 310" role="img" aria-label="CLI ga ulanishning tort usuli">
+    <defs>
+      <filter id="r08-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="8" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a08-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r08-1)">
+      <rect class="s fy" x="490" y="25" width="95" height="255" rx="6"></rect>
+      <rect class="s fw" x="482" y="48" width="12" height="14" rx="2"></rect>
+      <rect class="s fw" x="482" y="118" width="12" height="14" rx="2"></rect>
+      <rect class="s fw" x="482" y="188" width="12" height="14" rx="2"></rect>
+      <rect class="s fw" x="482" y="255" width="12" height="14" rx="2"></rect>
+      <rect class="s fw" x="14" y="42" width="48" height="26" rx="3"></rect>
+      <rect class="s fw" x="14" y="112" width="48" height="26" rx="3"></rect>
+      <rect class="s fw" x="14" y="182" width="48" height="26" rx="3"></rect>
+      <rect class="s fw" x="14" y="249" width="48" height="26" rx="3"></rect>
+      <path class="s2" d="M62,55 H482"></path>
+      <rect class="s fw" x="150" y="115" width="34" height="20" rx="3"></rect>
+      <rect class="s fw" x="390" y="115" width="34" height="20" rx="3"></rect>
+      <path class="s fb" d="M252,124 C244,108 272,100 284,110 C296,96 326,102 328,118 C344,118 346,140 330,144 C318,154 262,154 254,144 C240,142 240,128 252,124 Z"></path>
+      <path class="s2" d="M62,125 H150 M184,125 H244 M344,125 H390 M424,125 H482"></path>
+      <path class="s fb" d="M240,200 C228,178 262,164 280,178 C296,158 336,166 338,188 C362,186 368,220 348,230 C352,256 320,276 300,262 C282,282 244,272 244,250 C222,244 222,210 240,200 Z"></path>
+      <path class="s2" d="M62,195 H232 M352,195 H482 M62,262 H244 M348,262 H482"></path>
+    </g>
+    <text x="537" y="145" text-anchor="middle">Router /</text>
+    <text x="537" y="165" text-anchor="middle">Switch</text>
+    <text x="270" y="40" text-anchor="middle" class="red">1) Console — mahalliy</text>
+    <text x="270" y="74" text-anchor="middle" class="sm">console kabeli: RJ-45 ↔ DB-9</text>
+    <text x="270" y="104" text-anchor="middle" class="red">2) AUX + modem (PSTN)</text>
+    <text x="293" y="130" text-anchor="middle" class="sm">PSTN</text>
+    <text x="167" y="150" text-anchor="middle" class="sm">modem</text>
+    <text x="407" y="150" text-anchor="middle" class="sm">modem</text>
+    <text x="145" y="180" text-anchor="middle" class="red">3) Telnet</text>
+    <text x="145" y="214" text-anchor="middle" class="sm">TCP 23 · ochiq matn</text>
+    <text x="295" y="226" text-anchor="middle" class="red">IP tarmoq</text>
+    <text x="145" y="250" text-anchor="middle" class="red">4) SSH</text>
+    <text x="145" y="284" text-anchor="middle" class="sm">TCP 22 · shifrlangan</text>
+  </svg><p class="cap">1-rasm. Console · AUX · Telnet · SSH — bitta qurilmaga to‘rt yo‘l</p><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><table class="rot">
+    <tbody><tr><th>Usul</th><th>Port / protokol</th><th>Qayerdan</th></tr>
+    <tr><td>Console</td><td>EIA/TIA-232 DCE, 9600 bod</td><td>faqat mahalliy</td></tr>
+    <tr><td>AUX</td><td>EIA/TIA-232 DTE + modem</td><td>PSTN orqali</td></tr>
+    <tr><td>Telnet</td><td>TCP 23, ochiq matn</td><td>IP tarmoq</td></tr>
+    <tr><td>SSH</td><td>TCP 22, shifrlangan</td><td>IP tarmoq</td></tr>
+  </tbody></table><h2>2. Buyruq ko‘rinishlari <span class="en">(command views)</span></h2><svg class="sk" viewBox="0 0 600 260" role="img" aria-label="Buyruq korinishlari ierarxiyasi">
+    <defs>
+      <filter id="r08-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="18" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a08-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r08-2)">
+      <rect class="s fg" x="200" y="16" width="200" height="40" rx="10"></rect>
+      <rect class="s fy" x="190" y="86" width="220" height="42" rx="10"></rect>
+      <path class="sr" marker-end="url(#a08-2)" d="M308,58 V84"></path>
+      <path class="sr" marker-end="url(#a08-2)" d="M292,86 V60"></path>
+      <rect class="s fw" x="8" y="170" width="136" height="48" rx="8"></rect>
+      <rect class="s fw" x="152" y="170" width="136" height="48" rx="8"></rect>
+      <rect class="s fw" x="296" y="170" width="140" height="48" rx="8"></rect>
+      <rect class="s fw" x="444" y="170" width="140" height="48" rx="8"></rect>
+      <path class="s2" d="M296,130 C200,142 120,156 76,168 M298,130 C270,146 240,156 220,168
+                          M302,130 C330,146 350,156 366,168 M304,130 C400,144 480,156 514,168"></path>
+    </g>
+    <text x="300" y="34" text-anchor="middle" class="red">User view</text>
+    <text x="300" y="50" text-anchor="middle" class="sm">&lt;H3C&gt;  —  holat va statistika</text>
+    <text x="372" y="76" text-anchor="middle" class="sm">system-view</text>
+    <text x="218" y="76" text-anchor="middle" class="sm">quit / return</text>
+    <text x="300" y="106" text-anchor="middle" class="red">System view</text>
+    <text x="300" y="122" text-anchor="middle" class="sm">[H3C]  —  global parametrlar</text>
+    <text x="76" y="190" text-anchor="middle">Interface</text>
+    <text x="76" y="208" text-anchor="middle" class="sm">interface G0/0</text>
+    <text x="220" y="190" text-anchor="middle">Line</text>
+    <text x="220" y="208" text-anchor="middle" class="sm">line vty 0 63</text>
+    <text x="366" y="190" text-anchor="middle">Routing</text>
+    <text x="366" y="208" text-anchor="middle" class="sm">ospf 1 · rip</text>
+    <text x="514" y="190" text-anchor="middle">VLAN</text>
+    <text x="514" y="208" text-anchor="middle" class="sm">vlan 10</text>
+    <text x="300" y="244" text-anchor="middle" class="red">har qanday view’dan user view’ga: return yoki Ctrl+Z</text>
+  </svg><ul class="tight">
+    <li><b>Line view</b> — console, AUX, TTY va <b>VTY</b> (telnet/SSH, 5 ta bir vaqtda)</li>
+    <li>Pastga tushish — mos buyruq, yuqoriga — <b>quit</b></li>
+  </ul><h2>3. Sessiya namunasi</h2><svg class="sk" viewBox="0 0 600 220" role="img" aria-label="CLI sessiyasi namunasi">
+    <defs>
+      <filter id="r08-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="28" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r08-3)">
+      <rect class="s fw" x="8" y="18" width="584" height="192" rx="6"></rect>
+      <path class="s2" d="M18,28 v172"></path>
+    </g>
+    <text x="30" y="40">&lt;H3C&gt; system-view</text>
+    <text x="30" y="66">[H3C] interface GigabitEthernet 0/0</text>
+    <text x="30" y="92">[H3C-GigabitEthernet0/0] description to_MyPC</text>
+    <text x="30" y="118">[H3C-GigabitEthernet0/0] ip add 192.168.0.1 24</text>
+    <text x="30" y="144">[H3C-GigabitEthernet0/0] quit</text>
+    <text x="30" y="170">[H3C] line vty 0 63</text>
+    <text x="30" y="196">[H3C-line-vty0-63] authentication-mode scheme</text>
+  </svg><p class="cap">2-rasm. Prompt o‘zgarishi — qaysi view’dasiz, shu yozilgan</p><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>4. Buyruq turlari va rollar</h2><svg class="sk" viewBox="0 0 600 170" role="img" aria-label="Buyruq turlari">
+    <defs>
+      <filter id="r08-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="38" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r08-4)">
+      <rect class="s fg" x="10" y="40" width="185" height="100" rx="12"></rect>
+      <rect class="s fy" x="207" y="40" width="185" height="100" rx="12"></rect>
+      <rect class="s fb" x="404" y="40" width="186" height="100" rx="12"></rect>
+    </g>
+    <text x="102" y="30" text-anchor="middle" class="red">Read — ko‘rish</text>
+    <text x="102" y="74" text-anchor="middle">display …</text>
+    <text x="102" y="100" text-anchor="middle">dir</text>
+    <text x="102" y="160" text-anchor="middle" class="sm">holat, statistika</text>
+    <text x="299" y="30" text-anchor="middle" class="red">Write — sozlash</text>
+    <text x="299" y="74" text-anchor="middle">info-center enable</text>
+    <text x="299" y="100" text-anchor="middle">debugging</text>
+    <text x="299" y="160" text-anchor="middle" class="sm">tizimni o‘zgartiradi</text>
+    <text x="497" y="30" text-anchor="middle" class="red">Execution — bajarish</text>
+    <text x="497" y="74" text-anchor="middle">ping</text>
+    <text x="497" y="100" text-anchor="middle">ftp</text>
+    <text x="497" y="160" text-anchor="middle" class="sm">amalni ishga tushiradi</text>
+  </svg><table class="rot">
+    <tbody><tr><th>network-admin</th><td>barcha funksiya va resurs</td></tr>
+    <tr><th>network-operator</th><td>faqat ko‘rish (display history-command all — yo‘q)</td></tr>
+    <tr><th>level-0 … level-14</th><td>huquqni administrator beradi</td></tr>
+    <tr><th>level-15</th><td>network-admin bilan teng, o‘zgartirilmaydi</td></tr>
+  </tbody></table><h2>5. Yordam, tarix, xatolar</h2><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="Yordam va xato xabarlari">
+    <defs>
+      <filter id="r08-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="48" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r08-5)">
+      <rect class="s fw" x="8" y="26" width="290" height="190" rx="6"></rect>
+      <rect class="s fw" x="302" y="26" width="290" height="190" rx="6"></rect>
+    </g>
+    <text x="153" y="18" text-anchor="middle" class="red">yordam: ? va Tab</text>
+    <text x="447" y="18" text-anchor="middle" class="red">xato xabarlari</text>
+    <text x="20" y="50">? → view’dagi hamma buyruq</text>
+    <text x="20" y="76">dis? → display</text>
+    <text x="20" y="102">display v? → version, vlan…</text>
+    <text x="20" y="128">interface vlan ? → &lt;1-4094&gt;</text>
+    <text x="20" y="154">Tab → kalit so‘zni to‘ldiradi</text>
+    <text x="20" y="180">display history-command</text>
+    <text x="20" y="206">↑ Ctrl+P · ↓ Ctrl+N — tarix</text>
+    <text x="314" y="50">% Unrecognized command</text>
+    <text x="314" y="76">% Incomplete command</text>
+    <text x="314" y="102">% Ambiguous command</text>
+    <text x="314" y="128">% Too many parameters</text>
+    <text x="314" y="154">% Wrong parameter</text>
+    <text x="314" y="180">---- More ---- :</text>
+    <text x="314" y="206">Space · Enter · Ctrl+C</text>
+  </svg><p class="cap">3-rasm. Tarix buferi — 10 buyruq (history-command max-size)</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>6. Ko‘p ishlatiladigan buyruqlar</h2><svg class="sk" viewBox="0 0 600 210" role="img" aria-label="Ko p ishlatiladigan buyruqlar">
+    <defs>
+      <filter id="r08-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="58" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r08-6)">
+      <rect class="s fy" x="8" y="26" width="290" height="170" rx="6"></rect>
+      <rect class="s fb" x="302" y="26" width="290" height="170" rx="6"></rect>
+    </g>
+    <text x="153" y="18" text-anchor="middle" class="red">boshqarish</text>
+    <text x="447" y="18" text-anchor="middle" class="red">ko‘rish</text>
+    <text x="20" y="50">sysname RTA → &lt;RTA&gt;</text>
+    <text x="20" y="76">clock datetime HH:MM:SS</text>
+    <text x="20" y="102">display clock</text>
+    <text x="20" y="128">header shell / login / motd</text>
+    <text x="20" y="154">header legal / incoming</text>
+    <text x="20" y="182" class="sm">5 xil banner</text>
+    <text x="314" y="50">display version</text>
+    <text x="314" y="76">display current-configuration</text>
+    <text x="314" y="102">display interface</text>
+    <text x="314" y="128">display ip interface brief</text>
+    <text x="314" y="154">display diagnostic-information</text>
+    <text x="314" y="182" class="sm">hamma modul — bir buyruqda</text>
+  </svg><table class="rot">
+    <tbody><tr><th>Ctrl+A · Ctrl+E</th><td>satr boshi · oxiri</td><th>Ctrl+B · Ctrl+F</th><td>chapga · o‘ngga</td></tr>
+    <tr><th>Ctrl+D</th><td>kursordagi belgi</td><th>Backspace</th><td>chapdagi belgi</td></tr>
+    <tr><th>Ctrl+W · Esc+D</th><td>so‘zni o‘chirish</td><th>Ctrl+X · Ctrl+Y</th><td>chap · o‘ng tomon</td></tr>
+  </tbody></table><h2>7. Telnet serverni sozlash</h2><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="Telnet serverni sozlash">
+    <defs>
+      <filter id="r08-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="68" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r08-7)">
+      <rect class="s fw" x="30" y="34" width="60" height="34" rx="3"></rect>
+      <path class="s2" d="M60,68 v6 M44,74 h32"></path>
+      <rect class="s fy" x="440" y="32" width="95" height="38" rx="4"></rect>
+      <path class="s2" d="M90,51 H440"></path>
+      <rect class="s fw" x="8" y="100" width="584" height="142" rx="6"></rect>
+    </g>
+    <text x="60" y="26" text-anchor="middle" class="red">telnet klient</text>
+    <text x="60" y="92" text-anchor="middle" class="sm">PCA 192.168.0.1/24</text>
+    <text x="265" y="42" text-anchor="middle" class="sm">Ethernet</text>
+    <text x="487" y="24" text-anchor="middle" class="red">telnet server</text>
+    <text x="487" y="56" text-anchor="middle">RTA</text>
+    <text x="487" y="92" text-anchor="middle" class="sm">G0/0 …0.254/24</text>
+    <text x="24" y="124">[H3C] telnet server enable</text>
+    <text x="24" y="150">[H3C] line vty 0 63</text>
+    <text x="24" y="176">[H3C-line-vty0-63] authentication-mode password</text>
+    <text x="24" y="202">[H3C-line-vty0-63] set authentication password simple 123456</text>
+    <text x="24" y="228">[H3C-line-vty0-63] user-role network-admin</text>
+  </svg><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>8. SSH serverni sozlash</h2><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="SSH autentifikatsiyasi va buyruqlari">
+    <defs>
+      <filter id="r08-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="78" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r08-8)">
+      <rect class="s fg" x="8" y="26" width="270" height="90" rx="10"></rect>
+      <rect class="s fb" x="8" y="126" width="270" height="90" rx="10"></rect>
+      <rect class="s fw" x="292" y="26" width="300" height="190" rx="6"></rect>
+    </g>
+    <text x="143" y="48" text-anchor="middle" class="red">parol bilan</text>
+    <text x="143" y="72" text-anchor="middle" class="sm">login+parol shifrlanadi</text>
+    <text x="143" y="96" text-anchor="middle" class="sm">serverni tekshirmaydi</text>
+    <text x="143" y="148" text-anchor="middle" class="red">ochiq kalit (RSA)</text>
+    <text x="143" y="172" text-anchor="middle" class="sm">RSA kalit 512–2048 bit</text>
+    <text x="143" y="196" text-anchor="middle" class="sm">SSH 2.0 → kamida 768 bit</text>
+    <text x="304" y="50">public-key local create rsa</text>
+    <text x="304" y="76">ssh server enable</text>
+    <text x="304" y="102">line vty 0 63</text>
+    <text x="304" y="128">authentication-mode scheme</text>
+    <text x="304" y="154">protocol inbound ssh</text>
+    <text x="304" y="180">local-user sshclient</text>
+    <text x="304" y="206">service-type ssh</text>
+  </svg><p class="cap">4-rasm. SSH: transport + autentifikatsiya + ulanish qatlamlari</p><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>Kirish: console (mahalliy) · AUX · telnet 23 · SSH 22</li>
+      <li>View’lar ierarxik: user → system → interface / line / …</li>
+      <li>return yoki Ctrl+Z — istalgan joydan user view’ga</li>
+      <li>Buyruq turi: read · write · execution; rol: network-admin / operator / level-n</li>
+      <li>? va Tab — yordam, ↑↓ — tarix, Space/Enter/Ctrl+C — sahifalash</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>SSH porti va telnet porti? <span class="ans">— TCP 22 va TCP 23</span></li>
+    <li>Console tezligi (default)? <span class="ans">— 9600 bod</span></li>
+    <li>Nechta VTY foydalanuvchi bir vaqtda? <span class="ans">— 5</span></li>
+    <li>VTY autentifikatsiya rejimlari? <span class="ans">— none / password / scheme</span></li>
+    <li>User view’ga qaytish? <span class="ans">— return yoki Ctrl+Z</span></li>
+  </ol><div class="pg-num">— 5 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+</body>
+</html>

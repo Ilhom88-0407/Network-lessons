@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>16-bob · IP tarmoqni subnetlarga bo‘lish</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">16-bob</div><h1 class="title">IP tarmoqni subnetlarga bo‘lish
+    <small>IP Subnetting</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>Subnet</b> — katta tarmoqni bo‘lib olingan kichik tarmoq</li>
+      <li><b>Subnet maska</b> — manzilning qaysi qismi tarmoq, qaysi qismi host ekanini ko‘rsatadi</li>
+      <li><b>Prefiks (/24)</b> — maskaning qisqa yozuvi — nechta bit tarmoqqa tegishli</li>
+      <li><b>Qarzga olingan bit</b> — host qismidan olinib, subnet raqamiga beriladigan bitlar</li>
+      <li><b>VLSM</b> — bitta tarmoqda turli uzunlikdagi maskalarni ishlatish</li>
+      <li><b>CIDR</b> — bir nechta tarmoqni bitta yirik prefiksga jamlash</li>
+    </ul>
+  </div><h2>1. Nega subnet kerak?</h2><p class="tight">Dastlab manzil <mark>ikki pog‘onali</mark>: Net ID + Host ID. Har fizik tarmoqqa — alohida sinf manzili.</p><ul class="tight">
+    <li><b>manzil isrofi</b> — 300 host uchun B sinfi (65534) beriladi</li>
+    <li><b>tarmoq yetmaydi</b> — 100 kichik tarmoqqa 100 ta C sinfi kerak</li>
+    <li><b>kengaymaydi</b> — yangi tarmoq uchun IANA’dan yangi manzil kutiladi</li>
+  </ul><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="Ikki pogonali manzil ierarxiyasi">
+    <defs>
+      <filter id="r16-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r16-1)">
+      <path class="s fb" d="M240,55 C230,32 268,18 286,34 C300,12 344,18 349,40 C375,36 384,65 363,76 C353,94 268,97 255,82 C238,78 231,62 240,55 Z"></path>
+      <rect class="dash" x="24" y="126" width="234" height="78" rx="10"></rect>
+      <rect class="dash" x="342" y="126" width="234" height="78" rx="10"></rect>
+      <rect class="s fg" x="44" y="136" width="88" height="40" rx="5"></rect>
+      <rect class="s fw" x="52" y="146" width="20" height="14" rx="2"></rect>
+      <rect class="s fw" x="80" y="146" width="20" height="14" rx="2"></rect>
+      <rect class="s fw" x="104" y="146" width="20" height="14" rx="2"></rect>
+      <rect class="s fg" x="152" y="136" width="88" height="40" rx="5"></rect>
+      <rect class="s fw" x="160" y="146" width="20" height="14" rx="2"></rect>
+      <rect class="s fw" x="188" y="146" width="20" height="14" rx="2"></rect>
+      <rect class="s fw" x="212" y="146" width="20" height="14" rx="2"></rect>
+      <rect class="s fg" x="390" y="136" width="88" height="40" rx="5"></rect>
+      <rect class="s fw" x="398" y="146" width="20" height="14" rx="2"></rect>
+      <rect class="s fw" x="426" y="146" width="20" height="14" rx="2"></rect>
+      <rect class="s fw" x="450" y="146" width="20" height="14" rx="2"></rect>
+      <path class="s2" d="M252,78 C200,96 130,118 90,134"></path>
+      <path class="s2" d="M282,90 C260,108 220,124 198,134"></path>
+      <path class="s2" d="M352,78 C400,96 400,118 432,134"></path>
+    </g>
+    <text x="300" y="58" text-anchor="middle" class="red">INTERNET</text>
+    <text x="88" y="194" text-anchor="middle">Net A</text>
+    <text x="196" y="194" text-anchor="middle">Net B</text>
+    <text x="434" y="194" text-anchor="middle">Net C</text>
+    <text x="140" y="222" text-anchor="middle" class="sm">Tashkilot A</text>
+    <text x="434" y="222" text-anchor="middle" class="sm">Tashkilot B</text>
+    <text x="300" y="244" text-anchor="middle" class="sm">har fizik tarmoq — alohida sinf manzili</text>
+  </svg><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><p class="cap">1-rasm. Sinf bo‘yicha taqsimlash: tarmoqlar ko‘p, manzil yetmaydi</p><svg class="sk" viewBox="0 0 600 200" role="img" aria-label="Manzil isrofi: C va B sinflari">
+    <defs>
+      <filter id="r16-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="17" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r16-2)">
+      <rect class="s fb" x="118" y="44" width="70" height="26" rx="3"></rect>
+      <rect class="s fw" x="118" y="96" width="440" height="26" rx="3"></rect>
+      <rect class="s fg" x="118" y="96" width="83" height="26" rx="3"></rect>
+      <path class="dash" d="M201,34 v100"></path>
+      <path class="sr" d="M196,48 l24,18 M220,48 l-24,18"></path>
+    </g>
+    <text x="300" y="20" text-anchor="middle" class="red">kerak: 300 manzil</text>
+    <text x="110" y="62" text-anchor="end">C sinfi</text>
+    <text x="153" y="62" text-anchor="middle" class="sm">254</text>
+    <text x="110" y="114" text-anchor="end">B sinfi</text>
+    <text x="160" y="114" text-anchor="middle" class="sm">300</text>
+    <text x="380" y="114" text-anchor="middle" class="sm">65534</text>
+    <text x="380" y="146" text-anchor="middle" class="red">isrof: 65 234 manzil</text>
+    <text x="300" y="180" text-anchor="middle" class="sm">yechim: host bitlaridan bir qismini subnetga berish</text>
+  </svg><h2>2. Subnetlash usuli</h2><p class="tight">RFC 950 va RFC 917 — Host ID’dan bit <mark>qarzga olinadi</mark> va Subnet ID bo‘ladi.</p><svg class="sk" viewBox="0 0 600 210" role="img" aria-label="Ikki pogonadan uch pogonaga">
+    <defs>
+      <filter id="r16-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a16-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r16-3)">
+      <rect class="s fb" x="60" y="52" width="200" height="30"></rect>
+      <rect class="s fw" x="260" y="52" width="280" height="30"></rect>
+      <rect class="s fb" x="60" y="136" width="200" height="30"></rect>
+      <rect class="s fy" x="260" y="136" width="110" height="30"></rect>
+      <rect class="s fw" x="370" y="136" width="170" height="30"></rect>
+      <path class="sr" marker-end="url(#a16-1)" d="M400,86 C400,104 330,112 316,132"></path>
+    </g>
+    <text x="300" y="36" text-anchor="middle" class="red">2 pog‘ona</text>
+    <text x="160" y="72" text-anchor="middle">Net ID</text>
+    <text x="400" y="72" text-anchor="middle">Host ID</text>
+    <text x="160" y="156" text-anchor="middle">Net ID</text>
+    <text x="315" y="156" text-anchor="middle">Subnet ID</text>
+    <text x="455" y="156" text-anchor="middle">Host ID</text>
+    <text x="120" y="120" text-anchor="middle" class="red">3 pog‘ona</text>
+    <text x="300" y="194" text-anchor="middle" class="sm">subnet tashqariga ko‘rinmaydi — marshrutizator uni ajratadi</text>
+  </svg><p class="cap">2-rasm. Net ID + Subnet ID + Host ID</p><h2>3. Subnet maska</h2><ul class="tight">
+    <li>32 bit: ketma-ket <b>1</b> — tarmoq, ketma-ket <b>0</b> — host</li>
+    <li>standart maskalar: A — 255.0.0.0, B — 255.255.0.0, C — 255.255.255.0</li>
+  </ul><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="AND amali bilan subnet manzilini topish">
+    <defs>
+      <filter id="r16-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="11" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r16-4)">
+      <path class="s" d="M145,100 h248"></path>
+      <rect class="sr" x="499" y="112" width="96" height="26" fill="none" rx="6"></rect>
+      <rect class="sr" x="481" y="144" width="114" height="26" fill="none" rx="6"></rect>
+    </g>
+    <text x="140" y="46" text-anchor="end" class="sm">IP</text>
+    <text x="150" y="46" class="sm">10000110.10010000.00000001.00000001</text>
+    <text x="588" y="46" text-anchor="end">134.144.1.1</text>
+    <text x="140" y="76" text-anchor="end" class="sm">maska</text>
+    <text x="150" y="76" class="sm">11111111.11111111.11111111.00000000</text>
+    <text x="588" y="76" text-anchor="end">255.255.255.0</text>
+    <text x="112" y="96" text-anchor="end" class="red">AND</text>
+    <text x="140" y="130" text-anchor="end" class="sm">subnet</text>
+    <text x="150" y="130" class="sm">10000110.10010000.00000001.00000000</text>
+    <text x="588" y="130" text-anchor="end">134.144.1.0</text>
+    <text x="140" y="162" text-anchor="end" class="sm">broadcast</text>
+    <text x="150" y="162" class="sm">10000110.10010000.00000001.11111111</text>
+    <text x="588" y="162" text-anchor="end">134.144.1.255</text>
+    <text x="300" y="200" text-anchor="middle" class="sm">host bitlari hammasi 0 → subnet manzili</text>
+    <text x="300" y="228" text-anchor="middle" class="sm">host bitlari hammasi 1 → broadcast manzili</text>
+  </svg><p class="cap">3-rasm. IP AND maska = subnet manzili</p><h2>4. Subnetdagi host manzillari</h2><p class="tight">Host bitlari <b>N</b> bo‘lsa, foydali manzil <mark>2^N − 2</mark> ta.</p><svg class="sk" viewBox="0 0 600 240" role="img" aria-label="Host manzillari sonini hisoblash misoli">
+    <defs>
+      <filter id="r16-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="5" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r16-5)">
+      <rect class="s fb" x="40" y="60" width="388" height="32"></rect>
+      <rect class="s fy" x="428" y="60" width="72" height="32"></rect>
+      <rect class="s" x="60" y="104" width="480" height="124" rx="12"></rect>
+    </g>
+    <text x="270" y="44" text-anchor="middle" class="red">192.168.3.192 · maska 255.255.255.224</text>
+    <text x="234" y="82" text-anchor="middle">27 bit — tarmoq</text>
+    <text x="464" y="82" text-anchor="middle" class="sm">5 bit</text>
+    <text x="300" y="132" text-anchor="middle" class="sm">maska: 11111111.11111111.11111111.11100000</text>
+    <text x="300" y="162" text-anchor="middle">tarmoq bitlari 27 → N = 32 − 27 = 5</text>
+    <text x="300" y="192" text-anchor="middle">host manzillari = 2^5 − 2 = 30</text>
+    <text x="300" y="220" text-anchor="middle" class="sm">subnet .192 · hostlar .193…222 · broadcast .223</text>
+  </svg><p class="cap">4-rasm. /27 uchun hisob</p><table class="rot">
+    <tbody><tr><th>2^n</th><td>2^1</td><td>2^2</td><td>2^3</td><td>2^4</td><td>2^5</td><td>2^6</td><td>2^7</td><td>2^8</td><td>2^9</td><td>2^10</td></tr>
+    <tr><th>=</th><td>2</td><td>4</td><td>8</td><td>16</td><td>32</td><td>64</td><td>128</td><td>256</td><td>512</td><td>1024</td></tr>
+  </tbody></table><h2>5. Host soniga qarab bo‘lish</h2><p class="tight">Har subnetda <b>Y</b> manzil kerak: <mark>2^N ≥ Y+2 ≥ 2^(N−1)</mark>, maska uzunligi 32 − N.</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 200" role="img" aria-label="Host soniga qarab subnetlash misoli">
+    <defs>
+      <filter id="r16-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="23" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r16-6)">
+      <rect class="s fb" x="40" y="70" width="240" height="30"></rect>
+      <rect class="s fy" x="280" y="70" width="90" height="30"></rect>
+      <rect class="s fw" x="370" y="70" width="150" height="30"></rect>
+    </g>
+    <text x="280" y="52" text-anchor="middle" class="red">168.195.0.0 · Y = 700 → N = 10</text>
+    <text x="160" y="120" text-anchor="middle" class="sm">Net 16</text>
+    <text x="325" y="120" text-anchor="middle" class="sm">Subnet 6</text>
+    <text x="445" y="120" text-anchor="middle" class="sm">Host 10</text>
+    <text x="300" y="152" text-anchor="middle">/22 = 255.255.252.0</text>
+    <text x="300" y="182" text-anchor="middle" class="sm">2^6 = 64 subnet: 168.195.0.0 · 4.0 · 8.0 · 12.0 …</text>
+  </svg><p class="cap">5-rasm. 700 host → /22</p><h2>6. Subnet soniga qarab bo‘lish</h2><p class="tight"><b>X</b> ta subnet kerak: <mark>2^M ≥ X ≥ 2^(M−1)</mark> — hostlar soni maksimal qoladi.</p><svg class="sk" viewBox="0 0 600 240" role="img" aria-label="Subnet soniga qarab subnetlash misoli">
+    <defs>
+      <filter id="r16-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="29" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r16-7)">
+      <rect class="s fb" x="40" y="70" width="240" height="30"></rect>
+      <rect class="s fy" x="280" y="70" width="75" height="30"></rect>
+      <rect class="s fw" x="355" y="70" width="165" height="30"></rect>
+      <rect class="s fy" x="40" y="180" width="90" height="26" rx="3"></rect>
+      <rect class="s fy" x="150" y="180" width="90" height="26" rx="3"></rect>
+      <rect class="s fy" x="260" y="180" width="90" height="26" rx="3"></rect>
+      <rect class="s fy" x="370" y="180" width="90" height="26" rx="3"></rect>
+    </g>
+    <text x="300" y="26" text-anchor="middle" class="red">168.195.0.0 → 27 ta subnet, M = 5</text>
+    <text x="160" y="120" text-anchor="middle" class="sm">Net 16</text>
+    <text x="317" y="120" text-anchor="middle" class="sm">Sub 5</text>
+    <text x="437" y="120" text-anchor="middle" class="sm">Host 11</text>
+    <text x="300" y="152" text-anchor="middle">16 + 5 = 21 → /21 = 255.255.248.0</text>
+    <text x="85" y="198" text-anchor="middle" class="sm">168.195.0.0</text>
+    <text x="195" y="198" text-anchor="middle" class="sm">168.195.8.0</text>
+    <text x="305" y="198" text-anchor="middle" class="sm">168.195.16.0</text>
+    <text x="415" y="198" text-anchor="middle" class="sm">168.195.24.0</text>
+    <text x="490" y="198" text-anchor="middle" class="sm">…</text>
+    <text x="300" y="228" text-anchor="middle" class="sm">jami 2^5 = 32 subnet — 27 tasi yetarli</text>
+  </svg><p class="cap">6-rasm. 27 subnet → /21</p><h2>7. VLSM</h2><ul class="tight">
+    <li>bitta maskali bo‘lish — hamma subnet <b>bir xil</b>, manzil isrof bo‘ladi</li>
+    <li>RFC 1009 — <mark>turli uzunlikdagi maskalar</mark>, bo‘laklar har xil kattalikda</li>
+  </ul><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 260" role="img" aria-label="Qatiy maska va VLSM taqqoslash">
+    <defs>
+      <filter id="r16-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="31" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a16-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r16-8)">
+      <rect class="s fb" x="40" y="36" width="120" height="34" rx="3"></rect>
+      <rect class="s fb" x="164" y="36" width="120" height="34" rx="3"></rect>
+      <rect class="s fb" x="288" y="36" width="120" height="34" rx="3"></rect>
+      <rect class="s fb" x="412" y="36" width="120" height="34" rx="3"></rect>
+      <path class="sg" marker-end="url(#a16-2)" d="M300,102 v24"></path>
+      <rect class="s fb" x="40" y="166" width="170" height="34" rx="3"></rect>
+      <rect class="s fg" x="216" y="166" width="100" height="34" rx="3"></rect>
+      <rect class="s fy" x="322" y="166" width="70" height="34" rx="3"></rect>
+      <rect class="s fy" x="398" y="166" width="70" height="34" rx="3"></rect>
+      <rect class="s fw" x="474" y="166" width="58" height="34" rx="3"></rect>
+    </g>
+    <text x="300" y="22" text-anchor="middle" class="red">qat‘iy maska — hamma bo‘lak bir xil</text>
+    <text x="100" y="58" text-anchor="middle" class="sm">/22 · 1022</text>
+    <text x="224" y="58" text-anchor="middle" class="sm">/22 · 1022</text>
+    <text x="348" y="58" text-anchor="middle" class="sm">/22 · 1022</text>
+    <text x="472" y="58" text-anchor="middle" class="sm">/22 · 1022</text>
+    <text x="300" y="90" text-anchor="middle" class="sm">filialda 50 host kerak → 970 manzil isrof</text>
+    <text x="300" y="152" text-anchor="middle" class="grn">VLSM — har bo‘lakda o‘z maskasi</text>
+    <text x="125" y="188" text-anchor="middle" class="sm">/22 · 1022</text>
+    <text x="266" y="188" text-anchor="middle" class="sm">/25 · 126</text>
+    <text x="357" y="188" text-anchor="middle" class="sm">/26 · 62</text>
+    <text x="433" y="188" text-anchor="middle" class="sm">/26 · 62</text>
+    <text x="503" y="188" text-anchor="middle" class="sm">/27 · 30</text>
+    <text x="300" y="224" text-anchor="middle" class="sm">katta filial — /22, kichik filial — /25 yoki /26</text>
+    <text x="300" y="248" text-anchor="middle" class="sm">172.16.0.0 ichida turli o‘lchamdagi subnetlar</text>
+  </svg><h2>8. CIDR</h2><p class="tight">1992: B sinfi tugayapti, marshrut jadvali o‘sdi. Yechim — <mark>sinfsiz prefiks</mark> (RFC 1517–1520).</p><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="CIDR supernet va slash yozuvi">
+    <defs>
+      <filter id="r16-9" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="41" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a16-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r16-9)">
+      <rect class="s fw" x="40" y="40" width="150" height="30" rx="3"></rect>
+      <rect class="s fw" x="40" y="78" width="150" height="30" rx="3"></rect>
+      <path class="sg" marker-end="url(#a16-3)" d="M198,74 h50"></path>
+      <rect class="s fg" x="262" y="52" width="200" height="46" rx="4"></rect>
+      <rect class="s fb" x="60" y="166" width="354" height="30"></rect>
+      <rect class="s fy" x="414" y="166" width="66" height="30"></rect>
+    </g>
+    <text x="300" y="22" text-anchor="middle" class="red">CIDR — umumiy prefiksli tarmoqlar birlashadi</text>
+    <text x="115" y="60" text-anchor="middle" class="sm">200.1.2.0/24</text>
+    <text x="115" y="98" text-anchor="middle" class="sm">200.1.3.0/24</text>
+    <text x="362" y="72" text-anchor="middle">200.1.2.0/23</text>
+    <text x="362" y="92" text-anchor="middle" class="sm">255.255.254.0</text>
+    <text x="362" y="126" text-anchor="middle" class="grn">supernet — bitta marshrut</text>
+    <text x="300" y="150" text-anchor="middle" class="red">slash yozuvi: 192.168.1.1/27</text>
+    <text x="237" y="186" text-anchor="middle">27 bit prefiks</text>
+    <text x="447" y="186" text-anchor="middle" class="sm">5 bit host</text>
+    <text x="300" y="220" text-anchor="middle" class="sm">maskadagi birlar soni = prefiks uzunligi</text>
+    <text x="300" y="242" text-anchor="middle" class="sm">yig‘ish (aggregation) marshrut jadvalini qisqartiradi</text>
+  </svg><p class="cap">7-rasm. Supernet va /prefiks yozuvi</p><div class="pg-num">— 5 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>Subnet = Host ID’dan qarzga olingan bitlar → 3 pog‘ona</li>
+      <li>Maska: 1 lar — tarmoq, 0 lar — host; IP AND maska = subnet</li>
+      <li>Host soni = 2^N − 2; subnet soni = 2^M</li>
+      <li>Y host kerak → 2^N ≥ Y+2; X subnet kerak → 2^M ≥ X</li>
+      <li>VLSM — turli maska; CIDR — sinfsiz prefiks va supernet</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>/27 da nechta host? <span class="ans">— 2^5 − 2 = 30</span></li>
+    <li>134.144.1.1/24 broadcast’i? <span class="ans">— 134.144.1.255</span></li>
+    <li>700 host uchun maska? <span class="ans">— /22 = 255.255.252.0</span></li>
+    <li>VLSM qaysi RFC? <span class="ans">— RFC 1009</span></li>
+  </ol><div class="pg-num">— 6 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+</body>
+</html>

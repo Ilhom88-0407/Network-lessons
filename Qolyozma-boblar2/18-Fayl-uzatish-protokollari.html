@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>18-bob · Fayl uzatish protokollari</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">18-bob</div><h1 class="title">Fayl uzatish protokollari
+    <small>File Transfer Protocols — FTP / TFTP</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>FTP</b> — fayl uzatish protokoli, TCP ustida ishlaydi</li>
+      <li><b>Boshqaruv ulanishi</b> — 21-port: buyruqlar va javoblar shu yerdan yuradi</li>
+      <li><b>Ma’lumot ulanishi</b> — 20-port yoki kelishilgan port: faylning o‘zi</li>
+      <li><b>Aktiv / passiv rejim</b> — ma’lumot ulanishini server yoki mijoz ochadi</li>
+      <li><b>TFTP</b> — soddalashgan variant: UDP 69, autentifikatsiyasiz</li>
+      <li><b>ASCII / binary</b> — matn yoki o‘zgarishsiz (ikkilik) uzatish rejimi</li>
+    </ul>
+  </div><h2>1. FTP asoslari</h2><p class="tight"><mark>FTP</mark> — Internetdagi fayl uzatish standarti. <b>TCP</b> ustida, klient/server. <span class="en">(File Transfer Protocol)</span></p><ul class="tight">
+    <li><b>ikki TCP ulanish</b> — boshqaruv 21, ma’lumot 20</li>
+    <li><b>login va parol</b> — foydalanuvchi huquqlari beriladi</li>
+    <li><b>2 fayl rejimi</b> — ASCII · binary</li>
+    <li><b>2 data rejimi</b> — aktiv (PORT) · passiv (PASV)</li>
+  </ul><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="FTP boshqaruv va malumot ulanishlari">
+    <defs>
+      <filter id="r18-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+      <marker id="a18-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+      <marker id="a18-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r18-1)">
+      <!-- klient PC -->
+      <rect class="s fw" x="44" y="96" width="86" height="54" rx="4"></rect>
+      <path class="s2" d="M56,112 h40 M56,128 h62 M87,150 v10 M64,160 h46"></path>
+      <!-- server -->
+      <rect class="s fw" x="486" y="80" width="66" height="102" rx="4"></rect>
+      <path class="s2" d="M496,98 h46 M496,116 h46 M496,134 h46 M496,152 h46"></path>
+      <!-- boshqaruv ulanishi -->
+      <path class="s" marker-end="url(#a18-1)" d="M134,104 C240,66 380,58 480,86"></path>
+      <!-- malumot ulanishi -->
+      <path class="sg" marker-end="url(#a18-2)" d="M478,166 C380,188 240,184 140,142"></path>
+    </g>
+    <text x="300" y="20" text-anchor="middle" class="red">boshqaruv ulanishi — TCP 21</text>
+    <text x="300" y="40" text-anchor="middle" class="sm">buyruq va javob · seans oxirigacha ochiq</text>
+    <text x="300" y="206" text-anchor="middle" class="red">ma’lumot ulanishi — TCP 20</text>
+    <text x="300" y="226" text-anchor="middle" class="sm">fayl yoki ro‘yxat uzatiladi, so‘ng yopiladi</text>
+    <text x="519" y="72" text-anchor="middle">FTP server</text>
+    <text x="87" y="184" text-anchor="middle">FTP klient</text>
+    <text x="442" y="96" text-anchor="middle" class="sm">21</text>
+    <text x="442" y="178" text-anchor="middle" class="sm">20</text>
+  </svg><p class="cap">1-rasm. Bir seansda ikkita TCP ulanish</p><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>2. Fayl uzatish rejimlari</h2><svg class="sk" viewBox="0 0 600 175" role="img" aria-label="ASCII va binary fayl uzatish rejimlari">
+    <defs>
+      <filter id="r18-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="13" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a18-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r18-2)">
+      <rect class="s" x="14" y="26" width="272" height="120" rx="12"></rect>
+      <rect class="s" x="314" y="26" width="272" height="120" rx="12"></rect>
+      <!-- ASCII -->
+      <rect class="s fw" x="40" y="52" width="42" height="54" rx="3"></rect>
+      <path class="s2" d="M48,66 h26 M48,78 h26 M48,90 h18"></path>
+      <rect class="s fw" x="218" y="52" width="42" height="54" rx="3"></rect>
+      <path class="s2" d="M226,66 h26 M226,78 h26 M226,90 h18"></path>
+      <path class="s2" marker-end="url(#a18-3)" d="M86,80 h32"></path>
+      <path class="s2" marker-end="url(#a18-3)" d="M182,80 h32"></path>
+      <!-- binary -->
+      <rect class="s fb" x="332" y="52" width="40" height="54" rx="3"></rect>
+      <path class="s2" d="M340,66 h24 M340,78 h24 M340,90 h24"></path>
+      <rect class="s fb" x="528" y="52" width="40" height="54" rx="3"></rect>
+      <path class="s2" d="M536,66 h24 M536,78 h24 M536,90 h24"></path>
+      <path class="s2" marker-end="url(#a18-3)" d="M376,80 h14"></path>
+      <path class="s2" marker-end="url(#a18-3)" d="M510,80 h14"></path>
+      <path class="sg" d="M394,96 h112"></path>
+    </g>
+    <text x="150" y="18" text-anchor="middle" class="red">ASCII (netascii) — standart</text>
+    <text x="450" y="18" text-anchor="middle" class="red">binary / image (octet)</text>
+    <text x="150" y="88" text-anchor="middle">A B C</text>
+    <text x="450" y="84" text-anchor="middle" class="sm">0101 1100 0011</text>
+    <text x="150" y="130" text-anchor="middle" class="sm">o‘z formati → ASCII → o‘z formati</text>
+    <text x="450" y="130" text-anchor="middle" class="sm">uzluksiz bit oqimi, o‘girmasdan</text>
+    <text x="150" y="166" text-anchor="middle" class="sm">matn fayllar: .txt · .cfg</text>
+    <text x="450" y="166" text-anchor="middle" class="sm">dastur fayllar: .bin · .app</text>
+  </svg><p class="cap">2-rasm. ASCII — matn uchun, binary — dastur uchun</p><h2>3. Aktiv rejim (PORT)</h2><p class="tight">Klient <mark>PORT</mark> buyrug‘ida o‘z vaqtinchalik portini aytadi, data ulanishni <b>server</b> boshlaydi — 20-portdan.</p><ul class="tight">
+    <li><b>A1.A2.A3.A4</b> — klientning IP manzili</li>
+    <li><b>P1, P2</b> — port: 256 × P1 + P2</li>
+    <li><b>1174</b> — boshqaruv porti, <b>3566</b> — data porti</li>
+  </ul><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 420" role="img" aria-label="FTP aktiv rejim tortta qadam">
+    <defs>
+      <filter id="r18-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="21" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a18-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+      <marker id="a18-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r18-3)">
+      <rect class="s fw" x="68" y="52" width="104" height="30" rx="4"></rect>
+      <rect class="s fw" x="428" y="52" width="104" height="30" rx="4"></rect>
+      <path class="dash" d="M120,82 v290 M480,82 v290"></path>
+      <path class="s" marker-end="url(#a18-4)" d="M126,112 H474"></path>
+      <path class="s" marker-end="url(#a18-4)" d="M126,160 H474"></path>
+      <path class="sg" marker-end="url(#a18-5)" d="M474,230 H126"></path>
+      <path class="sg" marker-end="url(#a18-5)" d="M126,302 H474"></path>
+      <path class="sg" marker-end="url(#a18-5)" d="M474,320 H126"></path>
+    </g>
+    <text x="120" y="44" text-anchor="middle">FTP klient</text>
+    <text x="480" y="44" text-anchor="middle">FTP server</text>
+    <text x="120" y="74" text-anchor="middle" class="sm">192.168.0.1</text>
+    <text x="480" y="74" text-anchor="middle" class="sm">192.168.0.10</text>
+    <text x="300" y="98" text-anchor="middle" class="red">1) boshqaruv: 1174 → 21</text>
+    <text x="300" y="146" text-anchor="middle" class="red">2) PORT (192,168,0,1,13,238)</text>
+    <text x="300" y="182" text-anchor="middle" class="sm">13 × 256 + 238 = 3566</text>
+    <text x="300" y="216" text-anchor="middle" class="grn">3) data: server 20 → klient 3566</text>
+    <text x="300" y="252" text-anchor="middle" class="sm">SYN ni server yuboradi — shuning uchun «aktiv»</text>
+    <text x="300" y="288" text-anchor="middle" class="grn">4) ma’lumot uzatiladi</text>
+    <text x="300" y="348" text-anchor="middle" class="sm">tugagach FIN — data ulanish yopiladi, boshqaruv ochiq</text>
+    <text x="300" y="384" text-anchor="middle" class="red">firewall ichki tasodifiy portga ulanishni to‘sadi</text>
+  </svg><p class="cap">3-rasm. Aktiv (PORT) rejim — to‘rt qadam</p><div class="box"><span class="lbl">Data ulanish:</span> fayl yuborish · fayl olish · katalog ro‘yxatini yuborish</div><h2>4. Passiv rejim (PASV)</h2><p class="tight">Klient <mark>PASV</mark> yuboradi, server javobda o‘z vaqtinchalik portini beradi, data ulanishni <b>klient</b> boshlaydi.</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 380" role="img" aria-label="FTP passiv rejim qadamlari">
+    <defs>
+      <filter id="r18-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="29" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a18-6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+      <marker id="a18-7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r18-4)">
+      <rect class="s fw" x="68" y="52" width="104" height="30" rx="4"></rect>
+      <rect class="s fw" x="428" y="52" width="104" height="30" rx="4"></rect>
+      <path class="dash" d="M120,82 v250 M480,82 v250"></path>
+      <path class="s" marker-end="url(#a18-6)" d="M126,106 H474"></path>
+      <path class="s" marker-end="url(#a18-6)" d="M126,148 H474"></path>
+      <path class="s" marker-end="url(#a18-6)" d="M474,196 H126"></path>
+      <path class="sg" marker-end="url(#a18-7)" d="M126,258 H474"></path>
+      <path class="sg" marker-end="url(#a18-7)" d="M126,306 H474"></path>
+      <path class="sg" marker-end="url(#a18-7)" d="M474,322 H126"></path>
+    </g>
+    <text x="120" y="44" text-anchor="middle">FTP klient</text>
+    <text x="480" y="44" text-anchor="middle">FTP server</text>
+    <text x="120" y="74" text-anchor="middle" class="sm">192.168.0.1</text>
+    <text x="480" y="74" text-anchor="middle" class="sm">192.168.0.10</text>
+    <text x="300" y="98" text-anchor="middle" class="red">1) boshqaruv: 1174 → 21</text>
+    <text x="300" y="140" text-anchor="middle" class="red">2) PASV — server passiv rejimga o‘tsin</text>
+    <text x="300" y="186" text-anchor="middle" class="red">3) Entering Passive Mode (…,20,245)</text>
+    <text x="300" y="218" text-anchor="middle" class="sm">20 × 256 + 245 = 5365 — serverning porti</text>
+    <text x="300" y="248" text-anchor="middle" class="grn">4) data: klient 3789 → server 5365</text>
+    <text x="300" y="288" text-anchor="middle" class="grn">5) ma’lumot uzatiladi, so‘ng FIN</text>
+    <text x="300" y="352" text-anchor="middle" class="sm">ikkala ulanishni ham klient boshlaydi — firewall to‘smaydi</text>
+  </svg><p class="cap">4-rasm. Passiv (PASV) rejim</p><table class="rot">
+    <tbody><tr><th></th><th>Aktiv — PORT</th><th>Passiv — PASV</th></tr>
+    <tr><td>Portni kim aytadi</td><td>klient</td><td>server</td></tr>
+    <tr><td>Data ulanishni kim boshlaydi</td><td>server (20)</td><td>klient</td></tr>
+    <tr><td>Klient firewall orqasida</td><td>muammo</td><td>ishlaydi</td></tr>
+  </tbody></table><h2>5. TFTP</h2><p class="tight"><mark>TFTP</mark> — oddiy fayl uzatish protokoli. <span class="en">(Trivial FTP)</span></p><ul class="tight">
+    <li><b>UDP 69</b> — bitta port, klient/server</li>
+    <li><b>login yo‘q</b>, katalog ro‘yxati yo‘q, buyruqlar kam</li>
+    <li><b>o‘z qayta yuborish</b> mexanizmi — UDP ishonchsiz</li>
+    <li>uzatishni faqat <b>klient</b> boshlaydi</li>
+    <li>rejimlar: <b>netascii</b> = ASCII, <b>octet</b> = binary</li>
+  </ul><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 340" role="img" aria-label="TFTP yuklab olish va yuklash jarayoni">
+    <defs>
+      <filter id="r18-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="37" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a18-8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+      <marker id="a18-9" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r18-5)">
+      <path class="dash" d="M45,48 v186 M245,48 v186 M365,48 v216 M545,48 v216"></path>
+      <path class="s" marker-end="url(#a18-8)" d="M51,68 H239"></path>
+      <path class="sg" marker-end="url(#a18-9)" d="M239,98 H51"></path>
+      <path class="s" marker-end="url(#a18-8)" d="M51,128 H239"></path>
+      <path class="s2" d="M145,148 v5 M145,159 v5"></path>
+      <path class="sg" marker-end="url(#a18-9)" d="M239,186 H51"></path>
+      <path class="s" marker-end="url(#a18-8)" d="M51,216 H239"></path>
+      <path class="s" marker-end="url(#a18-8)" d="M371,68 H539"></path>
+      <path class="s2" marker-end="url(#a18-8)" d="M539,98 H371"></path>
+      <path class="sg" marker-end="url(#a18-9)" d="M371,128 H539"></path>
+      <path class="s2" marker-end="url(#a18-8)" d="M539,158 H371"></path>
+      <path class="s2" d="M455,178 v5 M455,189 v5"></path>
+      <path class="sg" marker-end="url(#a18-9)" d="M371,216 H539"></path>
+      <path class="s2" marker-end="url(#a18-8)" d="M539,246 H371"></path>
+    </g>
+    <text x="145" y="16" text-anchor="middle" class="red">yuklab olish</text>
+    <text x="455" y="16" text-anchor="middle" class="red">yuklash</text>
+    <text x="45" y="40" text-anchor="middle" class="sm">klient</text>
+    <text x="245" y="40" text-anchor="middle" class="sm">server</text>
+    <text x="365" y="40" text-anchor="middle" class="sm">klient</text>
+    <text x="545" y="40" text-anchor="middle" class="sm">server</text>
+    <text x="145" y="57" text-anchor="middle" class="sm">Read Request</text>
+    <text x="145" y="87" text-anchor="middle" class="sm">Data blok 1</text>
+    <text x="145" y="117" text-anchor="middle" class="sm">ACK 1</text>
+    <text x="145" y="175" text-anchor="middle" class="sm">Data blok n</text>
+    <text x="145" y="205" text-anchor="middle" class="sm">ACK n</text>
+    <text x="455" y="57" text-anchor="middle" class="sm">Write Request</text>
+    <text x="455" y="87" text-anchor="middle" class="sm">ACK 0</text>
+    <text x="455" y="117" text-anchor="middle" class="sm">Data blok 1</text>
+    <text x="455" y="147" text-anchor="middle" class="sm">ACK 1</text>
+    <text x="455" y="205" text-anchor="middle" class="sm">Data blok n</text>
+    <text x="455" y="235" text-anchor="middle" class="sm">ACK n</text>
+    <text x="300" y="286" text-anchor="middle" class="red">har blok = 512 bayt</text>
+    <text x="300" y="310" text-anchor="middle" class="sm">oxirgi blok 512 dan kichik → uzatish tugadi</text>
+    <text x="300" y="332" text-anchor="middle" class="sm">ACK kelmasa — vaqt tugagach qayta yuboriladi</text>
+  </svg><p class="cap">5-rasm. Read Request — olish, Write Request — yuklash</p><div class="box"><span class="lbl">Chegara holat:</span> fayl uzunligi 512 ga bo‘linsa, oxirida bo‘sh (0 baytli) paket yuboriladi</div><h2>6. Sozlash</h2><svg class="sk" viewBox="0 0 600 160" role="img" aria-label="Router FTP server va klient sxemasi">
+    <defs>
+      <filter id="r18-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="41" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a18-10" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r18-6)">
+      <rect class="s fy" x="60" y="58" width="94" height="42" rx="5"></rect>
+      <path class="s2" d="M74,72 h30 M74,86 h30 M118,72 h22 M118,86 h22"></path>
+      <rect class="s fy" x="450" y="58" width="94" height="42" rx="5"></rect>
+      <path class="s2" d="M464,72 h30 M464,86 h30 M508,72 h22 M508,86 h22"></path>
+      <path class="sr" marker-end="url(#a18-10)" d="M158,80 H442"></path>
+      <path class="s2" d="M442,96 H158"></path>
+    </g>
+    <text x="107" y="48" text-anchor="middle">FTP klient</text>
+    <text x="497" y="48" text-anchor="middle">FTP server</text>
+    <text x="300" y="44" text-anchor="middle" class="red">ftp 10.0.0.1</text>
+    <text x="300" y="66" text-anchor="middle" class="sm">boshqaruv 21 · ma’lumot 20</text>
+    <text x="300" y="120" text-anchor="middle" class="sm">put aaa.app bbb.app</text>
+    <text x="497" y="120" text-anchor="middle" class="sm">10.0.0.1</text>
+    <text x="300" y="146" text-anchor="middle" class="grn">230 User logged in.</text>
+  </svg><p class="tight"><b>Router — FTP server:</b></p><ul class="tight">
+    <li>[Router] ftp server enable</li>
+    <li>[Router] local-user ftp_manager class manage</li>
+    <li>[Router-luser-ftp_manager] password simple 123456</li>
+    <li>[Router-luser-ftp_manager] service-type ftp</li>
+  </ul><p class="tight"><b>Router — FTP klient:</b> &lt;Router&gt; ftp <i>ftp-server</i></p><div class="pg-num">— 5 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><ul class="tight">
+    <li>ls · get · put · bye · binary · pwd · cd · delete</li>
+  </ul><p class="tight"><b>TFTP klient:</b> &lt;Router&gt; tftp 10.0.0.1 get | put | sget <i>fayl</i></p><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>FTP: TCP · boshqaruv 21 · ma’lumot 20</li>
+      <li>Fayl rejimi: ASCII (matn) · binary (dastur)</li>
+      <li>Aktiv — data ulanishni server 20-portdan boshlaydi</li>
+      <li>Passiv — klient boshlaydi, firewall bilan ishlaydi</li>
+      <li>TFTP: UDP 69 · blok 512 bayt · ACK va qayta yuborish</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>FTP portlari? <span class="ans">— 21 boshqaruv, 20 ma’lumot</span></li>
+    <li>PORT (…,13,238) → port? <span class="ans">— 3566</span></li>
+    <li>Firewall orqasida qaysi rejim? <span class="ans">— passiv</span></li>
+    <li>TFTP transporti va porti? <span class="ans">— UDP 69</span></li>
+    <li>TFTP blok o‘lchami? <span class="ans">— 512 bayt</span></li>
+  </ol><div class="pg-num">— 6 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+</body>
+</html>

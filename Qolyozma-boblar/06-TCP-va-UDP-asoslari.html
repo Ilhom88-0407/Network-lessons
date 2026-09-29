@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>06-bob · TCP va UDP asoslari</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">6-bob</div><h1 class="title">TCP va UDP asoslari
+    <small>TCP and UDP Fundamentals</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>TCP</b> — ulanishli, ishonchli transport protokoli (RFC 793)</li>
+      <li><b>UDP</b> — ulanishsiz, tasdiqsiz, tez protokol (RFC 768)</li>
+      <li><b>Port</b> — bitta xostdagi ilovalarni ajratuvchi raqam</li>
+      <li><b>Segment</b> — transport qatlami uzatadigan ma’lumot bo‘lagi</li>
+    </ul>
+  </div><h2>1. Transport qatlami vazifalari</h2><p class="tight">Ilova va IP orasida — <mark>xostdan xostga</mark> ulanish.</p><ul class="tight">
+    <li><b>ulanishli / ulanishsiz</b> xizmat</li>
+    <li><b>holatni saqlash</b> — ulanishlar bazasi</li>
+    <li><b>segmentlash</b> — oqimni bo‘laklarga bo‘lish</li>
+    <li><b>multiplekslash</b> — port bilan ilovani ajratish</li>
+    <li><b>ishonchlilik</b> — faqat TCP</li>
+    <li><b>oqim nazorati</b> — tezlikni moslash</li>
+  </ul><svg class="sk" viewBox="0 0 600 300" role="img" aria-label="Transport qatlami va multiplekslash">
+    <defs>
+      <filter id="r06-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="6" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+      <marker id="a06-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r06-1)">
+      <rect class="s fw" x="20" y="50" width="140" height="40" rx="4"></rect>
+      <rect class="s fy" x="20" y="94" width="140" height="56" rx="4"></rect>
+      <rect class="s fw" x="20" y="154" width="140" height="40" rx="4"></rect>
+      <rect class="s fw" x="20" y="198" width="140" height="40" rx="4"></rect>
+      <rect class="s fw" x="250" y="60" width="80" height="34" rx="4"></rect>
+      <rect class="s fw" x="350" y="60" width="80" height="34" rx="4"></rect>
+      <rect class="s fw" x="450" y="60" width="80" height="34" rx="4"></rect>
+      <path class="s2" d="M290,94 v36 M390,94 v36 M490,94 v36"></path>
+      <rect class="s fy" x="240" y="130" width="300" height="34" rx="4"></rect>
+      <path class="s2" marker-end="url(#a06-1)" d="M390,164 v24"></path>
+      <rect class="s fb" x="320" y="190" width="140" height="40" rx="4"></rect>
+      <path class="s2" marker-end="url(#a06-1)" d="M390,230 v32"></path>
+      <path class="s" d="M300,266 h180"></path>
+    </g>
+    <text x="90" y="38" text-anchor="middle" class="red">TCP/IP model</text>
+    <text x="90" y="76" text-anchor="middle">Ilova</text>
+    <text x="90" y="120" text-anchor="middle">Transport</text>
+    <text x="90" y="140" text-anchor="middle" class="sm">TCP · UDP</text>
+    <text x="90" y="180" text-anchor="middle">Internet · IP</text>
+    <text x="90" y="224" text-anchor="middle" class="sm">kanal · fizik</text>
+    <text x="390" y="42" text-anchor="middle" class="red">multiplekslash</text>
+    <text x="290" y="82" text-anchor="middle">web</text>
+    <text x="390" y="82" text-anchor="middle">pochta</text>
+    <text x="490" y="82" text-anchor="middle">DNS</text>
+    <text x="298" y="116" class="sm">port 80</text>
+    <text x="398" y="116" class="sm">port 25</text>
+    <text x="498" y="116" class="sm">port 53</text>
+    <text x="390" y="152" text-anchor="middle">TCP / UDP</text>
+    <text x="390" y="215" text-anchor="middle">IP: 1 manzil</text>
+    <text x="390" y="282" text-anchor="middle" class="red">bitta kanal — ko‘p ilova</text>
+  </svg><p class="cap">1-rasm. Bir IP manzil — ko‘p ilova, portlar ajratadi</p><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="box"><span class="lbl">Manba:</span> TCP — RFC 793, UDP — RFC 768 — ikkisi IP ustida.</div><h2>2. TCP xususiyatlari</h2><ul class="tight">
+    <li><b>uch qadamli qo‘l siqish</b></li>
+    <li><b>port raqami</b> — ilovani aniqlaydi</li>
+    <li><b>nazorat summasi</b> — xatoni topadi</li>
+    <li><b>tasdiq (Ack)</b> — kelmasa qayta uzatiladi</li>
+    <li><b>ketma-ketlik raqami</b> — tartib va yo‘qolish</li>
+    <li><b>siljuvchi oyna</b> — oqim nazorati</li>
+  </ul><h2>3. TCP segment sarlavhasi</h2><svg class="sk" viewBox="0 0 600 306" role="img" aria-label="TCP sarlavhasi maydonlari">
+    <defs>
+      <filter id="r06-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="16" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r06-2)">
+      <rect class="s fw" x="40" y="56" width="260" height="34"></rect>
+      <rect class="s fw" x="300" y="56" width="260" height="34"></rect>
+      <rect class="s fw" x="40" y="90" width="520" height="34"></rect>
+      <rect class="s fw" x="40" y="124" width="520" height="34"></rect>
+      <rect class="s fw" x="40" y="158" width="65" height="34"></rect>
+      <rect class="s fw" x="105" y="158" width="65" height="34"></rect>
+      <rect class="s fy" x="170" y="158" width="130" height="34"></rect>
+      <rect class="s fw" x="300" y="158" width="260" height="34"></rect>
+      <rect class="s fw" x="40" y="192" width="260" height="34"></rect>
+      <rect class="s fw" x="300" y="192" width="260" height="34"></rect>
+      <rect class="s fw" x="40" y="226" width="520" height="34"></rect>
+      <rect class="s fb" x="40" y="260" width="520" height="34"></rect>
+      <path class="dash" d="M40,50 h520"></path>
+    </g>
+    <text x="42" y="48" class="sm">0</text>
+    <text x="302" y="48" class="sm">16</text>
+    <text x="558" y="48" text-anchor="end" class="sm">31</text>
+    <text x="170" y="79" text-anchor="middle">manba port·16</text>
+    <text x="430" y="79" text-anchor="middle">maqsad port·16</text>
+    <text x="300" y="113" text-anchor="middle">ketma-ketlik raqami·32</text>
+    <text x="300" y="147" text-anchor="middle">tasdiq raqami (Ack)·32</text>
+    <text x="72" y="181" text-anchor="middle" class="sm">ofs 4</text>
+    <text x="137" y="181" text-anchor="middle" class="sm">rez 6</text>
+    <text x="235" y="181" text-anchor="middle">bayroq 6</text>
+    <text x="430" y="181" text-anchor="middle">oyna·16</text>
+    <text x="170" y="215" text-anchor="middle">nazorat summasi·16</text>
+    <text x="430" y="215" text-anchor="middle" class="sm">shoshilinch ko‘rsatkich·16</text>
+    <text x="300" y="249" text-anchor="middle" class="sm">Options (MSS)·o‘zgaruvchan uzunlik</text>
+    <text x="300" y="283" text-anchor="middle">DATA — maksimum MSS</text>
+  </svg><p class="cap">2-rasm. TCP sarlavhasi — kamida 20 bayt</p><p class="tight">Bayroqlar: <mark>URG, ACK, PSH, RST, SYN, FIN</mark></p><div class="box"><span class="lbl">MSS:</span> odatda 1024 B, Ethernet — 1460 B; ikki tomon kelishadi.</div><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>4. Port raqamlari</h2><svg class="sk" viewBox="0 0 600 200" role="img" aria-label="Port raqamlari diapazoni">
+    <defs>
+      <filter id="r06-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="26" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r06-3)">
+      <rect class="s fy" x="40" y="70" width="100" height="36" rx="3"></rect>
+      <rect class="s fw" x="140" y="70" width="420" height="36" rx="3"></rect>
+      <rect class="s fw" x="40" y="132" width="520" height="28" rx="3"></rect>
+      <path class="s2" d="M165,132 v28 M263,132 v28 M348,132 v28 M443,132 v28"></path>
+    </g>
+    <text x="300" y="34" text-anchor="middle" class="red">port = 16 bit → 0 … 65535</text>
+    <text x="90" y="56" text-anchor="middle" class="sm">IANA · mashhur</text>
+    <text x="350" y="56" text-anchor="middle" class="sm">erkin ishlatiladi</text>
+    <text x="90" y="94" text-anchor="middle">0 – 1023</text>
+    <text x="350" y="94" text-anchor="middle">1024 – 65535</text>
+    <text x="300" y="126" text-anchor="middle" class="sm">mashhur portlar:</text>
+    <text x="105" y="152" text-anchor="middle" class="sm">20/21 FTP</text>
+    <text x="225" y="152" text-anchor="middle" class="sm">23 Telnet</text>
+    <text x="300" y="152" text-anchor="middle" class="sm">25 SMTP</text>
+    <text x="395" y="152" text-anchor="middle" class="sm">53 DNS</text>
+    <text x="490" y="152" text-anchor="middle" class="sm">80 HTTP</text>
+    <text x="300" y="186" text-anchor="middle">IP protokol: TCP = 6 · UDP = 17</text>
+  </svg><p class="cap">3-rasm. 0–1023 — IANA (RFC 1700), qolgani bo‘sh</p><table class="rot">
+    <tbody><tr><th>Ulanishni aniqlaydi</th><td>manba IP · manba port · maqsad IP · maqsad port</td></tr>
+    <tr><th>Qayerda</th><td>IP — IP sarlavhada, port — TCP/UDP sarlavhada</td></tr>
+  </tbody></table><h2>5. Ulanish o‘rnatish — 3 qadam</h2><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="Uch qadamli qol siqish">
+    <defs>
+      <filter id="r06-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="36" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a06-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+      <marker id="a06-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r06-4)">
+      <rect class="s fw" x="82" y="44" width="56" height="10" rx="3"></rect>
+      <rect class="s fw" x="462" y="44" width="56" height="10" rx="3"></rect>
+      <path class="dash" d="M110,54 v181 M490,54 v181"></path>
+      <path class="s2" marker-end="url(#a06-4)" d="M120,78 L480,90"></path>
+      <path class="s2" marker-end="url(#a06-4)" d="M480,120 L120,132"></path>
+      <path class="s2" marker-end="url(#a06-4)" d="M120,162 L480,174"></path>
+      <path class="sg" marker-end="url(#a06-5)" d="M130,205 L470,205"></path>
+      <path class="sg" d="M140,199 L130,205 L140,211"></path>
+    </g>
+    <text x="110" y="38" text-anchor="middle" class="red">Host A</text>
+    <text x="490" y="38" text-anchor="middle" class="red">Host B</text>
+    <text x="300" y="72" text-anchor="middle">SYN=1, ACK=0, Seq=a</text>
+    <text x="300" y="114" text-anchor="middle">SYN=1, ACK=1, Seq=b, Ack=a+1</text>
+    <text x="300" y="156" text-anchor="middle">ACK=1, Seq=a+1, Ack=b+1</text>
+    <text x="140" y="96" class="sm red">1</text>
+    <text x="455" y="138" class="sm red">2</text>
+    <text x="140" y="180" class="sm red">3</text>
+    <text x="300" y="230" text-anchor="middle" class="grn">ikki tomonlama ulanish tayyor</text>
+  </svg><p class="cap">4-rasm. SYN — qo‘l siqish belgisi</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>6. Ulanishni yopish — 4 qadam</h2><svg class="sk" viewBox="0 0 600 270" role="img" aria-label="Tort qadamli ulanishni yopish">
+    <defs>
+      <filter id="r06-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="46" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a06-6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r06-5)">
+      <rect class="s fw" x="82" y="44" width="56" height="10" rx="3"></rect>
+      <rect class="s fw" x="462" y="44" width="56" height="10" rx="3"></rect>
+      <path class="dash" d="M110,54 v196 M490,54 v196"></path>
+      <path class="sr" marker-end="url(#a06-6)" d="M120,78 L480,88"></path>
+      <path class="s2" marker-end="url(#a06-6)" d="M480,118 L120,128"></path>
+      <path class="sr" marker-end="url(#a06-6)" d="M480,158 L120,168"></path>
+      <path class="s2" marker-end="url(#a06-6)" d="M120,198 L480,208"></path>
+      <path class="s" d="M96,140 h28 M476,220 h28"></path>
+    </g>
+    <text x="110" y="38" text-anchor="middle" class="red">Host A</text>
+    <text x="490" y="38" text-anchor="middle" class="red">Host B</text>
+    <text x="300" y="72" text-anchor="middle">FIN=1, Seq=p</text>
+    <text x="300" y="112" text-anchor="middle">ACK, Ack=p+1</text>
+    <text x="300" y="152" text-anchor="middle">FIN=1, Seq=q</text>
+    <text x="300" y="192" text-anchor="middle">ACK, Ack=q+1</text>
+    <text x="150" y="144" class="sm">A → B yopildi</text>
+    <text x="380" y="232" class="sm">B → A yopildi</text>
+    <text x="300" y="262" text-anchor="middle" class="red">4 qadam — har yo‘nalish alohida</text>
+  </svg><p class="cap">5-rasm. FIN — yopish belgisi</p><h2>7. Ishonchlilik: tasdiq va qayta uzatish</h2><ul class="tight">
+    <li><b>Ack=N+1</b> — N dan kichik hammasi olindi</li>
+    <li>tasdiq ma’lumot bilan birga ketadi</li>
+    <li><b>RTT</b> tugagach qayta uzatiladi</li>
+  </ul><svg class="sk" viewBox="0 0 600 300" role="img" aria-label="Segment yoqolishi va qayta uzatish">
+    <defs>
+      <filter id="r06-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="56" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a06-7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+      <marker id="a06-8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r06-6)">
+      <rect class="s fw" x="72" y="44" width="56" height="10" rx="3"></rect>
+      <rect class="s fw" x="472" y="44" width="56" height="10" rx="3"></rect>
+      <path class="dash" d="M100,54 v231 M500,54 v231"></path>
+      <path class="s2" marker-end="url(#a06-7)" d="M110,74 L490,82"></path>
+      <path class="sr" d="M110,104 L232,110"></path>
+      <path class="sr" d="M236,98 L258,120 M258,98 L236,120"></path>
+      <path class="s2" marker-end="url(#a06-7)" d="M110,134 L490,142"></path>
+      <path class="s2" marker-end="url(#a06-7)" d="M110,164 L490,172"></path>
+      <path class="s2" marker-end="url(#a06-7)" d="M490,194 L110,202"></path>
+      <path class="sr" marker-end="url(#a06-7)" d="M110,228 L490,236"></path>
+      <path class="sg" marker-end="url(#a06-8)" d="M490,258 L110,266"></path>
+    </g>
+    <text x="100" y="38" text-anchor="middle" class="red">Host A</text>
+    <text x="500" y="38" text-anchor="middle" class="red">Host B</text>
+    <text x="300" y="68" text-anchor="middle" class="sm">Seq=1 … 1024</text>
+    <text x="170" y="96" text-anchor="middle" class="sm">Seq=1025</text>
+    <text x="430" y="110" text-anchor="middle" class="sm red">yo‘qoldi</text>
+    <text x="300" y="128" text-anchor="middle" class="sm">Seq=2049</text>
+    <text x="300" y="158" text-anchor="middle" class="sm">Seq=3073</text>
+    <text x="300" y="188" text-anchor="middle" class="sm red">Ack=1025 — faqat ketma-ket</text>
+    <text x="300" y="222" text-anchor="middle" class="sm red">RTT tugadi → 1025 qayta</text>
+    <text x="300" y="252" text-anchor="middle" class="sm grn">Ack=4097 — hammasi olindi</text>
+    <text x="300" y="290" text-anchor="middle" class="sm">summa xato → RTT dan keyin qayta</text>
+  </svg><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>8. Siljuvchi oyna</h2><p class="tight">Oyna = bir marta kutiladigan bayt soni; 16 bit → <mark>65535</mark>.</p><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="Siljuvchi oyna va oqim nazorati">
+    <defs>
+      <filter id="r06-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="66" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a06-9" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r06-7)">
+      <rect class="s fw" x="40" y="80" width="520" height="30"></rect>
+      <path class="s2" d="M105,80 v30 M170,80 v30 M235,80 v30 M300,80 v30 M365,80 v30 M430,80 v30 M495,80 v30"></path>
+      <rect class="sr" x="38" y="76" width="264" height="38" rx="4"></rect>
+      <path class="s2" marker-end="url(#a06-9)" d="M520,140 L140,152"></path>
+      <rect class="s fw" x="40" y="176" width="520" height="30"></rect>
+      <path class="s2" d="M105,176 v30 M170,176 v30 M235,176 v30 M300,176 v30 M365,176 v30 M430,176 v30 M495,176 v30"></path>
+      <rect class="sr" x="38" y="172" width="136" height="38" rx="4"></rect>
+    </g>
+    <text x="170" y="68" text-anchor="middle" class="red">oyna = 4096 B = 4 × 1024</text>
+    <text x="72" y="100" text-anchor="middle" class="sm">1024</text>
+    <text x="137" y="100" text-anchor="middle" class="sm">1024</text>
+    <text x="202" y="100" text-anchor="middle" class="sm">1024</text>
+    <text x="267" y="100" text-anchor="middle" class="sm">1024</text>
+    <text x="330" y="134" text-anchor="middle" class="sm">Ack=4097, Win=2048</text>
+    <text x="105" y="166" text-anchor="middle" class="red">yangi oyna = 2048 B</text>
+    <text x="300" y="228" text-anchor="middle" class="red">Win = 0 → uzatish to‘xtaydi</text>
+    <text x="300" y="246" text-anchor="middle" class="sm">2 oyna: yuborish + qabul</text>
+  </svg><p class="cap">6-rasm. B buferi kam — A tezlikni yarmiga pasaytiradi</p><div class="box"><span class="lbl">Cheklov:</span> oyna faqat xostlar orasida — router tiqilinchini TCP ko‘rmaydi.</div><h2>9. UDP sarlavhasi</h2><svg class="sk" viewBox="0 0 600 200" role="img" aria-label="UDP sarlavhasi maydonlari">
+    <defs>
+      <filter id="r06-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="76" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r06-8)">
+      <rect class="s fw" x="40" y="48" width="260" height="34"></rect>
+      <rect class="s fw" x="300" y="48" width="260" height="34"></rect>
+      <rect class="s fw" x="40" y="82" width="260" height="34"></rect>
+      <rect class="s fw" x="300" y="82" width="260" height="34"></rect>
+      <rect class="s fb" x="40" y="116" width="520" height="32"></rect>
+    </g>
+    <text x="300" y="34" text-anchor="middle" class="red">UDP sarlavhasi — 8 bayt</text>
+    <text x="170" y="71" text-anchor="middle">manba port·16</text>
+    <text x="430" y="71" text-anchor="middle">maqsad port·16</text>
+    <text x="170" y="105" text-anchor="middle">uzunlik·16</text>
+    <text x="430" y="105" text-anchor="middle">nazorat summasi·16</text>
+    <text x="300" y="138" text-anchor="middle">DATA</text>
+    <text x="300" y="176" text-anchor="middle" class="sm">ulanishsiz · tasdiq yo‘q · qayta uzatish yo‘q</text>
+  </svg><p class="cap">7-rasm. Uzunlik = sarlavha + ma’lumot</p><div class="pg-num">— 5 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>10. TCP va UDP — taqqoslash</h2><svg class="sk" viewBox="0 0 600 200" role="img" aria-label="TCP va UDP taqqoslash jadvali">
+    <defs>
+      <filter id="r06-9" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="86" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r06-9)">
+      <rect class="s fw" x="30" y="56" width="530" height="120"></rect>
+      <path class="s2" d="M280,56 v120 M420,56 v120 M30,86 h530 M30,116 h530 M30,146 h530"></path>
+      <path class="sg" d="M341,71 l7,9 l16,-18"></path>
+      <path class="sg" d="M341,101 l7,9 l16,-18"></path>
+      <path class="sg" d="M341,131 l7,9 l16,-18"></path>
+      <path class="sr" d="M481,62 l18,18 M499,62 l-18,18"></path>
+      <path class="sr" d="M481,92 l18,18 M499,92 l-18,18"></path>
+      <path class="sr" d="M481,122 l18,18 M499,122 l-18,18"></path>
+    </g>
+    <text x="350" y="44" text-anchor="middle" class="red">TCP</text>
+    <text x="490" y="44" text-anchor="middle" class="red">UDP</text>
+    <text x="40" y="77">ulanish o‘rnatish</text>
+    <text x="40" y="107">tasdiq va qayta uzatish</text>
+    <text x="40" y="137">siljuvchi oyna</text>
+    <text x="40" y="167">sarlavha</text>
+    <text x="350" y="167" text-anchor="middle">20+ bayt</text>
+    <text x="490" y="167" text-anchor="middle">8 bayt</text>
+    <text x="300" y="192" text-anchor="middle" class="sm">UDP: VoIP · video · BOOTP — kechikish kichik</text>
+  </svg><p class="cap">8-rasm. UDP ishonchli tarmoq uchun</p><div class="box"><span class="lbl">UDP afzalligi:</span> sodda, holat va bufer yo‘q — polosani tejaydi.</div><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>Transport qatlami: port · segment · oqim · ishonchlilik</li>
+      <li>Port 16 bit; 0–1023 mashhur; TCP=6, UDP=17</li>
+      <li>Ochish — 3 qadam (SYN), yopish — 4 qadam (FIN)</li>
+      <li>Seq va Ack: tartib, yo‘qolish, takror</li>
+      <li>Oyna ≤ 65535 bayt; Win=0 — to‘xtash</li>
+      <li>UDP: 8 bayt, tasdiq yo‘q, kechikish kichik</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>TCP sarlavhasi minimal uzunligi? <span class="ans">— 20 bayt</span></li>
+    <li>Ethernet uchun MSS? <span class="ans">— 1460 bayt</span></li>
+    <li>Mashhur portlar diapazoni? <span class="ans">— 0 … 1023</span></li>
+    <li>Oyna maksimumi va Win=0 ma’nosi? <span class="ans">— 65535 B; to‘xta</span></li>
+    <li>UDP sarlavhasida nechta maydon? <span class="ans">— 4 ta</span></li>
+  </ol><div class="pg-num">— 6 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+
+<!-- ================= 6-sahifa ================= -->
+
+</body>
+</html>

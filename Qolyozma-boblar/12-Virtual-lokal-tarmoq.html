@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>12-bob · Virtual lokal tarmoq</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">12-bob</div><h1 class="title">Virtual lokal tarmoq
+    <small>Virtual Local Area Network</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>VLAN</b> — bitta fizik tarmoq ichidagi mantiqiy alohida guruh</li>
+      <li><b>Teg (tag)</b> — kadrga qo‘shiladigan 4 baytli 802.1Q belgisi</li>
+      <li><b>VLAN ID</b> — tegdagi 12 bitli raqam (1–4094)</li>
+      <li><b>access · trunk</b> — tegsiz bitta VLAN · tegli bir necha VLAN</li>
+      <li><b>PVID</b> — portning o‘z VLAN raqami, tegsiz kadrga qo‘yiladi</li>
+    </ul>
+  </div><h2>1. Nega VLAN kerak?</h2><p class="tight">Kommutator kolliziya domenini bo‘ladi, <mark>broadcast domenini bo‘lmaydi</mark>.</p><svg class="sk" viewBox="0 0 600 330" role="img" aria-label="Broadcast domenini bolish yollari">
+    <defs>
+      <filter id="r12-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="12" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+      <marker id="a12-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r12-1)">
+      <!-- 1-qator: VLAN yo'q -->
+      <rect class="s fy" x="300" y="14" width="76" height="26" rx="3"></rect>
+      <rect class="s fw" x="150" y="70" width="44" height="24" rx="3"></rect>
+      <rect class="s fw" x="232" y="70" width="44" height="24" rx="3"></rect>
+      <rect class="s fw" x="382" y="70" width="44" height="24" rx="3"></rect>
+      <rect class="s fw" x="464" y="70" width="44" height="24" rx="3"></rect>
+      <path class="s2" d="M172,94 v6 M160,100 h24 M254,94 v6 M242,100 h24
+                          M404,94 v6 M392,100 h24 M486,94 v6 M474,100 h24"></path>
+      <path class="s2" d="M308,40 C260,50 200,58 172,70 M320,40 C300,52 270,58 254,70
+                          M356,40 C376,52 390,58 404,70 M368,40 C420,50 460,58 486,70"></path>
+      <path class="sr" marker-end="url(#a12-1)" d="M310,44 L182,66"></path>
+      <path class="sr" marker-end="url(#a12-1)" d="M322,44 L256,66"></path>
+      <path class="sr" marker-end="url(#a12-1)" d="M352,44 L400,66"></path>
+      <path class="sr" marker-end="url(#a12-1)" d="M364,44 L480,66"></path>
+      <!-- 2-qator: router -->
+      <rect class="s fb" x="290" y="120" width="76" height="28" rx="3"></rect>
+      <rect class="s fy" x="180" y="124" width="60" height="22" rx="3"></rect>
+      <rect class="s fy" x="420" y="124" width="60" height="22" rx="3"></rect>
+      <path class="s2" d="M240,135 h50 M366,135 h54"></path>
+      <rect class="s fw" x="152" y="176" width="42" height="22" rx="3"></rect>
+      <rect class="s fw" x="206" y="176" width="42" height="22" rx="3"></rect>
+      <rect class="s fw" x="406" y="176" width="42" height="22" rx="3"></rect>
+      <rect class="s fw" x="460" y="176" width="42" height="22" rx="3"></rect>
+      <path class="s2" d="M195,146 C190,158 180,166 173,176 M225,146 C226,158 226,166 227,176
+                          M435,146 C432,158 430,166 427,176 M465,146 C472,158 478,166 481,176"></path>
+      <path class="sr" marker-end="url(#a12-1)" d="M200,152 L178,170"></path>
+      <path class="sr" marker-end="url(#a12-1)" d="M218,152 L224,170"></path>
+      <path class="sr" d="M258,128 l12,14 M270,128 l-12,14"></path>
+      <!-- 3-qator: VLAN -->
+      <rect class="s fg" x="128" y="278" width="130" height="40" rx="8"></rect>
+      <rect class="s fb" x="384" y="278" width="130" height="40" rx="8"></rect>
+      <rect class="s fy" x="282" y="230" width="84" height="26" rx="3"></rect>
+      <path class="dash" d="M324,222 v106"></path>
+      <rect class="s fw" x="140" y="286" width="44" height="24" rx="3"></rect>
+      <rect class="s fw" x="202" y="286" width="44" height="24" rx="3"></rect>
+      <rect class="s fw" x="396" y="286" width="44" height="24" rx="3"></rect>
+      <rect class="s fw" x="458" y="286" width="44" height="24" rx="3"></rect>
+      <path class="s2" d="M292,256 C250,266 200,276 162,286 M300,256 C270,268 240,278 224,286
+                          M348,256 C380,268 400,278 418,286 M356,256 C420,268 460,278 480,286"></path>
+    </g>
+    <text x="52" y="40" text-anchor="middle" class="red">VLAN yo‘q</text>
+    <text x="52" y="60" text-anchor="middle" class="sm">1 broadcast</text>
+    <text x="52" y="78" text-anchor="middle" class="sm">domen</text>
+    <text x="338" y="32" text-anchor="middle" class="sm">SW</text>
+    <text x="172" y="87" text-anchor="middle" class="sm">PCA</text>
+    <text x="254" y="87" text-anchor="middle" class="sm">PCB</text>
+    <text x="404" y="87" text-anchor="middle" class="sm">PCC</text>
+    <text x="486" y="87" text-anchor="middle" class="sm">PCD</text>
+    <text x="52" y="150" text-anchor="middle" class="red">Router</text>
+    <text x="52" y="170" text-anchor="middle" class="sm">qimmat,</text>
+    <text x="52" y="188" text-anchor="middle" class="sm">sekinroq</text>
+    <text x="328" y="139" text-anchor="middle" class="sm">Router</text>
+    <text x="210" y="140" text-anchor="middle" class="sm">SW</text>
+    <text x="450" y="140" text-anchor="middle" class="sm">SW</text>
+    <text x="173" y="192" text-anchor="middle" class="sm">PCA</text>
+    <text x="227" y="192" text-anchor="middle" class="sm">PCB</text>
+    <text x="427" y="192" text-anchor="middle" class="sm">PCC</text>
+    <text x="481" y="192" text-anchor="middle" class="sm">PCD</text>
+    <text x="52" y="258" text-anchor="middle" class="red">VLAN</text>
+    <text x="52" y="278" text-anchor="middle" class="sm">arzon,</text>
+    <text x="52" y="296" text-anchor="middle" class="sm">tez</text>
+    <text x="193" y="270" text-anchor="middle" class="grn">VLAN 10</text>
+    <text x="449" y="270" text-anchor="middle" class="red">VLAN 20</text>
+    <text x="324" y="248" text-anchor="middle" class="sm">SW</text>
+    <text x="162" y="303" text-anchor="middle" class="sm">PCA</text>
+    <text x="224" y="303" text-anchor="middle" class="sm">PCB</text>
+    <text x="418" y="303" text-anchor="middle" class="sm">PCC</text>
+    <text x="480" y="303" text-anchor="middle" class="sm">PCD</text>
+  </svg><p class="cap">1-rasm. Broadcastni chegaralashning uchta yo‘li</p><ul class="tight">
+    <li>400 PC × 100 kbit/s broadcast = <mark>40 Mbit/s</mark> (100 Mbit/s liniyaning 40 %)</li>
+    <li>VLAN = alohida <b>2-qatlam broadcast domeni</b> = ko‘prik domeni</li>
+    <li>VLAN’lar orasida — faqat router yoki 3-qatlam kommutator</li>
+  </ul><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 120" role="img" aria-label="Jismoniy joylashuv va mantiqiy guruh">
+    <defs>
+      <filter id="r12-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="22" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a12-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r12-2)">
+      <rect class="s" x="20" y="16" width="150" height="88" rx="6"></rect>
+      <rect class="s fg" x="34" y="34" width="42" height="20" rx="2"></rect>
+      <rect class="s fb" x="110" y="34" width="42" height="20" rx="2"></rect>
+      <rect class="s fb" x="34" y="70" width="42" height="20" rx="2"></rect>
+      <rect class="s fg" x="110" y="70" width="42" height="20" rx="2"></rect>
+      <path class="sg" marker-end="url(#a12-2)" d="M200,60 h58"></path>
+      <rect class="s fg" x="300" y="16" width="250" height="40" rx="8"></rect>
+      <rect class="s fw" x="320" y="26" width="42" height="20" rx="2"></rect>
+      <rect class="s fw" x="380" y="26" width="42" height="20" rx="2"></rect>
+      <rect class="s fb" x="300" y="64" width="250" height="40" rx="8"></rect>
+      <rect class="s fw" x="320" y="74" width="42" height="20" rx="2"></rect>
+      <rect class="s fw" x="380" y="74" width="42" height="20" rx="2"></rect>
+    </g>
+    <text x="95" y="114" text-anchor="middle" class="sm">bir bino, aralash</text>
+    <text x="230" y="48" text-anchor="middle" class="grn">VLAN</text>
+    <text x="490" y="40" text-anchor="middle" class="sm">ishchi guruh 1</text>
+    <text x="490" y="88" text-anchor="middle" class="sm">ishchi guruh 2</text>
+  </svg><h2>2. VLAN taqsimlash usullari</h2><svg class="sk" viewBox="0 0 600 260" role="img" aria-label="VLAN taqsimlash usullari">
+    <defs>
+      <filter id="r12-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="32" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r12-3)">
+      <rect class="s fy" x="150" y="30" width="44" height="190" rx="4"></rect>
+      <rect class="s fw" x="24" y="36" width="52" height="26" rx="3"></rect>
+      <rect class="s fw" x="24" y="86" width="52" height="26" rx="3"></rect>
+      <rect class="s fw" x="24" y="136" width="52" height="26" rx="3"></rect>
+      <rect class="s fw" x="24" y="186" width="52" height="26" rx="3"></rect>
+      <path class="s2" d="M76,49 h74 M76,99 h74 M76,149 h74 M76,199 h74"></path>
+      <rect class="s" x="330" y="22" width="240" height="44"></rect>
+      <path class="s2" d="M330,44 h240 M450,22 v44"></path>
+      <rect class="s" x="330" y="96" width="240" height="44"></rect>
+      <path class="s2" d="M330,118 h240 M450,96 v44"></path>
+      <rect class="s" x="330" y="170" width="240" height="44"></rect>
+      <path class="s2" d="M330,192 h240 M450,170 v44"></path>
+    </g>
+    <text x="50" y="54" text-anchor="middle" class="sm">PCA</text>
+    <text x="50" y="104" text-anchor="middle" class="sm">PCB</text>
+    <text x="50" y="154" text-anchor="middle" class="sm">PCC</text>
+    <text x="50" y="204" text-anchor="middle" class="sm">PCD</text>
+    <text x="172" y="130" text-anchor="middle" class="sm">SW</text>
+    <text x="113" y="44" text-anchor="middle" class="sm">E1/0/1</text>
+    <text x="113" y="94" text-anchor="middle" class="sm">E1/0/2</text>
+    <text x="113" y="144" text-anchor="middle" class="sm">E1/0/3</text>
+    <text x="113" y="194" text-anchor="middle" class="sm">E1/0/4</text>
+    <text x="450" y="16" text-anchor="middle" class="red">port asosida</text>
+    <text x="390" y="38" text-anchor="middle" class="sm">E1/0/1–2</text>
+    <text x="510" y="38" text-anchor="middle" class="sm">VLAN 10</text>
+    <text x="390" y="60" text-anchor="middle" class="sm">E1/0/3–4</text>
+    <text x="510" y="60" text-anchor="middle" class="sm">VLAN 20</text>
+    <text x="450" y="90" text-anchor="middle" class="red">protokol asosida</text>
+    <text x="390" y="112" text-anchor="middle" class="sm">IP</text>
+    <text x="510" y="112" text-anchor="middle" class="sm">VLAN 10</text>
+    <text x="390" y="134" text-anchor="middle" class="sm">IPX</text>
+    <text x="510" y="134" text-anchor="middle" class="sm">VLAN 20</text>
+    <text x="450" y="164" text-anchor="middle" class="red">IP tarmoq asosida</text>
+    <text x="390" y="186" text-anchor="middle" class="sm">10.0.0.0/24</text>
+    <text x="510" y="186" text-anchor="middle" class="sm">VLAN 10</text>
+    <text x="390" y="208" text-anchor="middle" class="sm">20.0.0.0/24</text>
+    <text x="510" y="208" text-anchor="middle" class="sm">VLAN 20</text>
+    <text x="300" y="240" text-anchor="middle" class="red">port asosidagi VLAN — qolgan usullar uchun asos</text>
+  </svg><ul class="tight">
+    <li><b>Port</b> — portga VLAN beriladi; eng ko‘p ishlatiladi</li>
+    <li><b>Protokol</b> — kadr ichidagi protokol (IP, IPX) bo‘yicha</li>
+    <li><b>IP tarmoq</b> — manba IP va niqob bo‘yicha</li>
+  </ul><h2>3. VLAN tag va MAC jadval</h2><svg class="sk" viewBox="0 0 600 210" role="img" aria-label="VLAN tag va MAC manzil jadvali">
+    <defs>
+      <filter id="r12-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="42" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r12-4)">
+      <rect class="s fy" x="110" y="26" width="48" height="160" rx="4"></rect>
+      <rect class="s fw" x="14" y="30" width="50" height="24" rx="3"></rect>
+      <rect class="s fw" x="14" y="72" width="50" height="24" rx="3"></rect>
+      <rect class="s fw" x="14" y="114" width="50" height="24" rx="3"></rect>
+      <rect class="s fw" x="14" y="156" width="50" height="24" rx="3"></rect>
+      <path class="s2" d="M64,42 h46 M64,84 h46 M64,126 h46 M64,168 h46"></path>
+      <rect class="s fy" x="74" y="34" width="26" height="15" rx="2"></rect>
+      <rect class="s fy" x="74" y="76" width="26" height="15" rx="2"></rect>
+      <rect class="s fb" x="74" y="118" width="26" height="15" rx="2"></rect>
+      <rect class="s fb" x="74" y="160" width="26" height="15" rx="2"></rect>
+      <rect class="s" x="210" y="24" width="370" height="160"></rect>
+      <path class="s2" d="M340,24 v160 M430,24 v160 M210,56 h370 M210,88 h370 M210,120 h370 M210,152 h370"></path>
+    </g>
+    <text x="39" y="47" text-anchor="middle" class="sm">PCA</text>
+    <text x="39" y="89" text-anchor="middle" class="sm">PCB</text>
+    <text x="39" y="131" text-anchor="middle" class="sm">PCC</text>
+    <text x="39" y="173" text-anchor="middle" class="sm">PCD</text>
+    <text x="87" y="46" text-anchor="middle" class="sm">10</text>
+    <text x="87" y="88" text-anchor="middle" class="sm">10</text>
+    <text x="87" y="130" text-anchor="middle" class="sm">20</text>
+    <text x="87" y="172" text-anchor="middle" class="sm">20</text>
+    <text x="134" y="112" text-anchor="middle" class="sm">SW</text>
+    <text x="275" y="46" text-anchor="middle" class="red">MAC</text>
+    <text x="385" y="46" text-anchor="middle" class="red">VLAN</text>
+    <text x="505" y="46" text-anchor="middle" class="red">Port</text>
+    <text x="275" y="78" text-anchor="middle" class="sm">MAC-A</text>
+    <text x="385" y="78" text-anchor="middle" class="sm">10</text>
+    <text x="505" y="78" text-anchor="middle" class="sm">E1/0/1</text>
+    <text x="275" y="110" text-anchor="middle" class="sm">MAC-B</text>
+    <text x="385" y="110" text-anchor="middle" class="sm">10</text>
+    <text x="505" y="110" text-anchor="middle" class="sm">E1/0/2</text>
+    <text x="275" y="142" text-anchor="middle" class="sm">MAC-C</text>
+    <text x="385" y="142" text-anchor="middle" class="sm">20</text>
+    <text x="505" y="142" text-anchor="middle" class="sm">E1/0/3</text>
+    <text x="275" y="174" text-anchor="middle" class="sm">MAC-D</text>
+    <text x="385" y="174" text-anchor="middle" class="sm">20</text>
+    <text x="505" y="174" text-anchor="middle" class="sm">E1/0/4</text>
+    <text x="300" y="202" text-anchor="middle" class="red">qidiruv = maqsad MAC + VLAN ID</text>
+  </svg><p class="cap">2-rasm. Kirish portida tag qo‘yiladi, jadvalga VLAN ID bilan yoziladi</p><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="box"><span class="lbl">Eslatma:</span> bitta VLAN bir necha kommutatordan
+  o‘tishi mumkin — kommutatorlar orasida tag <mark>saqlanadi</mark>.</div><h2>4. IEEE 802.1Q kadr formati</h2><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="IEEE 802.1Q tag maydonlari">
+    <defs>
+      <filter id="r12-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="52" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r12-5)">
+      <rect class="s fw" x="30" y="34" width="70" height="32"></rect>
+      <rect class="s fw" x="100" y="34" width="70" height="32"></rect>
+      <rect class="s fw" x="170" y="34" width="70" height="32"></rect>
+      <rect class="s fw" x="240" y="34" width="240" height="32"></rect>
+      <rect class="s fw" x="480" y="34" width="90" height="32"></rect>
+      <rect class="s fw" x="30" y="106" width="64" height="32"></rect>
+      <rect class="s fw" x="94" y="106" width="64" height="32"></rect>
+      <rect class="s fy" x="158" y="106" width="56" height="32"></rect>
+      <rect class="s fw" x="214" y="106" width="56" height="32"></rect>
+      <rect class="s fw" x="270" y="106" width="210" height="32"></rect>
+      <rect class="s fw" x="480" y="106" width="90" height="32"></rect>
+      <path class="dash" d="M158,138 L80,155 M214,138 L540,155"></path>
+      <rect class="s fb" x="60" y="180" width="130" height="32"></rect>
+      <rect class="s fw" x="190" y="180" width="100" height="32"></rect>
+      <rect class="s fw" x="290" y="180" width="80" height="32"></rect>
+      <rect class="s fy" x="370" y="180" width="190" height="32"></rect>
+    </g>
+    <text x="300" y="22" text-anchor="middle" class="sm">oddiy Ethernet kadr — untagged</text>
+    <text x="65" y="55" text-anchor="middle">DA</text>
+    <text x="135" y="55" text-anchor="middle">SA</text>
+    <text x="205" y="55" text-anchor="middle">Type</text>
+    <text x="360" y="55" text-anchor="middle">Data</text>
+    <text x="525" y="55" text-anchor="middle">CRC</text>
+    <text x="300" y="96" text-anchor="middle" class="red">802.1Q tagli kadr — +4 bayt</text>
+    <text x="62" y="127" text-anchor="middle">DA</text>
+    <text x="126" y="127" text-anchor="middle">SA</text>
+    <text x="186" y="127" text-anchor="middle" class="red">tag</text>
+    <text x="242" y="127" text-anchor="middle">Type</text>
+    <text x="375" y="127" text-anchor="middle">Data</text>
+    <text x="525" y="127" text-anchor="middle">CRC</text>
+    <text x="125" y="172" text-anchor="middle" class="sm">2 bayt · 0x8100</text>
+    <text x="240" y="172" text-anchor="middle" class="sm">3 bit</text>
+    <text x="330" y="172" text-anchor="middle" class="sm">1 bit</text>
+    <text x="465" y="172" text-anchor="middle" class="sm">12 bit · 4096 ta</text>
+    <text x="125" y="201" text-anchor="middle">TPID</text>
+    <text x="240" y="201" text-anchor="middle">Pri</text>
+    <text x="330" y="201" text-anchor="middle">CFI</text>
+    <text x="465" y="201" text-anchor="middle">VLAN ID</text>
+    <text x="300" y="226" text-anchor="middle" class="sm">TCI = Priority + CFI + VLAN ID</text>
+  </svg><ul class="tight">
+    <li><b>TPID</b> 2 bayt — <mark>0x8100</mark> bo‘lsa kadr tagli</li>
+    <li><b>Priority</b> 3 bit — 802.1p, qiymat 0…7</li>
+    <li><b>CFI</b> 1 bit — 0 standart MAC formati, 1 nostandart</li>
+    <li><b>VLAN ID</b> 12 bit — 0…4095, jami 4096 ta</li>
+  </ul><h2>5. Tag bilan ishlash</h2><svg class="sk" viewBox="0 0 600 200" role="img" aria-label="Tagni qoyish va olib tashlash">
+    <defs>
+      <filter id="r12-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="62" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a12-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r12-6)">
+      <rect class="s fy" x="160" y="44" width="280" height="112" rx="6"></rect>
+      <rect class="s fw" x="20" y="92" width="40" height="26"></rect>
+      <rect class="s fw" x="60" y="92" width="40" height="26"></rect>
+      <rect class="s fw" x="100" y="92" width="40" height="26"></rect>
+      <rect class="s fw" x="190" y="92" width="45" height="26"></rect>
+      <rect class="s fw" x="235" y="92" width="45" height="26"></rect>
+      <rect class="s fb" x="280" y="92" width="50" height="26"></rect>
+      <rect class="s fw" x="330" y="92" width="80" height="26"></rect>
+      <rect class="s fw" x="470" y="92" width="36" height="26"></rect>
+      <rect class="s fw" x="506" y="92" width="36" height="26"></rect>
+      <rect class="s fw" x="542" y="92" width="38" height="26"></rect>
+      <path class="s2" marker-end="url(#a12-3)" d="M142,105 h14"></path>
+      <path class="s2" marker-end="url(#a12-3)" d="M442,105 h24"></path>
+    </g>
+    <text x="300" y="64" text-anchor="middle">kommutator</text>
+    <text x="80" y="82" text-anchor="middle" class="sm">untagged</text>
+    <text x="524" y="82" text-anchor="middle" class="sm">untagged</text>
+    <text x="40" y="110" text-anchor="middle" class="sm">DA</text>
+    <text x="80" y="110" text-anchor="middle" class="sm">SA</text>
+    <text x="120" y="110" text-anchor="middle" class="sm">Data</text>
+    <text x="212" y="110" text-anchor="middle" class="sm">DA</text>
+    <text x="257" y="110" text-anchor="middle" class="sm">SA</text>
+    <text x="305" y="110" text-anchor="middle" class="red">tag</text>
+    <text x="370" y="110" text-anchor="middle" class="sm">Data</text>
+    <text x="488" y="110" text-anchor="middle" class="sm">DA</text>
+    <text x="524" y="110" text-anchor="middle" class="sm">SA</text>
+    <text x="561" y="110" text-anchor="middle" class="sm">Data</text>
+    <text x="300" y="142" text-anchor="middle" class="sm">MAC jadval: MAC + VLAN ID</text>
+    <text x="300" y="182" text-anchor="middle" class="red">kirishda tag qo‘shiladi · chiqishda olinadi</text>
+  </svg><p class="cap">3-rasm. Xost tagni ko‘rmaydi — hammasi kommutator ichida</p><div class="box"><span class="lbl">Standart:</span> kommutatorda faqat <mark>VLAN 1</mark> bor,
+  hamma port — access, PVID = 1.</div><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>6. Port turlari: PVID bilan o‘yin</h2><svg class="sk" viewBox="0 0 600 300" role="img" aria-label="Access va trunk portlarda tag bilan ishlash">
+    <defs>
+      <filter id="r12-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="72" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r12-7)">
+      <rect class="s fy" x="170" y="110" width="80" height="70" rx="5"></rect>
+      <rect class="s fy" x="420" y="110" width="80" height="70" rx="5"></rect>
+      <path class="s" d="M250,145 h170"></path>
+      <rect class="s fy" x="268" y="152" width="36" height="16" rx="2"></rect>
+      <rect class="s fw" x="268" y="176" width="36" height="16" rx="2"></rect>
+      <rect class="s fw" x="24" y="40" width="54" height="28" rx="3"></rect>
+      <path class="s2" d="M51,68 v6 M38,74 h26"></path>
+      <rect class="s fw" x="24" y="222" width="54" height="28" rx="3"></rect>
+      <path class="s2" d="M51,250 v6 M38,256 h26"></path>
+      <rect class="s fw" x="536" y="40" width="54" height="28" rx="3"></rect>
+      <path class="s2" d="M563,68 v6 M550,74 h26"></path>
+      <rect class="s fw" x="536" y="222" width="54" height="28" rx="3"></rect>
+      <path class="s2" d="M563,250 v6 M550,256 h26"></path>
+      <path class="s2" d="M78,54 C120,58 148,102 172,120 M78,236 C120,232 148,188 172,170
+                          M498,120 C522,102 512,58 536,54 M498,170 C522,188 512,232 536,236"></path>
+    </g>
+    <text x="210" y="100" text-anchor="middle">SWA</text>
+    <text x="460" y="100" text-anchor="middle">SWB</text>
+    <text x="335" y="124" text-anchor="middle" class="red">trunk · PVID 20</text>
+    <text x="286" y="164" text-anchor="middle" class="sm">10</text>
+    <text x="312" y="164" class="sm">tag bilan</text>
+    <text x="286" y="188" text-anchor="middle" class="sm">20</text>
+    <text x="312" y="188" class="sm">tagsiz (PVID)</text>
+    <text x="112" y="100" text-anchor="middle" class="sm">PVID 10</text>
+    <text x="112" y="204" text-anchor="middle" class="sm">PVID 20</text>
+    <text x="538" y="100" text-anchor="middle" class="sm">PVID 10</text>
+    <text x="538" y="204" text-anchor="middle" class="sm">PVID 20</text>
+    <text x="51" y="59" text-anchor="middle" class="sm">PCA</text>
+    <text x="51" y="241" text-anchor="middle" class="sm">PCB</text>
+    <text x="563" y="59" text-anchor="middle" class="sm">PCC</text>
+    <text x="563" y="241" text-anchor="middle" class="sm">PCD</text>
+    <text x="300" y="282" text-anchor="middle" class="red">access — faqat PVID · trunk — PVID tagsiz, qolgani tagli</text>
+  </svg><p class="cap">4-rasm. PCA–PCC VLAN 10 da, PCB–PCD VLAN 20 da gaplashadi</p><h2>7. access · trunk · hybrid</h2><svg class="sk" viewBox="0 0 600 170" role="img" aria-label="Uchta port turi taqqoslash">
+    <defs>
+      <filter id="r12-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="82" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r12-8)">
+      <rect class="s" x="10" y="14" width="180" height="146" rx="10"></rect>
+      <rect class="s" x="205" y="14" width="180" height="146" rx="10"></rect>
+      <rect class="s" x="400" y="14" width="180" height="146" rx="10"></rect>
+      <rect class="s fw" x="70" y="48" width="60" height="24" rx="4"></rect>
+      <rect class="s fy" x="270" y="48" width="60" height="24" rx="4"></rect>
+      <rect class="s fg" x="470" y="48" width="60" height="24" rx="4"></rect>
+    </g>
+    <text x="100" y="36" text-anchor="middle" class="red">access</text>
+    <text x="300" y="36" text-anchor="middle" class="red">trunk</text>
+    <text x="500" y="36" text-anchor="middle" class="red">hybrid</text>
+    <text x="100" y="66" text-anchor="middle" class="sm">PVID 10</text>
+    <text x="300" y="66" text-anchor="middle" class="sm">PVID 20</text>
+    <text x="500" y="66" text-anchor="middle" class="sm">PVID 30</text>
+    <text x="100" y="100" text-anchor="middle">1 VLAN</text>
+    <text x="300" y="100" text-anchor="middle">ko‘p VLAN</text>
+    <text x="500" y="100" text-anchor="middle">ko‘p VLAN</text>
+    <text x="100" y="124" text-anchor="middle" class="sm">tagsiz: 10</text>
+    <text x="300" y="124" text-anchor="middle" class="sm">tagsiz: faqat PVID</text>
+    <text x="500" y="124" text-anchor="middle" class="sm">tagsiz: xohlagani</text>
+    <text x="100" y="148" text-anchor="middle" class="sm">kirish: +PVID</text>
+    <text x="300" y="148" text-anchor="middle" class="sm">qolgani: tagli</text>
+    <text x="500" y="148" text-anchor="middle" class="sm">masalan 10, 20, 30</text>
+  </svg><p class="cap">5-rasm. Farq faqat tagsiz chiqadigan VLAN’larda</p><div class="box"><span class="lbl">Hybrid:</span> turli VLAN’dagi xostlar bitta umumiy
+  server bilan gaplashadi. Trunk va hybrid orasida — avval access.</div><table class="rot">
+    <tbody><tr><th></th><th>access</th><th>trunk</th><th>hybrid</th></tr>
+    <tr><td>Tagsiz chiqadi</td><td>PVID</td><td>faqat PVID</td><td>xohlagan VLAN</td></tr>
+  </tbody></table><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>8. Sozlash</h2><ul class="tight">
+    <li><b>vlan</b> 10 → <b>port</b> Ethernet1/0/1</li>
+    <li><b>port link-type</b> access | trunk | hybrid</li>
+    <li><b>port trunk permit vlan</b> 10 20 · <b>port trunk pvid vlan</b> 20</li>
+    <li><b>port hybrid vlan</b> 10 20 untagged · <b>port hybrid pvid vlan</b> 30</li>
+    <li><b>display vlan</b> · <b>display interface</b> Ethernet1/0/1</li>
+  </ul><h2>9. VLAN’lar orasida aloqa</h2><svg class="sk" viewBox="0 0 600 190" role="img" aria-label="VLANlar orasida aloqa 3-qatlam orqali">
+    <defs>
+      <filter id="r12-9" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="92" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a12-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r12-9)">
+      <rect class="s fy" x="230" y="112" width="140" height="44" rx="4"></rect>
+      <rect class="s fy" x="262" y="22" width="76" height="30" rx="4"></rect>
+      <rect class="s fw" x="50" y="112" width="52" height="26" rx="3"></rect>
+      <path class="s2" d="M76,138 v6 M63,144 h26"></path>
+      <rect class="s fw" x="498" y="112" width="52" height="26" rx="3"></rect>
+      <path class="s2" d="M524,138 v6 M511,144 h26"></path>
+      <path class="s2" d="M102,124 h128 M370,124 h128"></path>
+      <path class="sr" d="M292,118 l16,16 M308,118 l-16,16"></path>
+      <path class="sg" marker-end="url(#a12-4)" d="M140,112 C150,60 200,36 256,36"></path>
+      <path class="sg" marker-end="url(#a12-4)" d="M344,36 C400,36 450,62 460,110"></path>
+    </g>
+    <text x="100" y="104" text-anchor="middle" class="red">VLAN 10</text>
+    <text x="500" y="104" text-anchor="middle" class="red">VLAN 20</text>
+    <text x="300" y="44" text-anchor="middle" class="sm">router / L3</text>
+    <text x="76" y="130" text-anchor="middle" class="sm">PCA</text>
+    <text x="524" y="130" text-anchor="middle" class="sm">PCD</text>
+    <text x="300" y="150" text-anchor="middle" class="sm">L2 switch</text>
+    <text x="300" y="178" text-anchor="middle" class="sm">2-qatlamda bloklangan — 3-qatlam orqali o‘tadi</text>
+  </svg><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>VLAN = alohida broadcast domen, kommutatorda arzon</li>
+      <li>Tag 4 bayt: TPID 0x8100 + Priority 3 bit + CFI 1 bit + VLAN ID 12 bit</li>
+      <li>MAC jadval qidiruvi — MAC va VLAN ID juftligi bo‘yicha</li>
+      <li>access 1 VLAN · trunk PVID tagsiz · hybrid xohlagani tagsiz</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>TPID qiymati? <span class="ans">— 0x8100</span></li>
+    <li>VLAN ID necha bit, nechta VLAN? <span class="ans">— 12 bit, 4096</span></li>
+    <li>Trunk qaysi VLAN’ni tagsiz yuboradi? <span class="ans">— PVID</span></li>
+    <li>Trunk’ni hybrid qilish uchun? <span class="ans">— avval access qilinadi</span></li>
+  </ol><div class="pg-num">— 5 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+</body>
+</html>

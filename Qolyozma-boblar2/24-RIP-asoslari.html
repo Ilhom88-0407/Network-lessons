@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>24-bob · RIP asoslari</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">24-bob</div><h1 class="title">RIP asoslari
+    <small>RIP Fundamentals</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>RIP</b> — eng sodda masofa-vektor protokoli, UDP 520</li>
+      <li><b>Metrika (hop)</b> — manzilgacha nechta marshrutizator borligi</li>
+      <li><b>16 = cheksizlik</b> — yaroqli qiymat 0–15, 16 — yetib bo‘lmaydi</li>
+      <li><b>Taymerlar</b> — update 30 s, timeout 180 s, garbage-collect 120 s</li>
+      <li><b>Split horizon</b> — marshrut o‘rganilgan portga qaytarib e’lon qilinmaydi</li>
+      <li><b>Poison reverse</b> — qaytariladi, lekin metrika 16 bilan</li>
+    </ul>
+  </div><h2>1. RIP nima?</h2><p class="tight"><mark>Distance-vector</mark> IGP — masofa <b>hop</b> soni bilan o‘lchanadi
+    <span class="en">(Routing Information Protocol)</span></p><ul class="tight">
+    <li><b>metrika</b> 0…15 — yaroqli, <b>16 = cheksiz</b> (erishilmas)</li>
+    <li><b>UDP 520</b> — xabarlar shu portda almashinadi</li>
+    <li>kichik va o‘rta tarmoqlar; OSPF va IS-IS dan sodda</li>
+    <li>ikki versiya: <b>RIPv1</b> (klassli) va <b>RIPv2</b> (klasssiz)</li>
+  </ul><svg class="sk" viewBox="0 0 600 225" role="img" aria-label="Hop soni bilan metrika">
+    <defs>
+      <filter id="r24-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+      <marker id="a24-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r24-1)">
+      <path class="sr" marker-end="url(#a24-1)" d="M478,66 C380,52 200,52 116,62"></path>
+      <rect class="s fg" x="470" y="96" width="104" height="40" rx="8"></rect>
+      <rect class="s fy" x="352" y="103" width="52" height="26" rx="4"></rect>
+      <rect class="s fy" x="212" y="103" width="52" height="26" rx="4"></rect>
+      <rect class="s fy" x="72" y="103" width="52" height="26" rx="4"></rect>
+      <path class="s2" d="M124,116 h88 M264,116 h88 M404,116 h66"></path>
+      <path class="s2" d="M98,129 v14 M238,129 v14 M378,129 v14"></path>
+    </g>
+    <text x="300" y="36" text-anchor="middle" class="red">10.4.0.0 gacha hop soni</text>
+    <text x="98" y="96" text-anchor="middle">RTA</text>
+    <text x="238" y="96" text-anchor="middle">RTB</text>
+    <text x="378" y="96" text-anchor="middle">RTC</text>
+    <text x="522" y="121" text-anchor="middle">10.4.0.0</text>
+    <text x="98" y="160" text-anchor="middle" class="red">2</text>
+    <text x="238" y="160" text-anchor="middle" class="red">1</text>
+    <text x="378" y="160" text-anchor="middle" class="red">0</text>
+    <text x="300" y="190" text-anchor="middle" class="red">har router o‘tilganda +1</text>
+    <text x="300" y="214" text-anchor="middle" class="sm">0 = bevosita ulangan tarmoq</text>
+  </svg><p class="cap">1-rasm. Metrika — manzilgacha bo‘lgan hop soni</p><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 165" role="img" aria-label="RIP metrika shkalasi">
+    <defs>
+      <filter id="r24-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="17" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r24-2)">
+      <path class="sg" d="M40,90 H520"></path>
+      <path class="sr" d="M520,90 H556"></path>
+      <path class="s2" d="M40,90 V78 M72,90 V78 M104,90 V78 M136,90 V78 M168,90 V78 M200,90 V78
+                          M232,90 V78 M264,90 V78 M296,90 V78 M328,90 V78 M360,90 V78 M392,90 V78
+                          M424,90 V78 M456,90 V78 M488,90 V78 M520,90 V74 M552,90 V74"></path>
+    </g>
+    <text x="280" y="56" text-anchor="middle" class="grn">0 – 15 = yaroqli</text>
+    <text x="540" y="34" text-anchor="middle" class="red">16 = cheksiz</text>
+    <text x="40" y="110" text-anchor="middle" class="sm">0</text>
+    <text x="200" y="110" text-anchor="middle" class="sm">5</text>
+    <text x="360" y="110" text-anchor="middle" class="sm">10</text>
+    <text x="520" y="110" text-anchor="middle" class="sm">15</text>
+    <text x="552" y="110" text-anchor="middle" class="sm">16</text>
+    <text x="280" y="138" text-anchor="middle" class="sm">16 va undan katta — erishilmas</text>
+    <text x="280" y="160" text-anchor="middle" class="sm">shuning uchun katta tarmoqqa mos emas</text>
+  </svg><p class="cap">2-rasm. Metrika diapazoni va konvergensiya chegarasi</p><h2>2. Jadval qanday quriladi</h2><ul class="tight">
+    <li>boshda jadvalda faqat <b>bevosita</b> marshrutlar</li>
+    <li><b>Request</b> yuboriladi → qo‘shnilar <b>Response</b> bilan jadvalini beradi</li>
+  </ul><svg class="sk" viewBox="0 0 600 255" role="img" aria-label="Request va Response bilan jadval qurish">
+    <defs>
+      <filter id="r24-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a24-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a24-3g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r24-3)">
+      <rect class="s fw" x="40" y="112" width="44" height="26" rx="3"></rect>
+      <rect class="s fw" x="516" y="112" width="44" height="26" rx="3"></rect>
+      <rect class="s fy" x="150" y="110" width="56" height="30" rx="4"></rect>
+      <rect class="s fy" x="394" y="110" width="56" height="30" rx="4"></rect>
+      <path class="s2" d="M84,125 H150 M206,125 H394 M450,125 H516"></path>
+      <path class="sr" marker-end="url(#a24-3)" d="M215,82 H385"></path>
+      <path class="sg" marker-end="url(#a24-3g)" d="M385,54 H215"></path>
+      <rect class="s" x="120" y="188" width="360" height="62" rx="4"></rect>
+      <path class="s2" d="M120,208 H480 M120,229 H480 M260,188 V250 M380,188 V250"></path>
+    </g>
+    <text x="300" y="76" text-anchor="middle" class="red">Request</text>
+    <text x="300" y="44" text-anchor="middle" class="grn">Response: 10.2.0.0, 10.3.0.0</text>
+    <text x="178" y="106" text-anchor="middle">RTA</text>
+    <text x="422" y="106" text-anchor="middle">RTB</text>
+    <text x="62" y="106" text-anchor="middle" class="sm">10.1.0.0</text>
+    <text x="538" y="106" text-anchor="middle" class="sm">10.3.0.0</text>
+    <text x="300" y="158" text-anchor="middle" class="sm">10.2.0.0/24</text>
+    <text x="300" y="180" text-anchor="middle" class="red">RTA jadvali — yangilangach</text>
+    <text x="128" y="203">Tarmoq</text>
+    <text x="268" y="203">Keyingi uzel</text>
+    <text x="388" y="203">Metrika</text>
+    <text x="128" y="224" class="sm">10.1.0.0</text>
+    <text x="268" y="224" class="sm">—</text>
+    <text x="388" y="224" class="sm">0</text>
+    <text x="128" y="245" class="sm">10.3.0.0</text>
+    <text x="268" y="245" class="sm">10.2.0.2</text>
+    <text x="388" y="245" class="sm">1</text>
+  </svg><p class="cap">3-rasm. 10.2.0.0 bevosita bo‘lgani uchun jadvalga qo‘shilmaydi</p><h2>3. Yangilash qoidasi</h2><ul class="tight">
+    <li><b>o‘sha qo‘shnidan</b> kelsa — metrika katta ham, kichik ham bo‘lsa yangilanadi</li>
+    <li><b>boshqa qo‘shnidan</b> — faqat metrika kichik bo‘lsa</li>
+    <li>jadvalda yo‘q marshrut — metrika 16 dan kichik bo‘lsa qo‘shiladi</li>
+  </ul><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 145" role="img" aria-label="Qoshimcha metrika">
+    <defs>
+      <filter id="r24-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="11" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a24-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r24-4)">
+      <rect class="s fy" x="90" y="58" width="56" height="28" rx="4"></rect>
+      <rect class="s fy" x="430" y="58" width="56" height="28" rx="4"></rect>
+      <path class="sg" marker-end="url(#a24-4)" d="M424,72 H152"></path>
+    </g>
+    <text x="118" y="52" text-anchor="middle">RTA</text>
+    <text x="458" y="52" text-anchor="middle">RTB</text>
+    <text x="288" y="66" text-anchor="middle" class="sm">10.3.0.0 · 0 + 1 = 1</text>
+    <text x="288" y="102" text-anchor="middle" class="red">chiqishda +1 · kirishda +0</text>
+    <text x="288" y="128" text-anchor="middle" class="sm">RTA jadvaliga metrika 1 bilan tushadi</text>
+  </svg><p class="cap">4-rasm. Chiqish metrikasi sukut bo‘yicha 1, kirish metrikasi 0</p><h2>4. Taymerlar</h2><svg class="sk" viewBox="0 0 600 190" role="img" aria-label="RIP taymerlari">
+    <defs>
+      <filter id="r24-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="13" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a24-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r24-5)">
+      <path class="sg" d="M40,112 H340"></path>
+      <path class="sr" d="M340,112 H540"></path>
+      <path class="s2" d="M40,112 V100 M90,112 V100 M140,112 V100 M190,112 V100 M240,112 V100
+                          M290,112 V100 M340,112 V94 M540,112 V94"></path>
+      <path class="sr" marker-end="url(#a24-5)" d="M120,70 C110,84 100,92 92,98"></path>
+      <path class="sr" marker-end="url(#a24-5)" d="M348,96 V92"></path>
+      <path class="sr" marker-end="url(#a24-5)" d="M500,50 C520,70 534,84 540,92"></path>
+    </g>
+    <text x="130" y="62" text-anchor="middle" class="red">update 30 s — davriy</text>
+    <text x="350" y="88" text-anchor="middle" class="red">timeout 180 s → metrika 16</text>
+    <text x="470" y="42" text-anchor="middle" class="red">garbage 120 s → o‘chadi</text>
+    <text x="90" y="132" text-anchor="middle" class="sm">30 s</text>
+    <text x="340" y="132" text-anchor="middle" class="sm">180 s</text>
+    <text x="540" y="132" text-anchor="middle" class="sm">300 s</text>
+    <text x="300" y="164" text-anchor="middle" class="sm">suppress = 120 s · yaroqli marshrut IP jadvaliga tushadi</text>
+    <text x="300" y="186" text-anchor="middle" class="sm">yangilanish kelmasa — 16, keyin o‘chiriladi</text>
+  </svg><p class="cap">5-rasm. Marshrutning umri: 30 s → 180 s → yana 120 s</p><table class="rot">
+    <tbody><tr><th>update</th><td>30 s</td><th>timeout</th><td>180 s</td></tr>
+    <tr><th>garbage-collect</th><td>120 s</td><th>suppress</th><td>120 s</td></tr>
+  </tbody></table><h2>5. O‘zgarish hop-by-hop tarqaladi</h2><svg class="sk" viewBox="0 0 600 200" role="img" aria-label="Topologiya ozgarishining tarqalishi">
+    <defs>
+      <filter id="r24-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="23" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a24-6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r24-6)">
+      <rect class="s fg" x="496" y="74" width="80" height="32" rx="6"></rect>
+      <path class="sr" d="M506,80 l60,20 M566,80 l-60,20"></path>
+      <rect class="s fy" x="396" y="80" width="52" height="26" rx="4"></rect>
+      <rect class="s fy" x="256" y="80" width="52" height="26" rx="4"></rect>
+      <rect class="s fy" x="116" y="80" width="52" height="26" rx="4"></rect>
+      <path class="s2" d="M168,93 H256 M308,93 H396 M448,93 H496"></path>
+      <path class="sr" marker-end="url(#a24-6)" d="M390,60 H316"></path>
+      <path class="sr" marker-end="url(#a24-6)" d="M250,60 H176"></path>
+    </g>
+    <text x="142" y="74" text-anchor="middle">RTA</text>
+    <text x="282" y="74" text-anchor="middle">RTB</text>
+    <text x="422" y="74" text-anchor="middle">RTC</text>
+    <text x="536" y="68" text-anchor="middle" class="sm">10.4.0.0</text>
+    <text x="353" y="46" text-anchor="middle" class="sm">1-qadam</text>
+    <text x="213" y="46" text-anchor="middle" class="sm">2-qadam</text>
+    <text x="536" y="130" text-anchor="middle" class="red">uzildi</text>
+    <text x="300" y="148" text-anchor="middle" class="red">har router faqat qo‘shnisiga aytadi</text>
+    <text x="300" y="180" text-anchor="middle" class="sm">tarqalish vaqti = router soni · update timer</text>
+  </svg><p class="cap">6-rasm. Router marshrut manbasini bilmaydi — faqat qo‘shnisidan oladi</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>6. Halqa qanday tug‘iladi</h2><svg class="sk" viewBox="0 0 600 330" role="img" aria-label="Bir yoli tarmoqda halqaning paydo bolishi">
+    <defs>
+      <filter id="r24-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="29" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a24-7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r24-7)">
+      <rect class="s fy" x="110" y="34" width="48" height="24" rx="4"></rect>
+      <rect class="s fy" x="230" y="34" width="48" height="24" rx="4"></rect>
+      <rect class="s fy" x="350" y="34" width="48" height="24" rx="4"></rect>
+      <rect class="s fg" x="460" y="32" width="86" height="28" rx="6"></rect>
+      <path class="s2" d="M158,46 h72 M278,46 h72 M398,46 h62"></path>
+
+      <rect class="s fy" x="110" y="144" width="48" height="24" rx="4"></rect>
+      <rect class="s fy" x="230" y="144" width="48" height="24" rx="4"></rect>
+      <rect class="s fy" x="350" y="144" width="48" height="24" rx="4"></rect>
+      <rect class="s fg" x="460" y="142" width="86" height="28" rx="6"></rect>
+      <path class="s2" d="M158,156 h72 M278,156 h72"></path>
+      <path class="dash" d="M398,156 h62"></path>
+      <path class="sr" d="M470,146 l66,20 M536,146 l-66,20"></path>
+
+      <rect class="s fy" x="110" y="254" width="48" height="24" rx="4"></rect>
+      <rect class="s fy" x="230" y="254" width="48" height="24" rx="4"></rect>
+      <rect class="s fy" x="350" y="254" width="48" height="24" rx="4"></rect>
+      <rect class="s fg" x="460" y="252" width="86" height="28" rx="6"></rect>
+      <path class="s2" d="M158,266 h72 M278,266 h72"></path>
+      <path class="dash" d="M398,266 h62"></path>
+      <path class="sr" d="M470,256 l66,20 M536,256 l-66,20"></path>
+      <path class="sr" marker-end="url(#a24-7)" d="M256,252 C286,238 342,238 368,250"></path>
+    </g>
+    <text x="46" y="50" text-anchor="middle" class="red">1-holat</text>
+    <text x="134" y="28" text-anchor="middle">RTA</text>
+    <text x="254" y="28" text-anchor="middle">RTB</text>
+    <text x="374" y="28" text-anchor="middle">RTC</text>
+    <text x="503" y="50" text-anchor="middle">10.4.0.0</text>
+    <text x="46" y="80" text-anchor="middle" class="sm">metrika</text>
+    <text x="134" y="80" text-anchor="middle" class="red">2</text>
+    <text x="254" y="80" text-anchor="middle" class="red">1</text>
+    <text x="374" y="80" text-anchor="middle" class="red">0</text>
+    <text x="300" y="100" text-anchor="middle" class="sm">konvergensiya — yozuvlar to‘g‘ri</text>
+
+    <text x="46" y="160" text-anchor="middle" class="red">2-holat</text>
+    <text x="503" y="136" text-anchor="middle" class="red">uzildi</text>
+    <text x="134" y="190" text-anchor="middle" class="red">2</text>
+    <text x="254" y="190" text-anchor="middle" class="red">1</text>
+    <text x="374" y="190" text-anchor="middle" class="red">—</text>
+    <text x="300" y="210" text-anchor="middle" class="sm">RTC yozuvni o‘chiradi, RTB hali bilmaydi</text>
+
+    <text x="46" y="270" text-anchor="middle" class="red">3-holat</text>
+    <text x="314" y="234" text-anchor="middle" class="red">HALQA</text>
+    <text x="134" y="300" text-anchor="middle" class="red">2</text>
+    <text x="254" y="300" text-anchor="middle" class="red">1</text>
+    <text x="374" y="300" text-anchor="middle" class="red">2</text>
+    <text x="300" y="320" text-anchor="middle" class="sm">RTB davriy yangilanish beradi → RTC xato yozuv oladi</text>
+  </svg><p class="cap">7-rasm. RTB uchun yo‘l RTC orqali, RTC uchun RTB orqali</p><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="Count to infinity">
+    <defs>
+      <filter id="r24-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="31" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r24-8)">
+      <path class="s" d="M60,30 V210 H560"></path>
+      <path class="dash" d="M60,36 H560"></path>
+      <path class="sr" d="M70,204 h40 v-21 h40 v-21 h40 v-21 h40 v-21 h40 v-21 h40 v-21 h40 v-21 h40 v-21 h150"></path>
+    </g>
+    <text x="34" y="26" text-anchor="middle" class="sm">metrika</text>
+    <text x="495" y="26" text-anchor="middle" class="red">16 = cheksiz</text>
+    <text x="48" y="208" text-anchor="middle" class="sm">1</text>
+    <text x="400" y="180" text-anchor="middle" class="sm">count to infinity — metrika oshib boradi</text>
+    <text x="100" y="232" text-anchor="middle" class="sm">vaqt</text>
+    <text x="400" y="230" text-anchor="middle" class="sm">maksimal 16 — faqat halqa vaqtini qisqartiradi</text>
+  </svg><p class="cap">8-rasm. Ko‘p yo‘lli tarmoqda metrika 16 ga yetguncha o‘sadi</p><ul class="tight">
+    <li>sabab — router marshrut manbasini bilmaydi</li>
+  </ul><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>7. Halqadan saqlanish</h2><svg class="sk" viewBox="0 0 600 235" role="img" aria-label="Split horizon va poison reverse">
+    <defs>
+      <filter id="r24-9" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="37" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a24-9" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r24-9)">
+      <rect class="s fy" x="120" y="44" width="54" height="28" rx="4"></rect>
+      <rect class="s fy" x="300" y="44" width="54" height="28" rx="4"></rect>
+      <rect class="s fg" x="440" y="42" width="90" height="32" rx="6"></rect>
+      <path class="s2" d="M174,58 H300 M354,58 H440"></path>
+      <path class="sr" marker-end="url(#a24-9)" d="M292,28 H186"></path>
+      <path class="sr" d="M230,20 l16,16 M246,20 l-16,16"></path>
+
+      <rect class="s fy" x="120" y="164" width="54" height="28" rx="4"></rect>
+      <rect class="s fy" x="300" y="164" width="54" height="28" rx="4"></rect>
+      <rect class="s fg" x="440" y="162" width="90" height="32" rx="6"></rect>
+      <path class="s2" d="M174,178 H300 M354,178 H440"></path>
+      <path class="sr" marker-end="url(#a24-9)" d="M292,146 H186"></path>
+    </g>
+    <text x="147" y="38" text-anchor="middle">RTB</text>
+    <text x="327" y="38" text-anchor="middle">RTC</text>
+    <text x="485" y="62" text-anchor="middle">10.4.0.0</text>
+    <text x="239" y="14" text-anchor="middle" class="red">yuborilmaydi</text>
+    <text x="300" y="92" text-anchor="middle" class="sm">split horizon: S1/0 dan olingan marshrut S1/0 ga qaytmaydi</text>
+
+    <text x="147" y="158" text-anchor="middle">RTB</text>
+    <text x="327" y="158" text-anchor="middle">RTC</text>
+    <text x="485" y="182" text-anchor="middle">10.4.0.0</text>
+    <text x="239" y="134" text-anchor="middle" class="red">10.4.0.0, metrika 16</text>
+    <text x="300" y="212" text-anchor="middle" class="sm">poison reverse: 16 bilan orqaga qaytariladi — ochiq rad</text>
+    <text x="300" y="232" text-anchor="middle" class="sm">+ ishonchli · – trafik ko‘p</text>
+  </svg><p class="cap">9-rasm. Split horizon — jim turadi, poison reverse — ochiq aytadi</p><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="Route poisoning, triggered update va suppress timer">
+    <defs>
+      <filter id="r24-10" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="41" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a24-10" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a24-10g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r24-10)">
+      <rect class="s" x="8" y="12" width="186" height="220" rx="10"></rect>
+      <rect class="s" x="207" y="12" width="186" height="220" rx="10"></rect>
+      <rect class="s" x="406" y="12" width="186" height="220" rx="10"></rect>
+
+      <rect class="s fy" x="75" y="86" width="52" height="26" rx="4"></rect>
+      <rect class="s fw" x="65" y="136" width="72" height="26" rx="3"></rect>
+      <path class="sr" d="M75,140 l52,18 M127,140 l-52,18"></path>
+      <path class="s2" d="M101,112 v24"></path>
+      <path class="sr" marker-end="url(#a24-10)" d="M75,99 H30"></path>
+
+      <circle class="s fw" cx="278" cy="113" r="26"></circle>
+      <path class="s2" d="M278,113 V92 M278,113 h15"></path>
+      <path class="sr" d="M258,135 L300,91"></path>
+      <path class="sr" marker-end="url(#a24-10)" d="M312,113 H366"></path>
+
+      <rect class="s fy" x="478" y="102" width="52" height="26" rx="4"></rect>
+      <path class="sg" marker-end="url(#a24-10g)" d="M438,80 L472,98"></path>
+      <path class="sr" marker-end="url(#a24-10)" d="M438,150 L472,126"></path>
+    </g>
+    <text x="101" y="40" text-anchor="middle" class="red">route poisoning</text>
+    <text x="300" y="40" text-anchor="middle" class="red">triggered update</text>
+    <text x="499" y="40" text-anchor="middle" class="red">suppress 120 s</text>
+    <text x="101" y="80" text-anchor="middle">RTC</text>
+    <text x="150" y="102" text-anchor="middle" class="red">16</text>
+    <text x="101" y="180" text-anchor="middle" class="sm">10.4.0.0</text>
+    <text x="278" y="180" text-anchor="middle" class="sm">30 s</text>
+    <text x="346" y="98" text-anchor="middle" class="red">darhol</text>
+    <text x="504" y="96" text-anchor="middle">RTB</text>
+    <text x="424" y="76" text-anchor="middle" class="sm">RTC</text>
+    <text x="424" y="166" text-anchor="middle" class="sm">RTA</text>
+    <text x="556" y="84" text-anchor="middle" class="grn">ha</text>
+    <text x="556" y="150" text-anchor="middle" class="red">yo‘q</text>
+    <text x="101" y="222" text-anchor="middle" class="sm">yaroqsizni 16 qiladi</text>
+    <text x="300" y="222" text-anchor="middle" class="sm">kutmasdan darhol</text>
+    <text x="499" y="222" text-anchor="middle" class="sm">boshqadan qabul qilmaydi</text>
+  </svg><p class="cap">10-rasm. Suppress paytida faqat o‘sha qo‘shnidan 16 dan kichik metrika olinadi</p><div class="box"><span class="lbl">Amalda:</span> hammasi birga ishlatiladi — poisoning + suppress + triggered update</div><div class="pg-num">— 5 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>8. RIPv1 kamchiligi</h2><svg class="sk" viewBox="0 0 600 180" role="img" aria-label="RIPv1 maska muammosi">
+    <defs>
+      <filter id="r24-11" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="43" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a24-11" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r24-11)">
+      <rect class="s fy" x="100" y="70" width="56" height="28" rx="4"></rect>
+      <rect class="s fy" x="400" y="70" width="56" height="28" rx="4"></rect>
+      <path class="s2" d="M156,84 H400"></path>
+      <rect class="s fw" x="76" y="122" width="104" height="28" rx="3"></rect>
+      <path class="s2" d="M128,98 V122"></path>
+      <path class="sr" marker-end="url(#a24-11)" d="M170,56 H388"></path>
+    </g>
+    <text x="128" y="64" text-anchor="middle">RTA</text>
+    <text x="428" y="64" text-anchor="middle">RTB</text>
+    <text x="279" y="44" text-anchor="middle" class="red">10.0.0.0 — maskasiz</text>
+    <text x="128" y="140" text-anchor="middle" class="sm">10.0.0.0/24</text>
+    <text x="470" y="116" text-anchor="middle" class="red">jadval: 10.0.0.0/8</text>
+    <text x="300" y="168" text-anchor="middle" class="sm">RIPv1 klassli — tabiiy maska qo‘yiladi → xato marshrut</text>
+  </svg><p class="cap">11-rasm. Maska yo‘qligi subnet adreslashda xatoga olib keladi</p><table class="rot">
+    <tbody><tr><th></th><th>RIPv1</th><th>RIPv2</th></tr>
+    <tr><td>Maska</td><td>yo‘q — klassli</td><td>bor — VLSM, CIDR</td></tr>
+    <tr><td>Tarqatish</td><td>faqat broadcast</td><td>multicast 224.0.0.9</td></tr>
+    <tr><td>Autentifikatsiya</td><td>yo‘q</td><td>oddiy matn, MD5</td></tr>
+  </tbody></table><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>RIP — distance-vector, metrika = hop, 0…15, 16 = cheksiz</li>
+      <li>UDP 520 · update 30 s · timeout 180 s · garbage 120 s</li>
+      <li>Marshrut hop-by-hop tarqaladi — manba bilinmaydi</li>
+      <li>Halqa sababi: eski ma’lumot davriy yangilanishda qaytadi</li>
+      <li>Yechim: split horizon · poisoning · poison reverse · suppress</li>
+      <li>RIPv2: VLSM/CIDR, multicast 224.0.0.9, autentifikatsiya</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>Qaysi port? <span class="ans">— UDP 520</span></li>
+    <li>Cheksiz metrika? <span class="ans">— 16</span></li>
+    <li>Timeout va garbage? <span class="ans">— 180 s va 120 s</span></li>
+    <li>Split horizon? <span class="ans">— olgan interfeysga qaytarmaydi</span></li>
+    <li>RIPv2 multicast adresi? <span class="ans">— 224.0.0.9</span></li>
+  </ol><div class="pg-num">— 6 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+
+<!-- ================= 6-sahifa ================= -->
+
+</body>
+</html>

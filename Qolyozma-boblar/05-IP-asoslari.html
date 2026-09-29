@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>05-bob · IP asoslari</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">5-bob</div><h1 class="title">IP asoslari
+    <small>IP Fundamentals</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>IP manzil</b> — qurilmaning tarmoqdagi manzili, 32 bit, 4 ta bayt</li>
+      <li><b>Tarmoq va host qismi</b> — manzilning boshi — tarmoq, oxiri — qurilma raqami</li>
+      <li><b>Sinf (A/B/C)</b> — manzil diapazoni: A — yirik, C — kichik tarmoqlar uchun</li>
+      <li><b>Broadcast</b> — host qismi butunlay 1 — tarmoqdagi hammaga xabar</li>
+      <li><b>ARP</b> — IP manzil bo‘yicha MAC manzilni topish protokoli</li>
+      <li><b>ICMP</b> — xato va diagnostika xabarlari (ping shu protokolda)</li>
+    </ul>
+  </div><h2>1. Tarmoq sathi va IP</h2><p class="tight">IP — TCP/IP tarmoq sathining asosiy protokoli, <mark>RFC 791</mark>. Ishonchsiz, ulanishsiz, best effort.</p><svg class="sk" viewBox="0 0 600 360" role="img" aria-label="TCP/IP sathlari va tarmoq sathi protokollari">
+    <defs>
+      <filter id="r05-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="5" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r05-1)">
+      <rect class="s fw" x="20" y="50" width="110" height="70" rx="6"></rect>
+      <rect class="s fw" x="20" y="150" width="110" height="100" rx="6"></rect>
+      <rect class="s fw" x="20" y="280" width="110" height="60" rx="6"></rect>
+      <rect class="s fb" x="170" y="60" width="110" height="44" rx="5"></rect>
+      <rect class="s fb" x="320" y="60" width="110" height="44" rx="5"></rect>
+      <rect class="s fy" x="170" y="160" width="180" height="80" rx="5"></rect>
+      <rect class="s fw" x="380" y="150" width="90" height="36" rx="4"></rect>
+      <rect class="s fw" x="490" y="150" width="90" height="36" rx="4"></rect>
+      <rect class="s fw" x="380" y="200" width="90" height="36" rx="4"></rect>
+      <rect class="s fw" x="490" y="200" width="90" height="36" rx="4"></rect>
+      <rect class="s fg" x="170" y="280" width="410" height="60" rx="5"></rect>
+      <path class="s2" d="M225,104 v56 M375,104 C362,130 332,152 322,158 M260,240 v40"></path>
+    </g>
+    <text x="300" y="30" text-anchor="middle" class="red">IP — tarmoq sathining yadrosi</text>
+    <text x="75" y="80" text-anchor="middle">Transport</text>
+    <text x="75" y="104" text-anchor="middle">sathi</text>
+    <text x="75" y="192" text-anchor="middle">Tarmoq</text>
+    <text x="75" y="216" text-anchor="middle">sathi</text>
+    <text x="75" y="304" text-anchor="middle">Tarmoq</text>
+    <text x="75" y="328" text-anchor="middle">interfeysi</text>
+    <text x="225" y="82" text-anchor="middle">TCP</text>
+    <text x="375" y="82" text-anchor="middle">UDP</text>
+    <text x="225" y="100" text-anchor="middle" class="sm">proto 6</text>
+    <text x="375" y="100" text-anchor="middle" class="sm">proto 17</text>
+    <text x="260" y="196" text-anchor="middle" class="red">IP</text>
+    <text x="260" y="222" text-anchor="middle" class="sm">RFC 791</text>
+    <text x="425" y="173" text-anchor="middle">ICMP</text>
+    <text x="535" y="173" text-anchor="middle">IGMP</text>
+    <text x="425" y="223" text-anchor="middle">ARP</text>
+    <text x="535" y="223" text-anchor="middle">RARP</text>
+    <text x="375" y="304" text-anchor="middle" class="sm">Ethernet · Token-Ring · FDDI · HDLC · PPP</text>
+    <text x="375" y="328" text-anchor="middle" class="sm">X.25 · Frame Relay · PSTN · ISDN</text>
+  </svg><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><ul class="tight">
+    <li><b>ARP</b> — IP manzilni fizik (MAC) manzilga o‘giradi</li>
+    <li><b>RARP</b> — fizik manzilni IP ga o‘giradi</li>
+    <li><b>ICMP</b> — xato xabarlari, diagnostika · <b>IGMP</b> — multicast guruhlari</li>
+  </ul><div class="box"><span class="lbl">Qoida:</span> IP paket ichini o‘qimaydi va holatini saqlamaydi. Ishonchlilik — TCP ning ishi.</div><h2>2. IP tarmoq tuzilishi</h2><svg class="sk" viewBox="0 0 600 320" role="img" aria-label="Routerlar segmentlarni bogʻlaydi">
+    <defs>
+      <filter id="r05-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="15" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r05-2)">
+      <rect class="s fg" x="20" y="126" width="130" height="56" rx="8"></rect>
+      <rect class="s fb" x="220" y="26" width="130" height="56" rx="8"></rect>
+      <rect class="s fb" x="220" y="240" width="130" height="56" rx="8"></rect>
+      <rect class="s fg" x="480" y="126" width="110" height="56" rx="8"></rect>
+      <rect class="s fy" x="250" y="136" width="60" height="36" rx="4"></rect>
+      <rect class="s fy" x="410" y="136" width="60" height="36" rx="4"></rect>
+      <path class="s2" d="M40,140 h24 v14 h-24 z M76,140 h24 v14 h-24 z M112,140 h24 v14 h-24 z
+                          M240,40 h24 v14 h-24 z M276,40 h24 v14 h-24 z M312,40 h24 v14 h-24 z
+                          M240,254 h24 v14 h-24 z M276,254 h24 v14 h-24 z M312,254 h24 v14 h-24 z
+                          M500,140 h24 v14 h-24 z M536,140 h24 v14 h-24 z"></path>
+      <path class="s" d="M150,154 h100 M280,136 v-54 M280,172 v68 M310,154 h100 M470,154 h10"></path>
+    </g>
+    <text x="85" y="118" text-anchor="middle">Network A</text>
+    <text x="285" y="18" text-anchor="middle">Network B</text>
+    <text x="285" y="232" text-anchor="middle">Network C</text>
+    <text x="535" y="118" text-anchor="middle">Network D</text>
+    <text x="280" y="158" text-anchor="middle" class="red">R1</text>
+    <text x="440" y="158" text-anchor="middle" class="red">R2</text>
+    <text x="360" y="126" text-anchor="middle" class="sm">RIP · OSPF · BGP</text>
+    <text x="300" y="312" text-anchor="middle" class="sm">har segment = bitta link · router har interfeysi bilan boshqa tarmoqda</text>
+  </svg><p class="cap">1-rasm. Paket hop-by-hop ketadi, har tugun o‘z jadvalidan foydalanadi</p><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>3. IP sarlavhasi</h2><svg class="sk" viewBox="0 0 600 300" role="img" aria-label="IP sarlavha maydonlari">
+    <defs>
+      <filter id="r05-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="25" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r05-3)">
+      <rect class="s fy" x="20" y="40" width="70" height="36"></rect>
+      <rect class="s fy" x="90" y="40" width="70" height="36"></rect>
+      <rect class="s fw" x="160" y="40" width="140" height="36"></rect>
+      <rect class="s fw" x="300" y="40" width="280" height="36"></rect>
+      <rect class="s fw" x="20" y="76" width="280" height="36"></rect>
+      <rect class="s fw" x="300" y="76" width="90" height="36"></rect>
+      <rect class="s fw" x="390" y="76" width="190" height="36"></rect>
+      <rect class="s fg" x="20" y="112" width="140" height="36"></rect>
+      <rect class="s fg" x="160" y="112" width="140" height="36"></rect>
+      <rect class="s fw" x="300" y="112" width="280" height="36"></rect>
+      <rect class="s fb" x="20" y="148" width="560" height="36"></rect>
+      <rect class="s fb" x="20" y="184" width="560" height="36"></rect>
+      <rect class="dash" x="20" y="220" width="560" height="36"></rect>
+      <path class="s2" d="M14,40 h-6 v180 h6"></path>
+    </g>
+    <text x="55" y="30" text-anchor="middle" class="sm">0</text>
+    <text x="190" y="30" text-anchor="middle" class="sm">8</text>
+    <text x="320" y="30" text-anchor="middle" class="sm">16</text>
+    <text x="450" y="30" text-anchor="middle" class="sm">24</text>
+    <text x="574" y="30" text-anchor="middle" class="sm">31</text>
+    <text x="55" y="64" text-anchor="middle" class="sm">Version</text>
+    <text x="125" y="64" text-anchor="middle" class="sm">IHL</text>
+    <text x="230" y="64" text-anchor="middle" class="sm">Type of Service</text>
+    <text x="440" y="64" text-anchor="middle" class="sm">Total Length</text>
+    <text x="160" y="100" text-anchor="middle" class="sm">Identification</text>
+    <text x="345" y="100" text-anchor="middle" class="sm">Flags</text>
+    <text x="485" y="100" text-anchor="middle" class="sm">Fragment Offset</text>
+    <text x="90" y="136" text-anchor="middle" class="sm">TTL</text>
+    <text x="230" y="136" text-anchor="middle" class="sm">Protocol</text>
+    <text x="440" y="136" text-anchor="middle" class="sm">Header Checksum</text>
+    <text x="300" y="172" text-anchor="middle" class="sm">Source Address — 32 bit</text>
+    <text x="300" y="208" text-anchor="middle" class="sm">Destination Address — 32 bit</text>
+    <text x="300" y="244" text-anchor="middle" class="sm">Options + Padding — kam ishlatiladi</text>
+    <text x="300" y="276" text-anchor="middle" class="red">Options’siz sarlavha — 20 bayt</text>
+    <text x="300" y="296" text-anchor="middle" class="sm">TTL har routerda −1 · 0 bo‘lsa paket tashlanadi</text>
+  </svg><h2>4. IP manzil formati</h2><svg class="sk" viewBox="0 0 600 245" role="img" aria-label="IP manzilning nuqtali onlik va ikkilik korinishi">
+    <defs>
+      <filter id="r05-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="35" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r05-4)">
+      <rect class="s fw" x="40" y="40" width="110" height="40" rx="4"></rect>
+      <rect class="s fw" x="170" y="40" width="110" height="40" rx="4"></rect>
+      <rect class="s fw" x="300" y="40" width="110" height="40" rx="4"></rect>
+      <rect class="s fw" x="430" y="40" width="110" height="40" rx="4"></rect>
+      <circle class="s" cx="160" cy="74" r="3"></circle>
+      <circle class="s" cx="290" cy="74" r="3"></circle>
+      <circle class="s" cx="420" cy="74" r="3"></circle>
+      <rect class="s fb" x="40" y="100" width="110" height="34" rx="4"></rect>
+      <rect class="s fb" x="170" y="100" width="110" height="34" rx="4"></rect>
+      <rect class="s fb" x="300" y="100" width="110" height="34" rx="4"></rect>
+      <rect class="s fb" x="430" y="100" width="110" height="34" rx="4"></rect>
+      <path class="s2" d="M40,176 v-8 h370 v8 M430,176 v-8 h110 v8"></path>
+    </g>
+    <text x="95" y="68" text-anchor="middle">192</text>
+    <text x="225" y="68" text-anchor="middle">168</text>
+    <text x="355" y="68" text-anchor="middle">5</text>
+    <text x="485" y="68" text-anchor="middle">123</text>
+    <text x="95" y="124" text-anchor="middle" class="sm">11000000</text>
+    <text x="225" y="124" text-anchor="middle" class="sm">10101000</text>
+    <text x="355" y="124" text-anchor="middle" class="sm">00000101</text>
+    <text x="485" y="124" text-anchor="middle" class="sm">01111011</text>
+    <text x="95" y="156" text-anchor="middle" class="sm">8 bit</text>
+    <text x="225" y="156" text-anchor="middle" class="sm">8 bit</text>
+    <text x="355" y="156" text-anchor="middle" class="sm">8 bit</text>
+    <text x="485" y="156" text-anchor="middle" class="sm">8 bit</text>
+    <text x="225" y="200" text-anchor="middle" class="red">tarmoq raqami</text>
+    <text x="485" y="200" text-anchor="middle" class="red">host raqami</text>
+    <text x="300" y="236" text-anchor="middle" class="sm">32 bit · mantiqiy manzil, apparatdan mustaqil · 2³² ≈ 4,3 mlrd</text>
+  </svg><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>5. Manzil sinflari</h2><svg class="sk" viewBox="0 0 600 330" role="img" aria-label="A dan E gacha manzil sinflari">
+    <defs>
+      <filter id="r05-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="45" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r05-5)">
+      <rect class="s fy" x="120" y="40" width="26" height="34"></rect>
+      <rect class="s fw" x="146" y="40" width="74" height="34"></rect>
+      <rect class="s fb" x="220" y="40" width="300" height="34"></rect>
+      <rect class="s fy" x="120" y="96" width="30" height="34"></rect>
+      <rect class="s fw" x="150" y="96" width="140" height="34"></rect>
+      <rect class="s fb" x="290" y="96" width="230" height="34"></rect>
+      <rect class="s fy" x="120" y="152" width="44" height="34"></rect>
+      <rect class="s fw" x="164" y="152" width="196" height="34"></rect>
+      <rect class="s fb" x="360" y="152" width="160" height="34"></rect>
+      <rect class="s fy" x="120" y="208" width="58" height="34"></rect>
+      <rect class="s fg" x="178" y="208" width="342" height="34"></rect>
+      <rect class="s fy" x="120" y="264" width="72" height="34"></rect>
+      <rect class="dash" x="192" y="264" width="328" height="34"></rect>
+    </g>
+    <text x="300" y="26" text-anchor="middle" class="red">birinchi oktet bitlari → sinf</text>
+    <text x="55" y="56" text-anchor="middle" class="red">A</text>
+    <text x="55" y="72" text-anchor="middle" class="sm">1–126</text>
+    <text x="133" y="62" text-anchor="middle" class="sm">0</text>
+    <text x="183" y="62" text-anchor="middle" class="sm">tarmoq 7</text>
+    <text x="370" y="62" text-anchor="middle" class="sm">host 24</text>
+    <text x="55" y="112" text-anchor="middle" class="red">B</text>
+    <text x="55" y="128" text-anchor="middle" class="sm">128–191</text>
+    <text x="135" y="118" text-anchor="middle" class="sm">10</text>
+    <text x="220" y="118" text-anchor="middle" class="sm">tarmoq 14</text>
+    <text x="405" y="118" text-anchor="middle" class="sm">host 16</text>
+    <text x="55" y="168" text-anchor="middle" class="red">C</text>
+    <text x="55" y="184" text-anchor="middle" class="sm">192–223</text>
+    <text x="142" y="174" text-anchor="middle" class="sm">110</text>
+    <text x="262" y="174" text-anchor="middle" class="sm">tarmoq 21</text>
+    <text x="440" y="174" text-anchor="middle" class="sm">host 8</text>
+    <text x="55" y="224" text-anchor="middle" class="red">D</text>
+    <text x="55" y="240" text-anchor="middle" class="sm">224–239</text>
+    <text x="149" y="230" text-anchor="middle" class="sm">1110</text>
+    <text x="349" y="230" text-anchor="middle" class="sm">multicast — guruh manzili</text>
+    <text x="55" y="280" text-anchor="middle" class="red">E</text>
+    <text x="55" y="296" text-anchor="middle" class="sm">240–255</text>
+    <text x="156" y="286" text-anchor="middle" class="sm">11110</text>
+    <text x="356" y="286" text-anchor="middle" class="sm">zaxira — tadqiqot uchun</text>
+    <text x="300" y="322" text-anchor="middle" class="sm">127 zaxira (loopback) · A tarmoqda 2²⁴, B da 2¹⁶, C da 2⁸ manzil</text>
+  </svg><h2>6. Maxsus manzillar</h2><table class="rot">
+    <tbody><tr><th>Tarmoq</th><th>Host</th><th>Ma’nosi</th></tr>
+    <tr><td>har qanday</td><td>hammasi 0</td><td>tarmoq manzili — 10.0.0.0</td></tr>
+    <tr><td>har qanday</td><td>hammasi 1</td><td>segment broadcast — 10.255.255.255</td></tr>
+    <tr><td>hammasi 0</td><td>hammasi 0</td><td>0.0.0.0 — hamma tarmoq, default marshrut</td></tr>
+    <tr><td>hammasi 1</td><td>hammasi 1</td><td>255.255.255.255 — cheklangan broadcast</td></tr>
+    <tr><td>127</td><td>har qanday</td><td>loopback — 127.0.0.1</td></tr>
+  </tbody></table><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 380" role="img" aria-label="Segment manzillari va broadcast boroni">
+    <defs>
+      <filter id="r05-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="55" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r05-6)">
+      <rect class="s fg" x="40" y="60" width="520" height="38" rx="4"></rect>
+      <rect class="s fy" x="40" y="60" width="60" height="38" rx="4"></rect>
+      <rect class="s fy" x="500" y="60" width="60" height="38" rx="4"></rect>
+      <path class="dash" d="M14,150 h572"></path>
+      <rect class="s fw" x="40" y="220" width="46" height="28" rx="3"></rect>
+      <rect class="s fw" x="112" y="220" width="46" height="28" rx="3"></rect>
+      <rect class="s fw" x="184" y="220" width="46" height="28" rx="3"></rect>
+      <rect class="s fy" x="112" y="282" width="46" height="22" rx="3"></rect>
+      <path class="s2" d="M63,248 v22 h72 M135,248 v34 M207,248 v22 h-72"></path>
+      <rect class="s fy" x="300" y="252" width="70" height="36" rx="4"></rect>
+      <path class="s" d="M158,293 C210,290 260,278 300,270"></path>
+      <path class="s2 dash" d="M370,268 h100"></path>
+      <path class="sr" d="M400,250 l40,40 M440,250 l-40,40"></path>
+      <rect class="dash" x="470" y="240" width="110" height="64" rx="8"></rect>
+    </g>
+    <text x="300" y="30" text-anchor="middle" class="red">har segmentda 2 ta manzil band</text>
+    <text x="70" y="52" text-anchor="middle" class="sm">tarmoq</text>
+    <text x="530" y="52" text-anchor="middle" class="sm">broadcast</text>
+    <text x="300" y="86" text-anchor="middle" class="sm">hostlar uchun: 2¹⁶ − 2 manzil</text>
+    <text x="70" y="124" text-anchor="middle" class="sm">172.16.0.0</text>
+    <text x="520" y="124" text-anchor="middle" class="sm">172.16.255.255</text>
+    <text x="150" y="196" text-anchor="middle" class="red">broadcast — DIP 255.255.255.255</text>
+    <text x="335" y="242" text-anchor="middle" class="sm">Router</text>
+    <text x="420" y="322" text-anchor="middle" class="red">o‘tkazmaydi</text>
+    <text x="525" y="230" text-anchor="middle" class="sm">boshqa tarmoq</text>
+    <text x="300" y="360" text-anchor="middle" class="sm">aks holda broadcast bo‘roni — tarmoq qulaydi</text>
+  </svg><div class="box"><span class="lbl">Qoida:</span> tarmoq va broadcast manzillari hostga berilmaydi.</div><h2>7. ARP — IP dan MAC ga</h2><svg class="sk" viewBox="0 0 600 300" role="img" aria-label="ARP sorov va javob">
+    <defs>
+      <filter id="r05-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="65" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a05-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a05-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r05-7)">
+      <rect class="s fy" x="30" y="70" width="60" height="32" rx="3"></rect>
+      <rect class="s fw" x="120" y="70" width="60" height="32" rx="3"></rect>
+      <rect class="s fw" x="210" y="70" width="60" height="32" rx="3"></rect>
+      <path class="s" d="M30,134 h240"></path>
+      <path class="s2" d="M60,102 v32 M150,102 v32 M240,102 v32"></path>
+      <path class="sr" marker-end="url(#a05-1)" d="M66,110 C100,122 120,128 144,132"></path>
+      <path class="sr" marker-end="url(#a05-1)" d="M66,112 C120,126 180,130 234,132"></path>
+      <path class="dash" d="M300,20 v186"></path>
+      <rect class="s fy" x="330" y="70" width="60" height="32" rx="3"></rect>
+      <rect class="s fw" x="420" y="70" width="60" height="32" rx="3"></rect>
+      <rect class="s fg" x="510" y="70" width="60" height="32" rx="3"></rect>
+      <path class="s" d="M330,134 h240"></path>
+      <path class="s2" d="M360,102 v32 M450,102 v32 M540,102 v32"></path>
+      <path class="sg" marker-end="url(#a05-2)" d="M534,112 C470,128 410,130 366,110"></path>
+    </g>
+    <text x="150" y="26" text-anchor="middle" class="red">1) ARP so‘rov — broadcast</text>
+    <text x="450" y="26" text-anchor="middle" class="red">2) ARP javob — unicast</text>
+    <text x="60" y="62" text-anchor="middle" class="sm">1.1.1.1</text>
+    <text x="150" y="62" text-anchor="middle" class="sm">1.1.1.2</text>
+    <text x="240" y="62" text-anchor="middle" class="sm">1.1.1.3</text>
+    <text x="360" y="62" text-anchor="middle" class="sm">1.1.1.1</text>
+    <text x="450" y="62" text-anchor="middle" class="sm">1.1.1.2</text>
+    <text x="540" y="62" text-anchor="middle" class="sm">1.1.1.3</text>
+    <text x="150" y="162" text-anchor="middle" class="sm">IP = 1.1.1.3, MAC = ?</text>
+    <text x="150" y="188" text-anchor="middle" class="sm">hammaga boradi</text>
+    <text x="450" y="162" text-anchor="middle" class="sm">1.1.1.3 → 00E0.FC03.3333</text>
+    <text x="450" y="188" text-anchor="middle" class="sm">faqat so‘ragan hostga</text>
+    <text x="300" y="228" text-anchor="middle" class="red">ARP jadval: dinamik — eskiradi · statik — qo‘lda, ustun</text>
+    <text x="300" y="256" text-anchor="middle" class="sm">Gratuitous ARP: o‘z IP sini so‘raydi — dublikat va MAC yangilanishi</text>
+    <text x="300" y="282" text-anchor="middle" class="sm">Proxy ARP: router boshqa tarmoq o‘rniga o‘z MAC ini beradi</text>
+  </svg><div class="pg-num">— 5 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>8. RARP va ICMP</h2><svg class="sk" viewBox="0 0 600 300" role="img" aria-label="RARP va ICMP ping">
+    <defs>
+      <filter id="r05-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="75" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a05-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a05-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r05-8)">
+      <rect class="s fw" x="30" y="82" width="80" height="44" rx="4"></rect>
+      <path class="s2" d="M42,96 h56 M42,112 h56"></path>
+      <rect class="s fb" x="210" y="82" width="80" height="44" rx="4"></rect>
+      <path class="s2" d="M222,96 h56 M222,112 h56"></path>
+      <path class="sr" marker-end="url(#a05-3)" d="M110,96 h96"></path>
+      <path class="sg" marker-end="url(#a05-4)" d="M210,114 h-96"></path>
+      <path class="dash" d="M300,20 v190"></path>
+      <rect class="s fw" x="350" y="82" width="70" height="44" rx="4"></rect>
+      <path class="s2" d="M362,96 h46 M362,112 h46"></path>
+      <rect class="s fw" x="510" y="82" width="70" height="44" rx="4"></rect>
+      <path class="s2" d="M522,96 h46 M522,112 h46"></path>
+      <path class="sr" marker-end="url(#a05-3)" d="M420,96 h86"></path>
+      <path class="sg" marker-end="url(#a05-4)" d="M510,114 h-86"></path>
+    </g>
+    <text x="150" y="26" text-anchor="middle" class="red">RARP — disksiz ish stansiyasi</text>
+    <text x="450" y="26" text-anchor="middle" class="red">ICMP — ping</text>
+    <text x="70" y="72" text-anchor="middle" class="sm">faqat MAC bor</text>
+    <text x="250" y="72" text-anchor="middle" class="sm">RARP server</text>
+    <text x="385" y="72" text-anchor="middle" class="sm">1.1.1.1</text>
+    <text x="545" y="72" text-anchor="middle" class="sm">2.2.2.2</text>
+    <text x="160" y="152" text-anchor="middle" class="sm">broadcast: IP = ?</text>
+    <text x="160" y="178" text-anchor="middle" class="sm">unicast: IP = 1.1.1.1</text>
+    <text x="465" y="152" text-anchor="middle" class="sm">Echo Request — 8</text>
+    <text x="465" y="178" text-anchor="middle" class="sm">Echo Reply — 0</text>
+    <text x="300" y="232" text-anchor="middle" class="red">xato xabarlari: 3 — yetib bo‘lmaydi · 11 — vaqt tugadi · 5 — redirect</text>
+    <text x="300" y="260" text-anchor="middle" class="sm">4 — source quench · 12 — parametr xatosi · 13/14 — timestamp</text>
+    <text x="300" y="286" text-anchor="middle" class="sm">so‘rov — broadcast, javob — unicast: resurs tejaladi</text>
+  </svg><h2>9. Paketni yetkazish</h2><svg class="sk" viewBox="0 0 600 300" role="img" aria-label="Host va router paketni qanday yuboradi">
+    <defs>
+      <filter id="r05-9" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="85" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a05-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r05-9)">
+      <rect class="s fw" x="30" y="46" width="180" height="32" rx="5"></rect>
+      <path class="s fy" d="M120,86 L200,116 L120,146 L40,116 Z"></path>
+      <rect class="s fw" x="20" y="170" width="90" height="46" rx="4"></rect>
+      <rect class="s fw" x="130" y="170" width="90" height="46" rx="4"></rect>
+      <rect class="s fg" x="30" y="240" width="180" height="32" rx="5"></rect>
+      <path class="s2" marker-end="url(#a05-5)" d="M120,78 v6"></path>
+      <path class="s2" marker-end="url(#a05-5)" d="M80,140 C70,154 66,160 65,166"></path>
+      <path class="s2" marker-end="url(#a05-5)" d="M160,140 C170,154 174,160 175,166"></path>
+      <path class="s2" marker-end="url(#a05-5)" d="M65,216 C66,226 90,234 114,238"></path>
+      <path class="s2" marker-end="url(#a05-5)" d="M175,216 C174,226 150,234 126,238"></path>
+      <path class="dash" d="M300,20 v260"></path>
+      <rect class="s fw" x="330" y="46" width="240" height="32" rx="5"></rect>
+      <path class="s fy" d="M450,86 L560,116 L450,146 L340,116 Z"></path>
+      <rect class="s fw" x="320" y="170" width="110" height="46" rx="4"></rect>
+      <rect class="s fw" x="450" y="170" width="130" height="46" rx="4"></rect>
+      <rect class="s fg" x="330" y="240" width="240" height="32" rx="5"></rect>
+      <path class="s2" marker-end="url(#a05-5)" d="M450,78 v6"></path>
+      <path class="s2" marker-end="url(#a05-5)" d="M400,140 C385,154 378,160 376,166"></path>
+      <path class="s2" marker-end="url(#a05-5)" d="M500,140 C512,154 516,160 517,166"></path>
+      <path class="s2" marker-end="url(#a05-5)" d="M517,216 C516,228 490,236 462,240"></path>
+    </g>
+    <text x="120" y="30" text-anchor="middle" class="red">Host yuboradi</text>
+    <text x="450" y="30" text-anchor="middle" class="red">Router uzatadi</text>
+    <text x="120" y="68" text-anchor="middle" class="sm">yuqori sath data berdi</text>
+    <text x="450" y="68" text-anchor="middle" class="sm">kiruvchi paket</text>
+    <text x="120" y="120" text-anchor="middle" class="sm">bir segmentda?</text>
+    <text x="450" y="120" text-anchor="middle" class="sm">manzil o‘zimizniki?</text>
+    <text x="65" y="190" text-anchor="middle" class="sm">Ha:</text>
+    <text x="65" y="208" text-anchor="middle" class="sm">host MAC</text>
+    <text x="175" y="190" text-anchor="middle" class="sm">Yo‘q:</text>
+    <text x="175" y="208" text-anchor="middle" class="sm">gateway MAC</text>
+    <text x="375" y="190" text-anchor="middle" class="sm">Ha:</text>
+    <text x="375" y="208" text-anchor="middle" class="sm">yuqori sathga</text>
+    <text x="515" y="190" text-anchor="middle" class="sm">Yo‘q:</text>
+    <text x="515" y="208" text-anchor="middle" class="sm">next-hop MAC</text>
+    <text x="120" y="262" text-anchor="middle" class="sm">kadrga joylab yuboradi</text>
+    <text x="450" y="262" text-anchor="middle" class="sm">chiqish portidan uzatadi</text>
+    <text x="300" y="294" text-anchor="middle" class="sm">host qabul qiladi: o‘z IP si · broadcast · a’zo bo‘lgan multicast</text>
+  </svg><div class="pg-num">— 6 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>32 bitli IP = tarmoq raqami + host raqami</li>
+      <li>Sinflar: A 1–126 · B 128–191 · C 192–223 · D multicast · E zaxira</li>
+      <li>Sarlavha 20 bayt; TTL har routerda −1</li>
+      <li>Boshqa tarmoqqa — default gateway orqali</li>
+      <li>ARP: IP → MAC · RARP: MAC → IP · ICMP: xato va diagnostika</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>TCP va UDP protokol raqami? <span class="ans">— 6 va 17</span></li>
+    <li>Sarlavha uzunligi? <span class="ans">— 20 bayt (Options’siz)</span></li>
+    <li>127.0.0.1 nima? <span class="ans">— loopback</span></li>
+    <li>Nega −2? <span class="ans">— tarmoq va broadcast manzillari</span></li>
+    <li>ARP so‘rov qanday ketadi? <span class="ans">— broadcast, javob unicast</span></li>
+  </ol><div class="pg-num">— 7 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+
+<!-- ================= 6-sahifa ================= -->
+
+</body>
+</html>

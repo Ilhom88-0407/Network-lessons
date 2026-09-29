@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>21-bob · IP marshrutlash</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">21-bob</div><h1 class="title">IP marshrutlash
+    <small>IP Routing</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>Marshrut</b> — paketni manzilga olib boradigan yo‘l ma’lumoti</li>
+      <li><b>Marshrut jadvali</b> — routerdagi barcha marshrutlar ro‘yxati</li>
+      <li><b>Next hop</b> — paket beriladigan keyingi qurilma manzili</li>
+      <li><b>Metrika</b> — yo‘lning xarajati; kichigi afzal</li>
+      <li><b>Preference</b> — protokolga ishonch darajasi; kichigi afzal</li>
+      <li><b>Longest match</b> — eng uzun mos maska bo‘yicha tanlash</li>
+    </ul>
+  </div><h2>1. Marshrutlash nima?</h2><ul class="tight">
+    <li><b>Marshrut</b> — paketni manzilga olib boradigan yo‘l ma’lumoti</li>
+    <li>Router har paketni <mark>marshrut jadvali</mark> bo‘yicha uzatadi</li>
+    <li>Har qurilma qarorni <b>mustaqil</b> qabul qiladi — estafeta kabi</li>
+  </ul><svg class="sk" viewBox="-50 0 720 340" role="img" aria-label="paketning hop-by-hop uzatilishi">
+    <defs>
+      <filter id="r21-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a21-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r21-1)">
+      <rect class="s fw" x="20" y="50" width="56" height="36" rx="3"></rect>
+      <path class="s2" d="M48,86 v8 M34,94 h28"></path>
+      <rect class="s fy" x="120" y="54" width="60" height="30" rx="3"></rect>
+      <rect class="s fy" x="250" y="54" width="60" height="30" rx="3"></rect>
+      <rect class="s fy" x="380" y="54" width="60" height="30" rx="3"></rect>
+      <rect class="s fy" x="380" y="200" width="60" height="30" rx="3"></rect>
+      <rect class="s fy" x="250" y="200" width="60" height="30" rx="3"></rect>
+      <rect class="s fw" x="120" y="190" width="50" height="56" rx="3"></rect>
+      <path class="s2" d="M128,202 h34 M128,214 h34 M128,226 h34"></path>
+      <path class="sr" marker-end="url(#a21-1)" d="M78,68 h36"></path>
+      <path class="sr" marker-end="url(#a21-1)" d="M182,69 h62"></path>
+      <path class="sr" marker-end="url(#a21-1)" d="M312,69 h62"></path>
+      <path class="sr" marker-end="url(#a21-1)" d="M410,86 v106"></path>
+      <path class="sr" marker-end="url(#a21-1)" d="M378,215 h-62"></path>
+      <path class="sr" marker-end="url(#a21-1)" d="M248,215 h-72"></path>
+    </g>
+    <text x="48" y="42" text-anchor="middle">PC</text>
+    <text x="150" y="46" text-anchor="middle">RTA</text>
+    <text x="280" y="46" text-anchor="middle">RTB</text>
+    <text x="410" y="46" text-anchor="middle">RTC</text>
+    <text x="470" y="112" class="sm">RTC: (N, RTD)</text>
+    <text x="470" y="222" class="sm">RTD: (N, RTE)</text>
+    <text x="150" y="110" text-anchor="middle" class="sm">(N, RTB)</text>
+    <text x="280" y="110" text-anchor="middle" class="sm">(N, RTC)</text>
+    <text x="410" y="250" text-anchor="middle">RTD</text>
+    <text x="280" y="250" text-anchor="middle">RTE</text>
+    <text x="280" y="274" text-anchor="middle" class="sm">(N, ulangan)</text>
+    <text x="145" y="182" text-anchor="middle">Server</text>
+    <text x="145" y="274" text-anchor="middle" class="red">Network N</text>
+    <text x="300" y="316" text-anchor="middle" class="sm">har router faqat keyingi qadamni biladi, butun yo‘lni emas</text>
+  </svg><p class="cap">1-rasm. Paket hop-by-hop, optimal yo‘l bo‘ylab uzatiladi</p><div class="box"><span class="lbl">Qoida:</span> router paketni faqat <mark>keyingi qadam</mark>ga beradi —
+    undan keyin nima bo‘lishi keyingi routerning ishi.</div><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>2. Marshrut jadvali</h2><p class="tight">Har router <b>o‘z jadvalini</b> saqlaydi; uzatish faqat shu jadval bo‘yicha.</p><svg class="sk" viewBox="0 0 600 260" role="img" aria-label="marshrut jadvali yozuvlari">
+    <defs>
+      <filter id="r21-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="17" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r21-2)">
+      <rect class="s fy" x="20" y="90" width="70" height="34" rx="4"></rect>
+      <path class="s2" d="M32,134 v8 M55,134 v8 M78,134 v8"></path>
+      <rect class="s fw" x="130" y="30" width="450" height="180" rx="4"></rect>
+      <path class="s2" d="M130,60 h450 M130,90 h450 M130,120 h450 M130,150 h450 M130,180 h450"></path>
+      <path class="s2" d="M270,30 v180 M380,30 v180 M470,30 v180"></path>
+    </g>
+    <text x="55" y="82" text-anchor="middle">RTA</text>
+    <text x="55" y="158" text-anchor="middle" class="sm">E0/1 E0/2 E0/3</text>
+    <text x="200" y="50" text-anchor="middle" class="red">Manzil/Maska</text>
+    <text x="325" y="50" text-anchor="middle" class="red">Next hop</text>
+    <text x="425" y="50" text-anchor="middle" class="red">Port</text>
+    <text x="525" y="50" text-anchor="middle" class="red">Metrika</text>
+    <text x="200" y="80" text-anchor="middle" class="sm">0.0.0.0/0</text>
+    <text x="325" y="80" text-anchor="middle" class="sm">20.0.0.2</text>
+    <text x="425" y="80" text-anchor="middle" class="sm">E0/2</text>
+    <text x="525" y="80" text-anchor="middle" class="sm">10</text>
+    <text x="200" y="110" text-anchor="middle" class="sm">10.0.0.0/24</text>
+    <text x="325" y="110" text-anchor="middle" class="sm">10.0.0.1</text>
+    <text x="425" y="110" text-anchor="middle" class="sm">E0/1</text>
+    <text x="525" y="110" text-anchor="middle" class="sm">0</text>
+    <text x="200" y="140" text-anchor="middle" class="sm">20.0.0.0/24</text>
+    <text x="325" y="140" text-anchor="middle" class="sm">20.0.0.1</text>
+    <text x="425" y="140" text-anchor="middle" class="sm">E0/2</text>
+    <text x="525" y="140" text-anchor="middle" class="sm">0</text>
+    <text x="200" y="170" text-anchor="middle" class="sm">40.0.0.0/24</text>
+    <text x="325" y="170" text-anchor="middle" class="sm">20.0.0.2</text>
+    <text x="425" y="170" text-anchor="middle" class="sm">E0/2</text>
+    <text x="525" y="170" text-anchor="middle" class="sm">1</text>
+    <text x="200" y="200" text-anchor="middle" class="sm">40.0.0.0/8</text>
+    <text x="325" y="200" text-anchor="middle" class="sm">30.0.0.2</text>
+    <text x="425" y="200" text-anchor="middle" class="sm">E0/3</text>
+    <text x="525" y="200" text-anchor="middle" class="sm">3</text>
+    <text x="300" y="240" text-anchor="middle" class="sm">qayerga · kim orqali · qaysi port · qancha xarajat</text>
+  </svg><p class="cap">2-rasm. Bitta yozuv — bitta yo‘nalish uchun ko‘rsatma</p><ul class="tight">
+    <li><b>Manzil/maska</b> — maqsad tarmoq (manzil VA maska)</li>
+    <li><b>Next hop</b> — keyingi routerning IP manzili</li>
+    <li><b>Port</b> — paket chiqadigan interfeys</li>
+    <li><b>Metrika</b> — shu yo‘lning xarajati</li>
+  </ul><h2>3. Maska uzunligi bo‘yicha turlari</h2><svg class="sk" viewBox="0 0 600 140" role="img" aria-label="host, tarmoq va sukut marshrutlari">
+    <defs>
+      <filter id="r21-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="3" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r21-3)">
+      <rect class="s fw" x="20" y="40" width="170" height="40" rx="5"></rect>
+      <rect class="s fb" x="215" y="40" width="170" height="40" rx="5"></rect>
+      <rect class="s fy" x="410" y="40" width="170" height="40" rx="5"></rect>
+    </g>
+    <text x="105" y="30" text-anchor="middle" class="red">host marshruti</text>
+    <text x="300" y="30" text-anchor="middle" class="red">tarmoq marshruti</text>
+    <text x="495" y="30" text-anchor="middle" class="red">sukut marshruti</text>
+    <text x="105" y="66" text-anchor="middle" class="sm">10.1.1.1/32</text>
+    <text x="300" y="66" text-anchor="middle" class="sm">10.1.1.0/24</text>
+    <text x="495" y="66" text-anchor="middle" class="sm">0.0.0.0/0</text>
+    <text x="105" y="104" text-anchor="middle" class="sm">bitta IP</text>
+    <text x="300" y="104" text-anchor="middle" class="sm">/0 dan /32 gacha</text>
+    <text x="495" y="104" text-anchor="middle" class="sm">hamma manzilga mos</text>
+    <text x="300" y="132" text-anchor="middle" class="sm">maska uzunligi = aniqlik darajasi</text>
+  </svg><p class="cap">3-rasm. Maska uzun bo‘lsa — yo‘l aniqroq</p><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>4. Yo‘l tanlash qoidalari</h2><svg class="sk" viewBox="0 0 600 210" role="img" aria-label="eng uzun maska qoidasi">
+    <defs>
+      <filter id="r21-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="11" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a21-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r21-4)">
+      <rect class="s fy" x="20" y="30" width="110" height="28" rx="3"></rect>
+      <rect class="s fg" x="180" y="62" width="280" height="30" rx="3"></rect>
+      <rect class="s fw" x="180" y="96" width="280" height="30" rx="3"></rect>
+      <path class="sr" marker-end="url(#a21-2)" d="M134,48 C152,54 164,60 176,68"></path>
+      <path class="sg" d="M470,78 l8,8 l14,-18"></path>
+      <path class="sr" d="M470,104 l16,16 M486,104 l-16,16"></path>
+    </g>
+    <text x="75" y="22" text-anchor="middle" class="red">kelgan paket</text>
+    <text x="75" y="49" text-anchor="middle" class="sm">40.0.0.2 ga</text>
+    <text x="250" y="82" text-anchor="middle" class="sm">40.0.0.0/24</text>
+    <text x="390" y="82" text-anchor="middle" class="sm">E0/2 · next 20.0.0.2</text>
+    <text x="250" y="116" text-anchor="middle" class="sm">40.0.0.0/8</text>
+    <text x="390" y="116" text-anchor="middle" class="sm">E0/3 · next 30.0.0.2</text>
+    <text x="504" y="82" class="grn">tanlanadi</text>
+    <text x="504" y="116" class="sm">e’tiborsiz</text>
+    <text x="300" y="156" text-anchor="middle" class="red">eng uzun maska yutadi (longest match)</text>
+    <text x="300" y="186" text-anchor="middle" class="sm">ikkitasi ham mos, lekin /24 aniqroq</text>
+  </svg><p class="cap">4-rasm. Bir necha mos yozuv bo‘lsa — maskasi uzuni ishlatiladi</p><svg class="sk" viewBox="0 0 600 210" role="img" aria-label="rekursiv qidiruv">
+    <defs>
+      <filter id="r21-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="19" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a21-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r21-5)">
+      <rect class="s fw" x="150" y="52" width="250" height="30" rx="3"></rect>
+      <rect class="s fg" x="150" y="112" width="250" height="30" rx="3"></rect>
+      <path class="sr" marker-end="url(#a21-3)" d="M275,88 v18"></path>
+    </g>
+    <text x="20" y="28" class="red">paket → 50.0.0.2</text>
+    <text x="20" y="72" class="sm">1-qidiruv</text>
+    <text x="210" y="72" text-anchor="middle" class="sm">50.0.0.0/24</text>
+    <text x="330" y="72" text-anchor="middle" class="sm">next 40.0.0.2</text>
+    <text x="578" y="72" text-anchor="end" class="sm">bevosita ulanmagan</text>
+    <text x="20" y="132" class="sm">2-qidiruv</text>
+    <text x="210" y="132" text-anchor="middle" class="sm">40.0.0.0/24</text>
+    <text x="330" y="132" text-anchor="middle" class="sm">next 20.0.0.2</text>
+    <text x="578" y="132" text-anchor="end" class="grn">bu ulangan</text>
+    <text x="300" y="170" text-anchor="middle" class="red">rekursiv qidiruv — ulangan next hop topilguncha</text>
+    <text x="300" y="198" text-anchor="middle" class="sm">so‘ng paket E0/2 orqali chiqadi</text>
+  </svg><p class="cap">5-rasm. Next hop ulanmagan bo‘lsa — jadval yana qidiriladi</p><svg class="sk" viewBox="0 0 600 160" role="img" aria-label="sukut marshruti">
+    <defs>
+      <filter id="r21-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="23" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a21-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+      <marker id="a21-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r21-6)">
+      <rect class="s fw" x="40" y="40" width="200" height="32" rx="4"></rect>
+      <rect class="s fy" x="330" y="18" width="240" height="32" rx="4"></rect>
+      <rect class="s fw" x="330" y="74" width="240" height="32" rx="4"></rect>
+      <path class="sg" marker-end="url(#a21-4)" d="M244,50 C280,42 300,38 326,34"></path>
+      <path class="sr" marker-end="url(#a21-5)" d="M244,62 C280,72 300,80 326,88"></path>
+    </g>
+    <text x="140" y="60" text-anchor="middle" class="sm">mos yozuv topilmadi</text>
+    <text x="270" y="32" text-anchor="middle" class="grn">bor</text>
+    <text x="270" y="96" text-anchor="middle" class="red">yo‘q</text>
+    <text x="450" y="38" text-anchor="middle" class="sm">sukut marshruti 0.0.0.0/0</text>
+    <text x="450" y="94" text-anchor="middle" class="sm">paket tashlab yuboriladi</text>
+    <text x="300" y="130" text-anchor="middle" class="red">sukut marshruti — eng qisqa maska, oxirgi variant</text>
+    <text x="300" y="154" text-anchor="middle" class="sm">0.0.0.0/0 hamma manzilga mos keladi</text>
+  </svg><p class="cap">6-rasm. Hech narsa mos kelmasa — sukut marshruti yoki tashlash</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>5. Marshrut qayerdan keladi?</h2><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="direct, static va dynamic marshrutlar">
+    <defs>
+      <filter id="r21-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="29" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a21-6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a21-7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r21-7)">
+      <rect class="s" x="8" y="34" width="186" height="104" rx="10"></rect>
+      <rect class="s fy" x="60" y="56" width="60" height="26" rx="3"></rect>
+      <path class="s2" d="M90,82 v34 M40,116 h100"></path>
+      <rect class="s fw" x="44" y="118" width="28" height="16" rx="2"></rect>
+      <rect class="s fw" x="112" y="118" width="28" height="16" rx="2"></rect>
+      <rect class="s" x="206" y="34" width="186" height="104" rx="10"></rect>
+      <rect class="s fy" x="270" y="56" width="60" height="26" rx="3"></rect>
+      <rect class="s fw" x="245" y="98" width="54" height="32" rx="3"></rect>
+      <path class="s2" d="M253,108 h38 M253,118 h38"></path>
+      <path class="sr" marker-end="url(#a21-6)" d="M277,96 C284,92 290,88 296,84"></path>
+      <rect class="s" x="404" y="34" width="186" height="104" rx="10"></rect>
+      <rect class="s fy" x="425" y="56" width="54" height="26" rx="3"></rect>
+      <rect class="s fy" x="515" y="56" width="54" height="26" rx="3"></rect>
+      <path class="sg" marker-end="url(#a21-7)" d="M483,64 h26"></path>
+      <path class="sg" marker-end="url(#a21-7)" d="M511,76 h-26"></path>
+    </g>
+    <text x="101" y="26" text-anchor="middle" class="red">direct</text>
+    <text x="299" y="26" text-anchor="middle" class="red">static</text>
+    <text x="497" y="26" text-anchor="middle" class="red">dynamic</text>
+    <text x="497" y="110" text-anchor="middle" class="sm">RIP · OSPF</text>
+    <text x="101" y="158" text-anchor="middle" class="sm">interfeys o‘zi yasaydi</text>
+    <text x="299" y="158" text-anchor="middle" class="sm">qo‘lda yoziladi</text>
+    <text x="497" y="158" text-anchor="middle" class="sm">protokol o‘zi topadi</text>
+    <text x="101" y="180" text-anchor="middle" class="sm">xarajat kichik</text>
+    <text x="299" y="180" text-anchor="middle" class="sm">metrika = 0</text>
+    <text x="497" y="180" text-anchor="middle" class="sm">resurs ko‘p ketadi</text>
+    <text x="101" y="202" text-anchor="middle" class="sm">faqat ulangan tarmoq</text>
+    <text x="299" y="202" text-anchor="middle" class="sm">oddiy tarmoq uchun</text>
+    <text x="497" y="202" text-anchor="middle" class="sm">murakkab tarmoq uchun</text>
+    <text x="300" y="224" text-anchor="middle" class="sm">nosozlikda static yangilanmaydi, dynamic o‘zi qayta hisoblaydi</text>
+  </svg><p class="cap">7-rasm. Uchta manba: ulanish, qo‘l va protokol</p><h2>6. Metrika — yo‘lning xarajati</h2><svg class="sk" viewBox="0 0 600 170" role="img" aria-label="metrikani hisoblash omillari">
+    <defs>
+      <filter id="r21-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="31" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a21-8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r21-8)">
+      <rect class="s fw" x="20" y="30" width="130" height="26" rx="3"></rect>
+      <rect class="s fw" x="158" y="30" width="130" height="26" rx="3"></rect>
+      <rect class="s fw" x="20" y="66" width="130" height="26" rx="3"></rect>
+      <rect class="s fw" x="158" y="66" width="130" height="26" rx="3"></rect>
+      <rect class="s fw" x="20" y="102" width="130" height="26" rx="3"></rect>
+      <rect class="s fw" x="158" y="102" width="130" height="26" rx="3"></rect>
+      <rect class="s fy" x="380" y="56" width="190" height="44" rx="5"></rect>
+      <path class="sr" marker-end="url(#a21-8)" d="M300,78 h72"></path>
+    </g>
+    <text x="85" y="48" text-anchor="middle" class="sm">hop soni</text>
+    <text x="223" y="48" text-anchor="middle" class="sm">polosa (bandwidth)</text>
+    <text x="85" y="84" text-anchor="middle" class="sm">kechikish</text>
+    <text x="223" y="84" text-anchor="middle" class="sm">liniya bandligi</text>
+    <text x="85" y="120" text-anchor="middle" class="sm">ishonchlilik</text>
+    <text x="223" y="120" text-anchor="middle" class="sm">PMTU</text>
+    <text x="475" y="46" text-anchor="middle" class="red">xarajat</text>
+    <text x="475" y="84" text-anchor="middle">metrika (cost)</text>
+    <text x="475" y="128" text-anchor="middle" class="sm">kichik metrika = yaxshi yo‘l</text>
+    <text x="300" y="158" text-anchor="middle" class="sm">har protokol o‘z metrikasini hisoblaydi — ular taqqoslanmaydi</text>
+  </svg><p class="cap">8-rasm. Metrika bir necha omildan hisoblanadi</p><table class="rot">
+    <tbody><tr><th>Protokol</th><th>Metrika asosi</th></tr>
+    <tr><td>static</td><td>doimiy 0</td></tr>
+    <tr><td>RIP</td><td>hop soni</td></tr>
+    <tr><td>OSPF</td><td>polosa (bandwidth)</td></tr>
+  </tbody></table><h2>7. Protokol ustuvorligi (preference)</h2><p class="tight">Bir manzilga bir necha protokol yo‘l topsa — <mark>preference</mark> solishtiriladi.</p><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 220" role="img" aria-label="H3C protokol preference qiymatlari">
+    <defs>
+      <filter id="r21-9" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="37" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a21-9" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r21-9)">
+      <path class="s2" marker-end="url(#a21-9)" d="M92,26 v182"></path>
+      <rect class="s fg" x="104" y="28" width="210" height="24" rx="3"></rect>
+      <rect class="s fb" x="104" y="58" width="210" height="24" rx="3"></rect>
+      <rect class="s fy" x="104" y="88" width="210" height="24" rx="3"></rect>
+      <rect class="s fw" x="104" y="118" width="210" height="24" rx="3"></rect>
+      <rect class="s fw" x="104" y="148" width="210" height="24" rx="3"></rect>
+      <rect class="s fw" x="104" y="178" width="210" height="24" rx="3"></rect>
+    </g>
+    <text x="300" y="20" text-anchor="middle" class="sm">H3C sukut qiymatlari</text>
+    <text x="76" y="45" text-anchor="end" class="red">0</text>
+    <text x="76" y="75" text-anchor="end" class="red">10</text>
+    <text x="76" y="105" text-anchor="end" class="red">60</text>
+    <text x="76" y="135" text-anchor="end" class="red">100</text>
+    <text x="76" y="165" text-anchor="end" class="red">150</text>
+    <text x="76" y="195" text-anchor="end" class="red">256</text>
+    <text x="112" y="45" class="sm">direct</text>
+    <text x="112" y="75" class="sm">OSPF ichki</text>
+    <text x="112" y="105" class="sm">static</text>
+    <text x="112" y="135" class="sm">RIP</text>
+    <text x="112" y="165" class="sm">OSPF tashqi</text>
+    <text x="112" y="195" class="sm">BGP</text>
+    <text x="578" y="45" text-anchor="end" class="grn">kichik qiymat = ishonchliroq</text>
+    <text x="578" y="195" text-anchor="end" class="sm">pastga — ishonch kamayadi</text>
+    <text x="300" y="214" text-anchor="middle" class="sm">g‘olib yozuv marshrut jadvaliga tushadi</text>
+  </svg><p class="cap">9-rasm. Preference — protokolning ishonchlilik darajasi</p><h2>8. Marshrut halqasi (loop)</h2><svg class="sk" viewBox="0 0 600 270" role="img" aria-label="marshrut halqasi">
+    <defs>
+      <filter id="r21-10" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="41" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a21-10" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r21-10)">
+      <rect class="s fy" x="60" y="50" width="64" height="30" rx="4"></rect>
+      <rect class="s fy" x="270" y="50" width="64" height="30" rx="4"></rect>
+      <rect class="s fy" x="170" y="160" width="64" height="30" rx="4"></rect>
+      <path class="sr" marker-end="url(#a21-10)" d="M126,65 h138"></path>
+      <path class="sr" marker-end="url(#a21-10)" d="M300,82 L234,156"></path>
+      <path class="sr" marker-end="url(#a21-10)" d="M172,170 L108,82"></path>
+    </g>
+    <text x="92" y="42" text-anchor="middle">RTA</text>
+    <text x="302" y="42" text-anchor="middle">RTB</text>
+    <text x="152" y="180" text-anchor="end">RTC</text>
+    <text x="195" y="44" text-anchor="middle" class="red">paket</text>
+    <text x="300" y="118" text-anchor="middle" class="sm">uchtasi ham 11.4.0.0 ga boshqasini ko‘rsatadi</text>
+    <text x="300" y="224" text-anchor="middle" class="red">sabab: noto‘g‘ri static yoki yomon reja</text>
+    <text x="300" y="254" text-anchor="middle" class="sm">TTL = 0 bo‘lguncha aylanadi — polosa behuda ketadi</text>
+  </svg><p class="cap">10-rasm. Halqada paket manzilga yetmaydi, faqat aylanadi</p><h2>9. Jadvalni ko‘rish</h2><table class="rot">
+    <tbody><tr><th>Buyruq</th><th>Nima ko‘rsatadi</th></tr>
+    <tr><td>display ip routing-table</td><td>qisqa jadval</td></tr>
+    <tr><td>display ip routing-table 1.1.1.1</td><td>aniq bir marshrut</td></tr>
+    <tr><td>display ip routing-table statistics</td><td>marshrut statistikasi</td></tr>
+  </tbody></table><div class="pg-num">— 5 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 180" role="img" aria-label="display ip routing-table natijasi">
+    <defs>
+      <filter id="r21-11" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="43" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r21-11)">
+      <rect class="s fw" x="20" y="20" width="560" height="134" rx="5"></rect>
+      <path class="s2" d="M20,56 h560 M20,80 h560"></path>
+    </g>
+    <text x="34" y="44" class="red">display ip routing-table</text>
+    <text x="40" y="72" class="sm">Destination/Mask</text>
+    <text x="200" y="72" class="sm">Proto</text>
+    <text x="280" y="72" class="sm">Pre</text>
+    <text x="330" y="72" class="sm">Cost</text>
+    <text x="390" y="72" class="sm">NextHop</text>
+    <text x="500" y="72" class="sm">Interface</text>
+    <text x="40" y="100" class="sm">0.0.0.0/0</text>
+    <text x="200" y="100" class="sm">Static</text>
+    <text x="280" y="100" class="sm">60</text>
+    <text x="330" y="100" class="sm">0</text>
+    <text x="390" y="100" class="sm">20.0.0.2</text>
+    <text x="500" y="100" class="sm">GE0/1</text>
+    <text x="40" y="124" class="sm">10.0.0.0/24</text>
+    <text x="200" y="124" class="sm">Direct</text>
+    <text x="280" y="124" class="sm">0</text>
+    <text x="330" y="124" class="sm">0</text>
+    <text x="390" y="124" class="sm">10.0.0.1</text>
+    <text x="500" y="124" class="sm">GE0/0</text>
+    <text x="40" y="146" class="sm">20.0.0.0/24</text>
+    <text x="200" y="146" class="sm">OSPF</text>
+    <text x="280" y="146" class="sm">10</text>
+    <text x="330" y="146" class="sm">2</text>
+    <text x="390" y="146" class="sm">20.0.0.1</text>
+    <text x="500" y="146" class="sm">GE0/1</text>
+    <text x="300" y="174" text-anchor="middle" class="sm">Pre — protokol ustuvorligi, Cost — metrika</text>
+  </svg><p class="cap">11-rasm. Chiqishda Proto · Pre · Cost ustunlariga qaraladi</p><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>Marshrut yo‘lni ko‘rsatadi, router hop-by-hop uzatadi</li>
+      <li>Yozuv: manzil/maska · next hop · port · metrika</li>
+      <li>Tanlash: eng uzun maska → rekursiv qidiruv → sukut</li>
+      <li>Manba: direct · static · dynamic (RIP, OSPF)</li>
+      <li>Preference kichik = ishonchli; halqada TTL nolga tushadi</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>Sukut marshruti maskasi? <span class="ans">— 0.0.0.0/0</span></li>
+    <li>Ikki mos yozuvdan qaysi biri? <span class="ans">— maskasi uzuni</span></li>
+    <li>Static marshrut preference va metrikasi? <span class="ans">— 60 va 0</span></li>
+    <li>RIP va OSPF metrikasi nimadan? <span class="ans">— hop soni, polosa</span></li>
+  </ol><div class="pg-num">— 6 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+
+<!-- ================= 6-sahifa ================= -->
+
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>19-bob · DHCP — manzilni avtomatik berish</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">19-bob</div><h1 class="title">DHCP — manzilni avtomatik berish
+    <small>Dynamic Host Configuration Protocol</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>DHCP</b> — IP manzilni qurilmaga avtomatik beruvchi protokol</li>
+      <li><b>Server va klient</b> — manzil beruvchi va manzil so‘rovchi tomon</li>
+      <li><b>Pool (havza)</b> — serverdagi tarqatish uchun ajratilgan manzillar to‘plami</li>
+      <li><b>Lease (ijara)</b> — manzil berilgan muddat, tugasa yangilanadi</li>
+      <li><b>DORA</b> — 4 qadam: Discover → Offer → Request → ACK</li>
+      <li><b>Relay agent</b> — so‘rovni boshqa tarmoqdagi serverga uzatuvchi qurilma</li>
+    </ul>
+  </div><h2>1. DHCP nima</h2><p class="tight"><mark>IP · maska · shlyuz · DNS</mark> — hammasini server avtomatik beradi.</p><ul class="tight">
+    <li><b>BOOTP</b> ning kengaytmasi, u bilan mos</li>
+    <li><b>UDP</b> ustida: server 67 · klient 68</li>
+    <li>klient/server — sozlamalar markazda turadi</li>
+    <li>manzil <b>ijaraga</b> beriladi → resurs tejaladi</li>
+  </ul><svg class="sk" viewBox="0 0 600 210" role="img" aria-label="Qolda sozlash va DHCP taqqoslash">
+    <defs>
+      <filter id="r19-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="5" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a19-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a19-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r19-1)">
+      <rect class="s" x="12" y="30" width="270" height="150" rx="12"></rect>
+      <rect class="s" x="318" y="30" width="270" height="150" rx="12"></rect>
+      <!-- admin -->
+      <path class="s2" d="M52,90 v28 M36,100 h32 M40,144 l12,-26 l12,26"></path>
+      <circle class="s fw" cx="52" cy="76" r="13"></circle>
+      <rect class="s fw" x="150" y="48" width="52" height="30" rx="3"></rect>
+      <rect class="s fw" x="150" y="94" width="52" height="30" rx="3"></rect>
+      <rect class="s fw" x="150" y="140" width="52" height="30" rx="3"></rect>
+      <path class="sr" marker-end="url(#a19-1)" d="M70,86 C100,72 120,64 144,60"></path>
+      <path class="sr" marker-end="url(#a19-1)" d="M70,104 C100,106 120,108 144,108"></path>
+      <path class="sr" marker-end="url(#a19-1)" d="M70,122 C100,136 120,148 144,154"></path>
+      <path class="s2" d="M212,58 h44 M212,70 h30 M212,104 h44 M212,116 h30 M212,150 h44 M212,162 h30"></path>
+      <!-- DHCP server -->
+      <rect class="s fy" x="336" y="80" width="52" height="66" rx="4"></rect>
+      <path class="s2" d="M346,96 h32 M346,110 h32 M346,124 h32"></path>
+      <rect class="s fw" x="496" y="48" width="52" height="30" rx="3"></rect>
+      <rect class="s fw" x="496" y="94" width="52" height="30" rx="3"></rect>
+      <rect class="s fw" x="496" y="140" width="52" height="30" rx="3"></rect>
+      <path class="sg" marker-end="url(#a19-2)" d="M392,96 C424,76 452,64 490,60"></path>
+      <path class="sg" marker-end="url(#a19-2)" d="M392,112 C424,110 452,108 490,108"></path>
+      <path class="sg" marker-end="url(#a19-2)" d="M392,128 C424,142 452,150 490,154"></path>
+    </g>
+    <text x="147" y="22" text-anchor="middle" class="red">qo‘lda sozlash</text>
+    <text x="453" y="22" text-anchor="middle" class="grn">DHCP bilan</text>
+    <text x="52" y="166" text-anchor="middle" class="sm">admin</text>
+    <text x="362" y="166" text-anchor="middle" class="sm">DHCP server</text>
+    <text x="147" y="202" text-anchor="middle" class="sm">har xost uchun alohida — sekin, xato ko‘p</text>
+    <text x="470" y="202" text-anchor="middle" class="sm">xost o‘zi so‘raydi, server beradi</text>
+  </svg><p class="cap">1-rasm. Katta tarmoqda qo‘lda sozlash ish bermaydi</p><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>2. Tizim qismlari</h2><svg class="sk" viewBox="0 0 600 180" role="img" aria-label="DHCP klient relay va server">
+    <defs>
+      <filter id="r19-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="11" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r19-2)">
+      <rect class="dash" x="12" y="46" width="170" height="98" rx="10"></rect>
+      <rect class="dash" x="418" y="46" width="170" height="98" rx="10"></rect>
+      <rect class="s fw" x="40" y="72" width="56" height="36" rx="3"></rect>
+      <path class="s2" d="M68,108 v8 M50,116 h36 M50,84 h26 M50,94 h36"></path>
+      <rect class="s fy" x="266" y="72" width="80" height="38" rx="5"></rect>
+      <path class="s2" d="M280,84 h24 M280,98 h24 M314,84 h18 M314,98 h18"></path>
+      <rect class="s fy" x="506" y="60" width="56" height="70" rx="4"></rect>
+      <path class="s2" d="M516,76 h36 M516,90 h36 M516,104 h36"></path>
+      <path class="s" d="M100,90 H262"></path>
+      <path class="s" d="M350,90 H502"></path>
+    </g>
+    <text x="97" y="36" text-anchor="middle" class="red">Tarmoq 1</text>
+    <text x="503" y="36" text-anchor="middle" class="red">Tarmoq 2</text>
+    <text x="68" y="140" text-anchor="middle" class="sm">DHCP klient</text>
+    <text x="306" y="62" text-anchor="middle">DHCP relay agent</text>
+    <text x="534" y="152" text-anchor="middle" class="sm">DHCP server</text>
+    <text x="222" y="108" text-anchor="middle" class="sm">broadcast</text>
+    <text x="382" y="108" text-anchor="middle" class="sm">unicast</text>
+  </svg><p class="cap">2-rasm. Relay agent turli subnetlarni bog‘laydi</p><h2>3. Manzil taqsimlash usullari</h2><svg class="sk" viewBox="0 0 600 340" role="img" aria-label="DHCP manzil taqsimlashning uch usuli">
+    <defs>
+      <filter id="r19-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="17" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a19-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r19-3)">
+      <rect class="s" x="8" y="30" width="186" height="210" rx="12"></rect>
+      <rect class="s" x="207" y="30" width="186" height="210" rx="12"></rect>
+      <rect class="s" x="406" y="30" width="186" height="210" rx="12"></rect>
+      <!-- qo'lda -->
+      <rect class="s fw" x="30" y="62" width="54" height="38" rx="3"></rect>
+      <path class="s2" d="M40,76 h34 M40,88 h34"></path>
+      <rect class="s fy" x="122" y="66" width="52" height="30" rx="4"></rect>
+      <path class="s" d="M88,82 h30"></path>
+      <path class="sr" d="M94,74 h16 v16 h-16 z M98,74 v-5 a5,5 0 0,1 8,0 v5"></path>
+      <!-- avtomatik -->
+      <rect class="s fy" x="228" y="56" width="44" height="62" rx="4"></rect>
+      <path class="s2" d="M236,72 h28 M236,86 h28 M236,100 h28"></path>
+      <rect class="s fw" x="322" y="70" width="52" height="34" rx="3"></rect>
+      <path class="s2" marker-end="url(#a19-3)" d="M278,88 h38"></path>
+      <path class="s" d="M330,185 a13,11 0 1,0 21,0 a13,11 0 1,0 -21,0 M351,185 a13,11 0 1,0 21,0 a13,11 0 1,0 -21,0"></path>
+      <!-- dinamik -->
+      <rect class="s fy" x="426" y="56" width="44" height="62" rx="4"></rect>
+      <path class="s2" d="M434,72 h28 M434,86 h28 M434,100 h28"></path>
+      <rect class="s fw" x="520" y="70" width="52" height="34" rx="3"></rect>
+      <path class="s2" marker-end="url(#a19-3)" d="M476,88 h38"></path>
+      <circle class="s fw" cx="499" cy="185" r="26"></circle>
+      <path class="s2" d="M499,168 v17 h12"></path>
+    </g>
+    <text x="101" y="22" text-anchor="middle" class="red">qo‘lda (manual)</text>
+    <text x="300" y="22" text-anchor="middle" class="red">avtomatik</text>
+    <text x="499" y="22" text-anchor="middle" class="red">dinamik</text>
+    <text x="148" y="86" text-anchor="middle" class="sm">IP</text>
+    <text x="101" y="152" text-anchor="middle" class="sm">MAC ↔ IP bog‘lanadi</text>
+    <text x="300" y="152" text-anchor="middle" class="sm">doimiy IP</text>
+    <text x="499" y="152" text-anchor="middle" class="sm">muddatli IP</text>
+    <text x="101" y="190" text-anchor="middle" class="sm">admin o‘zi biriktiradi</text>
+    <text x="300" y="228" text-anchor="middle" class="sm">cheksiz</text>
+    <text x="101" y="264" text-anchor="middle" class="sm">printer · DNS · server</text>
+    <text x="300" y="264" text-anchor="middle" class="sm">bo‘shatilmaguncha band</text>
+    <text x="499" y="264" text-anchor="middle" class="sm">lease bilan beriladi</text>
+    <text x="101" y="292" text-anchor="middle" class="sm">muddati yo‘q</text>
+    <text x="300" y="292" text-anchor="middle" class="sm">muddati yo‘q</text>
+    <text x="499" y="292" text-anchor="middle" class="sm">muddat tugasa — qaytadi</text>
+    <text x="499" y="322" text-anchor="middle" class="grn">eng ko‘p ishlatiladi</text>
+  </svg><p class="cap">3-rasm. Uch xil taqsimlash</p><table class="rot">
+    <tbody><tr><th>Usul</th><th>Muddat</th><th>Qayerda</th></tr>
+    <tr><td>Qo‘lda</td><td>yo‘q</td><td>printer, DNS, server</td></tr>
+    <tr><td>Avtomatik</td><td>doimiy</td><td>o‘zgarmas xostlar</td></tr>
+    <tr><td>Dinamik</td><td>lease</td><td>oddiy foydalanuvchilar</td></tr>
+  </tbody></table><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>4. DHCP nima beradi</h2><ul class="tight">
+    <li><b>plug-and-play</b> — xostni sozlash shart emas</li>
+    <li><b>markazlashgan</b> boshqaruv — barcha sozlama bitta joyda</li>
+    <li><b>samaradorlik</b> — ijara tugasa, manzil qayta ishlatiladi</li>
+    <li><b>subnetlar aro</b> — relay agent yordamida</li>
+  </ul><h2>5. Manzil olishning 4 bosqichi</h2><ul class="tight">
+    <li><b>DISCOVER</b> — klient broadcast qiladi: server bormi?</li>
+    <li><b>OFFER</b> — server manzil taklif qiladi</li>
+    <li><b>REQUEST</b> — klient birinchi kelgan taklifni tanlaydi</li>
+    <li><b>ACK</b> — server tasdiqlaydi, <b>NAK</b> — rad etadi</li>
+  </ul><svg class="sk" viewBox="0 0 600 440" role="img" aria-label="DHCP tortta bosqich">
+    <defs>
+      <filter id="r19-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="23" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a19-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a19-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r19-4)">
+      <rect class="s fw" x="68" y="52" width="104" height="30" rx="4"></rect>
+      <rect class="s fy" x="428" y="52" width="104" height="30" rx="4"></rect>
+      <path class="dash" d="M120,82 v300 M480,82 v300"></path>
+      <path class="sr" marker-end="url(#a19-4)" d="M126,120 H474"></path>
+      <path class="sg" marker-end="url(#a19-5)" d="M474,192 H126"></path>
+      <path class="sr" marker-end="url(#a19-4)" d="M126,264 H474"></path>
+      <path class="sg" marker-end="url(#a19-5)" d="M474,336 H126"></path>
+    </g>
+    <text x="120" y="44" text-anchor="middle">DHCP klient</text>
+    <text x="480" y="44" text-anchor="middle">DHCP server</text>
+    <text x="120" y="74" text-anchor="middle" class="sm">UDP 68</text>
+    <text x="480" y="74" text-anchor="middle" class="sm">UDP 67</text>
+    <text x="300" y="106" text-anchor="middle" class="red">1) DISCOVER — broadcast</text>
+    <text x="300" y="146" text-anchor="middle" class="sm">menga kim IP beradi?</text>
+    <text x="300" y="178" text-anchor="middle" class="grn">2) OFFER</text>
+    <text x="300" y="218" text-anchor="middle" class="sm">10.0.0.2/24 ni taklif qilaman</text>
+    <text x="300" y="250" text-anchor="middle" class="red">3) REQUEST — broadcast</text>
+    <text x="300" y="290" text-anchor="middle" class="sm">birinchi kelgan taklifni olaman</text>
+    <text x="300" y="322" text-anchor="middle" class="grn">4) ACK (yoki NAK)</text>
+    <text x="300" y="362" text-anchor="middle" class="sm">manzil sizniki — tasdiq</text>
+    <text x="300" y="400" text-anchor="middle" class="red">qizil — broadcast · yashil — serverning javobi</text>
+    <text x="300" y="428" text-anchor="middle" class="sm">boshqa serverlar taklifini qaytarib oladi</text>
+  </svg><p class="cap">4-rasm. DISCOVER → OFFER → REQUEST → ACK</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="box"><span class="lbl">Keyin:</span> klient ARP bilan tekshiradi. Manzil band bo‘lsa — <b>DECLINE</b> va yangi so‘rov. Kerak bo‘lmasa — <b>RELEASE</b>.</div><h2>6. Ijara va uni yangilash</h2><svg class="sk" viewBox="0 0 600 210" role="img" aria-label="Ijara muddati va yangilash nuqtalari">
+    <defs>
+      <filter id="r19-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="31" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r19-5)">
+      <rect class="s fg" x="60" y="78" width="240" height="30" rx="3"></rect>
+      <rect class="s fy" x="300" y="78" width="180" height="30" rx="3"></rect>
+      <rect class="s fw" x="480" y="78" width="60" height="30" rx="3"></rect>
+      <path class="s2" d="M300,78 v-16 M480,78 v-16 M60,108 v14 M540,108 v14"></path>
+      <path class="sr" d="M300,112 v10 M480,112 v10"></path>
+    </g>
+    <text x="300" y="22" text-anchor="middle" class="red">ijara muddati (lease)</text>
+    <text x="300" y="54" text-anchor="middle" class="sm">50 %</text>
+    <text x="480" y="54" text-anchor="middle" class="sm">87,5 %</text>
+    <text x="72" y="140" text-anchor="middle" class="sm">boshlanish</text>
+    <text x="528" y="140" text-anchor="middle" class="sm">tugash</text>
+    <text x="270" y="172" text-anchor="middle" class="sm">50 % — unicast REQUEST → o‘sha serverga</text>
+    <text x="270" y="198" text-anchor="middle" class="sm">87,5 % — broadcast REQUEST → istalgan serverga</text>
+  </svg><p class="cap">5-rasm. Yangilash nuqtalari</p><div class="box"><span class="lbl">Javob:</span> <b>ACK</b> — ijara uzaytiriladi, <b>NAK</b> — rad, klient yangidan DISCOVER qiladi</div><h2>7. Relay agent</h2><svg class="sk" viewBox="0 0 600 205" role="img" aria-label="DHCP relay agent ishlashi">
+    <defs>
+      <filter id="r19-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="43" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a19-6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a19-7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r19-6)">
+      <rect class="s fw" x="28" y="98" width="58" height="38" rx="3"></rect>
+      <path class="s2" d="M38,112 h38 M38,124 h26 M57,136 v8 M40,144 h34"></path>
+      <rect class="s fy" x="266" y="98" width="84" height="38" rx="5"></rect>
+      <path class="s2" d="M280,110 h24 M280,124 h24 M316,110 h20 M316,124 h20"></path>
+      <rect class="s fy" x="500" y="80" width="58" height="74" rx="4"></rect>
+      <path class="s2" d="M510,96 h38 M510,110 h38 M510,124 h38"></path>
+      <path class="sr" marker-end="url(#a19-6)" d="M92,110 H260"></path>
+      <path class="sg" marker-end="url(#a19-7)" d="M356,110 H494"></path>
+      <path class="s2" marker-end="url(#a19-7)" d="M494,128 H356"></path>
+      <path class="s2" marker-end="url(#a19-6)" d="M260,128 H92"></path>
+    </g>
+    <text x="57" y="172" text-anchor="middle" class="sm">DHCP klient</text>
+    <text x="308" y="84" text-anchor="middle">relay agent</text>
+    <text x="529" y="68" text-anchor="middle" class="sm">DHCP server</text>
+    <text x="176" y="102" text-anchor="middle" class="sm">broadcast</text>
+    <text x="425" y="102" text-anchor="middle" class="sm">unicast</text>
+    <text x="176" y="148" text-anchor="middle" class="sm">javob</text>
+    <text x="425" y="148" text-anchor="middle" class="sm">javob</text>
+    <text x="300" y="196" text-anchor="middle" class="sm">har subnetga alohida server kerak emas</text>
+  </svg><p class="cap">6-rasm. Broadcast → unicast → server</p><ul class="tight">
+    <li>klientning <b>broadcast</b> paketini serverga <b>unicast</b> qilib uzatadi</li>
+    <li>serverdan kelgan sozlamani klientga qaytaradi</li>
+  </ul><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>8. Routerda sozlash</h2><svg class="sk" viewBox="0 0 600 175" role="img" aria-label="DHCP server sozlash sxemasi">
+    <defs>
+      <filter id="r19-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="47" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r19-7)">
+      <rect class="s fw" x="40" y="64" width="58" height="38" rx="3"></rect>
+      <path class="s2" d="M50,78 h38 M50,90 h26 M69,102 v8 M52,110 h34"></path>
+      <rect class="s fy" x="250" y="58" width="100" height="44" rx="5"></rect>
+      <path class="s2" d="M264,72 h30 M264,88 h30 M306,72 h24 M306,88 h24"></path>
+      <rect class="s fw" x="500" y="40" width="54" height="66" rx="4"></rect>
+      <path class="s2" d="M510,56 h34 M510,70 h34 M510,84 h34"></path>
+      <path class="s" d="M104,80 H246"></path>
+      <path class="s" d="M354,72 H496"></path>
+    </g>
+    <text x="300" y="44" text-anchor="middle">DHCP server (Router)</text>
+    <text x="69" y="134" text-anchor="middle" class="sm">klient</text>
+    <text x="527" y="30" text-anchor="middle" class="sm">DNS 192.168.1.10</text>
+    <text x="300" y="128" text-anchor="middle" class="sm">pool 192.168.1.0/24 · ijara 5 kun</text>
+    <text x="300" y="152" text-anchor="middle" class="sm">shlyuz 192.168.1.254 · forbidden-ip: .10 va .254</text>
+  </svg><ul class="tight">
+    <li>[Router] dhcp enable</li>
+    <li>[Router] dhcp server forbidden-ip 192.168.1.10</li>
+    <li>[Router] dhcp server ip-pool 0</li>
+    <li>[…pool-0] network 192.168.1.0 mask 255.255.255.0</li>
+    <li>[…pool-0] gateway-list 192.168.1.254 · dns-list 192.168.1.10</li>
+    <li>[…pool-0] expired day 5</li>
+  </ul><p class="tight"><b>Relay agent</b> (interfeys ko‘rinishida):</p><ul class="tight">
+    <li>dhcp select relay · dhcp relay server-address 192.168.1.10</li>
+  </ul><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>DHCP = BOOTP kengaytmasi · UDP 67 (server) / 68 (klient)</li>
+      <li>Usullar: qo‘lda · avtomatik · dinamik (lease)</li>
+      <li>DISCOVER → OFFER → REQUEST → ACK</li>
+      <li>Yangilash: 50 % unicast, 87,5 % broadcast</li>
+      <li>Relay agent — server boshqa subnetda bo‘lganda</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>DHCP portlari? <span class="ans">— 67 server, 68 klient</span></li>
+    <li>4 bosqich? <span class="ans">— DISCOVER, OFFER, REQUEST, ACK</span></li>
+    <li>Yangilash qachon? <span class="ans">— 50 % va 87,5 %</span></li>
+    <li>Manzil band chiqsa? <span class="ans">— DECLINE</span></li>
+  </ol><div class="pg-num">— 5 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+</body>
+</html>

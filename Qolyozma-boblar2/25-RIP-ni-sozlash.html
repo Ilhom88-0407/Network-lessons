@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>25-bob · RIP ni sozlash</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">25-bob</div><h1 class="title">RIP ni sozlash
+    <small>Configuring RIP</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>network buyrug‘i</b> — qaysi interfeyslarda RIP ishlashini belgilaydi</li>
+      <li><b>RIPv1 / RIPv2</b> — maskasiz / maskali, v2 — multicast 224.0.0.9</li>
+      <li><b>Silent interface</b> — eshitadi, lekin yangilanish yubormaydi</li>
+      <li><b>Summary</b> — avtomatik jamlash, undo bilan o‘chiriladi</li>
+      <li><b>Autentifikatsiya</b> — yangilanishlarni parol/MD5 bilan himoyalash</li>
+      <li><b>display rip</b> — protokol holati va taymerlarini ko‘rsatadi</li>
+    </ul>
+  </div><h2>1. Asosiy sozlash</h2><table class="rot">
+    <tbody><tr><th>[RTA]</th><td>rip [ process-id ]</td></tr>
+    <tr><th>[RTA-rip-1]</th><td>network network-address [ wildcard-mask ]</td></tr>
+  </tbody></table><ul class="tight">
+    <li><b>process-id</b> yozilmasa — sukut bo‘yicha <b>1</b></li>
+    <li><b>wildcard-mask</b> — maskaning teskarisi; <b>network 0.0.0.0</b> — hamma interfeys</li>
+  </ul><svg class="sk" viewBox="0 0 600 280" role="img" aria-label="network komandasining ikki manosi">
+    <defs>
+      <filter id="r25-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="5" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+      <marker id="a25-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r25-1)">
+      <rect class="s fy" x="250" y="112" width="90" height="48" rx="6"></rect>
+      <rect class="s fw" x="70" y="40" width="96" height="32" rx="4"></rect>
+      <rect class="s fw" x="434" y="68" width="96" height="32" rx="4"></rect>
+      <rect class="s fw" x="434" y="186" width="96" height="32" rx="4"></rect>
+      <path class="sg" d="M250,122 L166,60"></path>
+      <path class="sg" d="M340,122 L434,90"></path>
+      <path class="dash" d="M340,150 L434,198"></path>
+    </g>
+    <text x="300" y="24" text-anchor="middle" class="red">network = qaysi interfeysda RIP ishlaydi</text>
+    <text x="118" y="60" text-anchor="middle" class="sm">10.0.0.0/8</text>
+    <text x="482" y="88" text-anchor="middle" class="sm">12.0.0.0/8</text>
+    <text x="482" y="206" text-anchor="middle" class="sm">11.0.0.0/8</text>
+    <text x="295" y="142" text-anchor="middle">RTA</text>
+    <text x="222" y="78" text-anchor="middle" class="sm">E1/0</text>
+    <text x="378" y="96" text-anchor="middle" class="sm">S0/0</text>
+    <text x="378" y="168" text-anchor="middle" class="sm">S0/1</text>
+    <text x="300" y="246" text-anchor="middle" class="grn">network 10.0.0.0 · network 12.0.0.0 → RIP yoqilgan</text>
+    <text x="300" y="270" text-anchor="middle" class="red">S0/1 e‘lon qilinmagan → 11.0.0.0 tashqarida</text>
+  </svg><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><p class="cap">1-rasm. network — ham qaysi direct marshrut e‘lon qilinishini, ham qaysi interfeys paket olishini belgilaydi</p><h2>2. Qo‘shimcha sozlashlar</h2><table class="rot">
+    <tbody><tr><th>[RTA-rip-1]</th><td>silent-interface { all | interfeys }</td></tr>
+    <tr><th>[RTA-Eth1/0]</th><td>rip split-horizon</td></tr>
+    <tr><th>[RTA-Eth1/0]</th><td>rip poison-reverse</td></tr>
+  </tbody></table><svg class="sk" viewBox="0 0 600 180" role="img" aria-label="silent-interface ishlashi">
+    <defs>
+      <filter id="r25-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="15" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a25-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a25-2g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r25-2)">
+      <rect class="s fy" x="60" y="70" width="54" height="40" rx="5"></rect>
+      <rect class="s fy" x="250" y="70" width="80" height="40" rx="6"></rect>
+      <rect class="s fw" x="460" y="66" width="54" height="34" rx="3"></rect>
+      <path class="s2" d="M487,100 v8 M473,108 h28"></path>
+      <path class="s2" d="M114,90 H250 M330,88 H460"></path>
+      <path class="sg" marker-end="url(#a25-2g)" d="M136,58 H230"></path>
+      <path class="sr" marker-end="url(#a25-2)" d="M344,58 H446"></path>
+      <path class="sr" d="M387,50 l16,16 M403,50 l-16,16"></path>
+    </g>
+    <text x="87" y="124" text-anchor="middle" class="sm">RTB</text>
+    <text x="290" y="94" text-anchor="middle">RTA</text>
+    <text x="487" y="124" text-anchor="middle" class="sm">PC</text>
+    <text x="183" y="40" text-anchor="middle" class="grn">normal almashinuv</text>
+    <text x="395" y="36" text-anchor="middle" class="red">RIP yuborilmaydi</text>
+    <text x="395" y="124" text-anchor="middle" class="sm">silent-interface</text>
+    <text x="300" y="158" text-anchor="middle" class="sm">split horizon — sukut bo‘yicha yoqilgan · poison reverse — o‘chirilgan</text>
+  </svg><p class="cap">2-rasm. Jim interfeys yangilanish yubormaydi, lekin qabul qiladi</p><h2>3. RIPv2 sozlash</h2><table class="rot">
+    <tbody><tr><th>[RTA-rip-1]</th><td>version { 1 | 2 }</td></tr>
+    <tr><th>[RTA-rip-1]</th><td>undo summary</td></tr>
+    <tr><th>[RTA-Ser2/0]</th><td>rip authentication-mode md5 rfc2453 plain PAROL</td></tr>
+  </tbody></table><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="undo summary va autentifikatsiya">
+    <defs>
+      <filter id="r25-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="25" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a25-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a25-3g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r25-3)">
+      <rect class="s fw" x="30" y="36" width="76" height="24" rx="3"></rect>
+      <rect class="s fw" x="30" y="70" width="76" height="24" rx="3"></rect>
+      <rect class="s fy" x="160" y="46" width="56" height="32" rx="5"></rect>
+      <path class="s2" d="M106,48 L160,58 M106,82 L160,72"></path>
+      <path class="sr" marker-end="url(#a25-3)" d="M226,52 H330"></path>
+      <path class="sg" marker-end="url(#a25-3g)" d="M226,82 H318"></path>
+      <rect class="s fy" x="120" y="156" width="56" height="30" rx="5"></rect>
+      <rect class="s fy" x="400" y="156" width="56" height="30" rx="5"></rect>
+      <path class="s2" d="M176,171 H400"></path>
+      <rect class="s fy" x="272" y="160" width="32" height="24" rx="3"></rect>
+      <path class="s2" d="M280,160 v-6 a8,8 0 0 1 16,0 v6"></path>
+    </g>
+    <text x="68" y="52" text-anchor="middle" class="sm">10.0.1.0/24</text>
+    <text x="68" y="86" text-anchor="middle" class="sm">10.0.2.0/24</text>
+    <text x="188" y="68" text-anchor="middle">RTA</text>
+    <text x="400" y="46" text-anchor="middle" class="red">summary: 10.0.0.0/8</text>
+    <text x="400" y="90" text-anchor="middle" class="grn">undo summary: /24 lar</text>
+    <text x="300" y="112" text-anchor="middle" class="sm">RIPv1 da avtosummarizatsiya o‘chirilmaydi</text>
+    <text x="148" y="150" text-anchor="middle">RTA</text>
+    <text x="428" y="150" text-anchor="middle">RTB</text>
+    <text x="288" y="144" text-anchor="middle" class="red">MD5 / oddiy matn</text>
+    <text x="288" y="210" text-anchor="middle" class="sm">parol: plain 1–16 belgi · cipher 33–53 belgi</text>
+  </svg><p class="cap">3-rasm. undo summary — barcha subnetlar alohida e‘lon qilinadi</p><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>4. RIPv1 misoli</h2><svg class="sk" viewBox="0 0 600 180" role="img" aria-label="RIPv1 asosiy sozlash misoli">
+    <defs>
+      <filter id="r25-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="35" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r25-4)">
+      <rect class="s fy" x="180" y="62" width="60" height="32" rx="5"></rect>
+      <rect class="s fy" x="360" y="62" width="60" height="32" rx="5"></rect>
+      <rect class="s fw" x="30" y="66" width="98" height="26" rx="3"></rect>
+      <rect class="s fw" x="472" y="66" width="98" height="26" rx="3"></rect>
+      <path class="s2" d="M128,79 H180 M240,78 H360 M420,79 H472"></path>
+    </g>
+    <text x="210" y="84" text-anchor="middle">RTA</text>
+    <text x="390" y="84" text-anchor="middle">RTB</text>
+    <text x="79" y="84" text-anchor="middle" class="sm">192.168.0.0/24</text>
+    <text x="521" y="84" text-anchor="middle" class="sm">192.168.2.0/24</text>
+    <text x="300" y="56" text-anchor="middle" class="sm">192.168.1.0/24</text>
+    <text x="300" y="120" text-anchor="middle" class="grn">hamma tarmoq tabiiy maskada → RIPv1 yetarli</text>
+    <text x="300" y="148" text-anchor="middle" class="sm">RTA jadvali: 192.168.2.0/24 RIP 100 1 → 192.168.1.2</text>
+    <text x="300" y="172" text-anchor="middle" class="sm">cost 1 = bir hop uzoqlikda</text>
+  </svg><p class="cap">4-rasm. Ikkala routerda faqat rip + network yetarli</p><table class="rot">
+    <tbody><tr><th>RTA</th><td>rip<br>network 192.168.0.0<br>network 192.168.1.0</td></tr>
+    <tr><th>RTB</th><td>rip<br>network 192.168.1.0<br>network 192.168.2.0</td></tr>
+  </tbody></table><h2>5. RIPv2 misoli</h2><svg class="sk" viewBox="0 0 600 180" role="img" aria-label="RIPv2 sozlash misoli">
+    <defs>
+      <filter id="r25-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="45" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r25-5)">
+      <rect class="s fy" x="180" y="62" width="60" height="32" rx="5"></rect>
+      <rect class="s fy" x="360" y="62" width="60" height="32" rx="5"></rect>
+      <rect class="s fw" x="40" y="66" width="76" height="26" rx="3"></rect>
+      <rect class="s fw" x="486" y="66" width="76" height="26" rx="3"></rect>
+      <path class="s2" d="M116,79 H180 M240,78 H360 M420,79 H486"></path>
+      <rect class="s fy" x="284" y="96" width="32" height="22" rx="3"></rect>
+      <path class="s2" d="M292,96 v-5 a8,8 0 0 1 16,0 v5"></path>
+    </g>
+    <text x="210" y="84" text-anchor="middle">RTA</text>
+    <text x="390" y="84" text-anchor="middle">RTB</text>
+    <text x="78" y="84" text-anchor="middle" class="sm">10.0.1.0/24</text>
+    <text x="524" y="84" text-anchor="middle" class="sm">10.0.2.0/24</text>
+    <text x="300" y="56" text-anchor="middle" class="sm">192.168.0.0/30</text>
+    <text x="300" y="138" text-anchor="middle" class="grn">version 2 · undo summary · MD5</text>
+    <text x="300" y="164" text-anchor="middle" class="sm">maska /30 va /24 — uzluksiz emas → RIPv2 kerak</text>
+  </svg><p class="cap">5-rasm. RTA jadvaliga 10.0.2.0/24 RIP orqali tushadi</p><table class="rot">
+    <tbody><tr><th>RTA · RTB</th><td>network 10.0.0.0 · network 192.168.0.0<br>version 2 · undo summary</td></tr>
+  </tbody></table><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>6. Holatni ko‘rish</h2><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="display rip chiqishi">
+    <defs>
+      <filter id="r25-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="55" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a25-6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r25-6)">
+      <rect class="s fw" x="40" y="24" width="330" height="202" rx="5"></rect>
+      <path class="sr" marker-end="url(#a25-6)" d="M440,66 H378"></path>
+      <path class="sr" marker-end="url(#a25-6)" d="M420,114 H378"></path>
+      <path class="sr" marker-end="url(#a25-6)" d="M448,162 H378"></path>
+      <path class="sr" marker-end="url(#a25-6)" d="M430,210 H378"></path>
+    </g>
+    <text x="52" y="46" class="sm">RIP process: 1</text>
+    <text x="52" y="70" class="sm">RIP version: 2</text>
+    <text x="52" y="94" class="sm">Preference: 100</text>
+    <text x="52" y="118" class="sm">Summary: Disabled</text>
+    <text x="52" y="142" class="sm">Update time: 30 secs</text>
+    <text x="52" y="166" class="sm">Timeout time: 180 secs</text>
+    <text x="52" y="190" class="sm">Suppress: 120 secs</text>
+    <text x="52" y="214" class="sm">Networks: 192.168.0.0</text>
+    <text x="490" y="70" text-anchor="middle" class="red">versiya = 2</text>
+    <text x="490" y="118" text-anchor="middle" class="red">summary o‘chirilgan</text>
+    <text x="490" y="166" text-anchor="middle" class="red">taymerlar</text>
+    <text x="490" y="214" text-anchor="middle" class="red">RIP tarmoqlari</text>
+  </svg><p class="cap">6-rasm. display rip — versiya, summarizatsiya, taymerlar va tarmoqlar</p><ul class="tight">
+    <li><b>debugging rip 1 packet</b> — yuborilgan va olingan xabarlar</li>
+    <li>chiqishda: versiya, broadcast yoki multicast, manzil va cost</li>
+  </ul><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>rip → network — RIP ni yoqishning ikki qadami</li>
+      <li>network e‘lon qilinmagan interfeys RIP dan tashqarida qoladi</li>
+      <li>silent-interface — yubormaydi, qabul qiladi</li>
+      <li>RIPv2: version 2 · undo summary · authentication-mode</li>
+      <li>Tekshirish: display rip · display ip routing-table · debugging</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>Sukutdagi process-id? <span class="ans">— 1</span></li>
+    <li>Hamma interfeysda yoqish? <span class="ans">— network 0.0.0.0</span></li>
+    <li>Avtosummarizatsiyani o‘chirish? <span class="ans">— undo summary (faqat RIPv2)</span></li>
+    <li>Qaysi rejimda autentifikatsiya? <span class="ans">— interfeys rejimida</span></li>
+  </ol><div class="pg-num">— 4 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+</body>
+</html>

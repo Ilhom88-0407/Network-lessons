@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>11-bob · Ethernet kommutator asoslari</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">11-bob</div><h1 class="title">Ethernet kommutator asoslari
+    <small>Ethernet Switch Fundamentals</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>Hub</b> — hamma portga takrorlaydi, bitta kolliziya domeni</li>
+      <li><b>Kolliziya domeni</b> — bir vaqtda bitta kadr yuradigan hudud</li>
+      <li><b>MAC jadval</b> — «MAC manzil → port» moslik ro‘yxati</li>
+      <li><b>Flood</b> — kadrni qolgan hamma portga yuborish</li>
+      <li><b>Broadcast domen</b> — broadcast kadr yetib boradigan hudud</li>
+    </ul>
+  </div><h2>1. Umumiy (shared) Ethernet</h2><p class="tight">Hub yoki koaksial kabel — hammasi <mark>bitta kolliziya domeni</mark>.</p><ul class="tight">
+    <li>to‘qnashuvni <b>CSMA/CD</b> aniqlaydi, kadr qayta yuboriladi</li>
+    <li>host ko‘paysa — kolliziya ko‘p, unum tushadi</li>
+    <li>polosa bo‘linadi, har kadrni hamma oladi</li>
+  </ul><svg class="sk" viewBox="0 0 620 215" role="img" aria-label="Umumiy Ethernet: hub va koaksial kabel">
+    <defs>
+      <filter id="r11-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r11-1)">
+      <rect class="dash" x="24" y="44" width="262" height="142" rx="16"></rect>
+      <rect class="s fw" x="100" y="56" width="110" height="28" rx="4"></rect>
+      <path class="s2" d="M130,84 C110,100 80,114 60,128 M145,84 C136,100 126,114 120,128
+                          M168,84 C172,100 175,114 178,128 M185,84 C205,100 224,114 236,128"></path>
+      <rect class="s fw" x="36" y="128" width="40" height="26" rx="3"></rect>
+      <rect class="s fw" x="96" y="128" width="40" height="26" rx="3"></rect>
+      <rect class="s fw" x="156" y="128" width="40" height="26" rx="3"></rect>
+      <rect class="s fw" x="216" y="128" width="40" height="26" rx="3"></rect>
+      <path class="s2" d="M56,154 v6 M44,160 h24 M116,154 v6 M104,160 h24
+                          M176,154 v6 M164,160 h24 M236,154 v6 M224,160 h24"></path>
+      <rect class="dash" x="334" y="44" width="262" height="142" rx="16"></rect>
+      <path class="s" d="M352,96 h228 M352,88 v16 M580,88 v16"></path>
+      <path class="s2" d="M390,96 v32 M446,96 v32 M502,96 v32 M558,96 v32"></path>
+      <rect class="s fw" x="370" y="128" width="40" height="26" rx="3"></rect>
+      <rect class="s fw" x="426" y="128" width="40" height="26" rx="3"></rect>
+      <rect class="s fw" x="482" y="128" width="40" height="26" rx="3"></rect>
+      <rect class="s fw" x="538" y="128" width="40" height="26" rx="3"></rect>
+      <path class="s2" d="M390,154 v6 M378,160 h24 M446,154 v6 M434,160 h24
+                          M502,154 v6 M490,160 h24 M558,154 v6 M546,160 h24"></path>
+    </g>
+    <text x="155" y="76" text-anchor="middle">HUB</text>
+    <text x="466" y="86" text-anchor="middle" class="sm">koaksial kabel</text>
+    <text x="155" y="204" text-anchor="middle" class="red">bitta kolliziya domeni</text>
+    <text x="466" y="204" text-anchor="middle" class="red">bitta kolliziya domeni</text>
+  </svg><h2>2. Kommutatsiyalangan Ethernet</h2><p class="tight">L2 kommutator — <b>IEEE 802.1D</b> ko‘prik (bridge) vorisi: ko‘p port, tez uzatish.</p><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 620 205" role="img" aria-label="Kommutatsiyalangan Ethernet">
+    <defs>
+      <filter id="r11-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="17" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r11-2)">
+      <rect class="s fy" x="170" y="36" width="280" height="36" rx="5"></rect>
+      <path class="s2" d="M200,72 v34 M255,72 v34 M310,72 v34 M365,72 v34 M420,72 v34"></path>
+      <rect class="s fw" x="182" y="106" width="36" height="26" rx="3"></rect>
+      <rect class="s fw" x="237" y="106" width="36" height="26" rx="3"></rect>
+      <rect class="s fw" x="292" y="106" width="36" height="26" rx="3"></rect>
+      <rect class="s fw" x="347" y="106" width="36" height="26" rx="3"></rect>
+      <rect class="s fw" x="402" y="106" width="36" height="26" rx="3"></rect>
+      <path class="s2" d="M200,132 v6 M188,138 h24 M255,132 v6 M243,138 h24 M310,132 v6 M298,138 h24
+                          M365,132 v6 M353,138 h24 M420,132 v6 M408,138 h24"></path>
+      <rect class="dash" x="175" y="96" width="50" height="62" rx="10"></rect>
+      <rect class="dash" x="230" y="96" width="50" height="62" rx="10"></rect>
+      <rect class="dash" x="285" y="96" width="50" height="62" rx="10"></rect>
+      <rect class="dash" x="340" y="96" width="50" height="62" rx="10"></rect>
+      <rect class="dash" x="395" y="96" width="50" height="62" rx="10"></rect>
+    </g>
+    <text x="310" y="60" text-anchor="middle">L2 switch</text>
+    <text x="310" y="24" text-anchor="middle" class="sm">portlar orasida polosa talashilmaydi</text>
+    <text x="200" y="180" text-anchor="middle" class="sm">1</text>
+    <text x="255" y="180" text-anchor="middle" class="sm">2</text>
+    <text x="310" y="180" text-anchor="middle" class="sm">3</text>
+    <text x="365" y="180" text-anchor="middle" class="sm">4</text>
+    <text x="420" y="180" text-anchor="middle" class="sm">5</text>
+    <text x="310" y="200" text-anchor="middle" class="red">har port — alohida kolliziya domeni</text>
+  </svg><h2>3. MAC jadvalini o‘rganish</h2><p class="tight">Boshda jadval bo‘sh. Kadr kelganda <mark>manba MAC + kirish porti</mark> yoziladi,
+    manzil topilmasa — hamma portga tarqatiladi.</p><svg class="sk" viewBox="0 0 620 265" role="img" aria-label="MAC manzilni organish">
+    <defs>
+      <filter id="r11-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a11-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a11-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r11-3)">
+      <rect class="s fy" x="30" y="62" width="270" height="50" rx="5"></rect>
+      <path class="sr" marker-end="url(#a11-1)" d="M70,178 V116"></path>
+      <path class="sg" marker-end="url(#a11-2)" d="M125,116 V178"></path>
+      <path class="sg" marker-end="url(#a11-2)" d="M180,116 V178"></path>
+      <path class="sg" marker-end="url(#a11-2)" d="M235,116 V178"></path>
+      <rect class="s fw" x="51" y="182" width="38" height="30" rx="3"></rect>
+      <rect class="s fw" x="106" y="182" width="38" height="30" rx="3"></rect>
+      <rect class="s fw" x="161" y="182" width="38" height="30" rx="3"></rect>
+      <rect class="s fw" x="216" y="182" width="38" height="30" rx="3"></rect>
+      <path class="s2" d="M70,212 v6 M58,218 h24 M125,212 v6 M113,218 h24
+                          M180,212 v6 M168,218 h24 M235,212 v6 M223,218 h24"></path>
+      <rect class="s fw" x="330" y="62" width="270" height="185" rx="4"></rect>
+      <path class="s2" d="M330,99 h270 M330,136 h270 M330,173 h270 M330,210 h270 M460,62 v185"></path>
+    </g>
+    <text x="165" y="94" text-anchor="middle">L2 switch</text>
+    <text x="70" y="108" text-anchor="middle" class="sm">E1/0/1</text>
+    <text x="125" y="108" text-anchor="middle" class="sm">E1/0/2</text>
+    <text x="180" y="108" text-anchor="middle" class="sm">E1/0/3</text>
+    <text x="235" y="108" text-anchor="middle" class="sm">E1/0/4</text>
+    <text x="70" y="248" text-anchor="middle" class="sm">PCA</text>
+    <text x="125" y="248" text-anchor="middle" class="sm">PCB</text>
+    <text x="180" y="248" text-anchor="middle" class="sm">PCC</text>
+    <text x="235" y="248" text-anchor="middle" class="sm">PCD</text>
+    <text x="395" y="87" text-anchor="middle" class="red">MAC</text>
+    <text x="530" y="87" text-anchor="middle" class="red">Port</text>
+    <text x="395" y="124" text-anchor="middle">MAC_A</text>
+    <text x="530" y="124" text-anchor="middle">E1/0/1</text>
+  </svg><p class="cap">1-rasm. PCA yubordi → MAC_A yozildi, kadr qolgan portlarga tarqaldi</p><svg class="sk" viewBox="0 0 620 245" role="img" aria-label="MAC jadval qoidalari">
+    <defs>
+      <filter id="r11-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="11" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a11-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r11-4)">
+      <rect class="s fy" x="20" y="60" width="170" height="28" rx="4"></rect>
+      <path class="dash" d="M50,88 v40"></path>
+      <path class="s2" d="M157,88 v40"></path>
+      <rect class="s fw" x="33" y="128" width="34" height="26" rx="3"></rect>
+      <rect class="s fw" x="140" y="128" width="34" height="26" rx="3"></rect>
+      <path class="sr" d="M43,101 l14,14 M57,101 l-14,14"></path>
+      <path class="sr" marker-end="url(#a11-3)" d="M70,160 C95,180 118,180 134,162"></path>
+      <rect class="s fy" x="220" y="60" width="170" height="28" rx="4"></rect>
+      <path class="s2" d="M305,88 v28"></path>
+      <rect class="s fw" x="280" y="116" width="50" height="24" rx="3"></rect>
+      <path class="s2" d="M295,140 C280,152 265,160 255,166 M305,140 v26 M315,140 C330,152 345,160 355,166"></path>
+      <rect class="s fw" x="238" y="166" width="34" height="26" rx="3"></rect>
+      <rect class="s fw" x="288" y="166" width="34" height="26" rx="3"></rect>
+      <rect class="s fw" x="338" y="166" width="34" height="26" rx="3"></rect>
+      <rect class="s fw" x="430" y="60" width="160" height="96" rx="4"></rect>
+      <path class="s2" d="M430,92 h160 M430,124 h160"></path>
+      <path class="sr" d="M440,100 l140,14 M440,114 l140,-14"></path>
+      <circle class="s fw" cx="470" cy="192" r="20"></circle>
+      <path class="s2" d="M470,192 v-13 M470,192 l10,7"></path>
+    </g>
+    <text x="105" y="48" text-anchor="middle" class="sm">host boshqa portga ko‘chdi</text>
+    <text x="305" y="134" text-anchor="middle" class="sm">hub</text>
+    <text x="510" y="84" text-anchor="middle" class="sm">eski yozuv</text>
+    <text x="500" y="198" class="sm">aging taymer</text>
+    <text x="105" y="232" text-anchor="middle" class="red">bitta MAC — bitta port</text>
+    <text x="305" y="232" text-anchor="middle" class="red">bir portda ko‘p MAC</text>
+    <text x="500" y="232" text-anchor="middle" class="red">yangilanmasa — o‘chadi</text>
+  </svg><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>4. Unicast kadrni uzatish</h2><p class="tight">Manzil MAC jadvalda bor — kadr <mark>faqat o‘sha portga</mark> chiqadi.</p><svg class="sk" viewBox="0 0 620 265" role="img" aria-label="Unicast kadrni uzatish">
+    <defs>
+      <filter id="r11-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="5" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a11-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r11-5)">
+      <rect class="s fy" x="30" y="62" width="270" height="50" rx="5"></rect>
+      <path class="sr" marker-end="url(#a11-4)" d="M70,178 V116"></path>
+      <path class="sr" marker-end="url(#a11-4)" d="M235,116 V178"></path>
+      <path class="s2" d="M125,112 v10 M180,112 v10"></path>
+      <path class="sr" d="M117,126 l16,16 M133,126 l-16,16 M172,126 l16,16 M188,126 l-16,16"></path>
+      <rect class="s fw" x="51" y="182" width="38" height="30" rx="3"></rect>
+      <rect class="s fw" x="106" y="182" width="38" height="30" rx="3"></rect>
+      <rect class="s fw" x="161" y="182" width="38" height="30" rx="3"></rect>
+      <rect class="s fw" x="216" y="182" width="38" height="30" rx="3"></rect>
+      <path class="s2" d="M70,212 v6 M58,218 h24 M125,212 v6 M113,218 h24
+                          M180,212 v6 M168,218 h24 M235,212 v6 M223,218 h24"></path>
+      <rect class="s fw" x="330" y="62" width="270" height="185" rx="4"></rect>
+      <path class="s2" d="M330,99 h270 M330,136 h270 M330,173 h270 M330,210 h270 M460,62 v185"></path>
+      <rect class="s fy" x="466" y="214" width="62" height="28" rx="3"></rect>
+    </g>
+    <text x="165" y="94" text-anchor="middle">L2 switch</text>
+    <text x="70" y="108" text-anchor="middle" class="sm">E1/0/1</text>
+    <text x="125" y="108" text-anchor="middle" class="sm">E1/0/2</text>
+    <text x="180" y="108" text-anchor="middle" class="sm">E1/0/3</text>
+    <text x="235" y="108" text-anchor="middle" class="sm">E1/0/4</text>
+    <text x="70" y="248" text-anchor="middle" class="sm">PCA</text>
+    <text x="125" y="248" text-anchor="middle" class="sm">PCB</text>
+    <text x="180" y="248" text-anchor="middle" class="sm">PCC</text>
+    <text x="235" y="248" text-anchor="middle" class="sm">PCD</text>
+    <text x="395" y="87" text-anchor="middle" class="red">MAC</text>
+    <text x="530" y="87" text-anchor="middle" class="red">Port</text>
+    <text x="395" y="124" text-anchor="middle">MAC_A</text>
+    <text x="530" y="124" text-anchor="middle">E1/0/1</text>
+    <text x="395" y="161" text-anchor="middle">MAC_B</text>
+    <text x="530" y="161" text-anchor="middle">E1/0/2</text>
+    <text x="395" y="198" text-anchor="middle">MAC_C</text>
+    <text x="530" y="198" text-anchor="middle">E1/0/3</text>
+    <text x="395" y="235" text-anchor="middle">MAC_D</text>
+    <text x="530" y="235" text-anchor="middle">E1/0/4</text>
+  </svg><p class="cap">2-rasm. PCA → PCD: jadvalda MAC_D bor, kadr faqat E1/0/4 ga</p><h2>5. Flood — hamma portga</h2><svg class="sk" viewBox="0 0 620 265" role="img" aria-label="Broadcast va nomalum unicast kadrni tarqatish">
+    <defs>
+      <filter id="r11-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="13" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a11-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a11-6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r11-6)">
+      <rect class="s fw" x="55" y="14" width="190" height="28" rx="3"></rect>
+      <rect class="s fy" x="30" y="62" width="270" height="50" rx="5"></rect>
+      <path class="sr" marker-end="url(#a11-5)" d="M70,178 V116"></path>
+      <path class="sg" marker-end="url(#a11-6)" d="M125,116 V178"></path>
+      <path class="sg" marker-end="url(#a11-6)" d="M180,116 V178"></path>
+      <path class="sg" marker-end="url(#a11-6)" d="M235,116 V178"></path>
+      <rect class="s fw" x="51" y="182" width="38" height="30" rx="3"></rect>
+      <rect class="s fw" x="106" y="182" width="38" height="30" rx="3"></rect>
+      <rect class="s fw" x="161" y="182" width="38" height="30" rx="3"></rect>
+      <rect class="s fw" x="216" y="182" width="38" height="30" rx="3"></rect>
+      <path class="s2" d="M70,212 v6 M58,218 h24 M125,212 v6 M113,218 h24
+                          M180,212 v6 M168,218 h24 M235,212 v6 M223,218 h24"></path>
+      <rect class="s fw" x="330" y="76" width="270" height="140" rx="6"></rect>
+    </g>
+    <text x="150" y="33" text-anchor="middle" class="sm">DA = FF-FF-FF-FF-FF-FF</text>
+    <text x="165" y="94" text-anchor="middle">L2 switch</text>
+    <text x="70" y="108" text-anchor="middle" class="sm">E1/0/1</text>
+    <text x="125" y="108" text-anchor="middle" class="sm">E1/0/2</text>
+    <text x="180" y="108" text-anchor="middle" class="sm">E1/0/3</text>
+    <text x="235" y="108" text-anchor="middle" class="sm">E1/0/4</text>
+    <text x="70" y="248" text-anchor="middle" class="sm">PCA</text>
+    <text x="125" y="248" text-anchor="middle" class="sm">PCB</text>
+    <text x="180" y="248" text-anchor="middle" class="sm">PCC</text>
+    <text x="235" y="248" text-anchor="middle" class="sm">PCD</text>
+    <text x="465" y="110" text-anchor="middle" class="red">flood bo‘ladi:</text>
+    <text x="465" y="145" text-anchor="middle">broadcast · multicast</text>
+    <text x="465" y="176" text-anchor="middle">noma’lum unicast</text>
+    <text x="465" y="204" text-anchor="middle" class="sm">kelgan portdan tashqari hammasiga</text>
+  </svg><h2>6. Filtrlash</h2><p class="tight">Manzil <mark>kelgan portning o‘zida</mark> o‘rganilgan bo‘lsa — kadr tashlanadi.</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 620 265" role="img" aria-label="Kadrni filtrlash">
+    <defs>
+      <filter id="r11-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="21" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a11-7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r11-7)">
+      <rect class="s fy" x="30" y="62" width="270" height="50" rx="5"></rect>
+      <path class="s2" d="M70,112 v34 M180,112 v70 M235,112 v70"></path>
+      <rect class="s fw" x="30" y="146" width="80" height="26" rx="3"></rect>
+      <path class="s2" d="M48,172 v10 M92,172 v10"></path>
+      <rect class="s fw" x="32" y="182" width="32" height="30" rx="3"></rect>
+      <rect class="s fw" x="76" y="182" width="32" height="30" rx="3"></rect>
+      <rect class="s fw" x="161" y="182" width="38" height="30" rx="3"></rect>
+      <rect class="s fw" x="216" y="182" width="38" height="30" rx="3"></rect>
+      <path class="s2" d="M48,212 v6 M36,218 h24 M92,212 v6 M80,218 h24
+                          M180,212 v6 M168,218 h24 M235,212 v6 M223,218 h24"></path>
+      <path class="sr" marker-end="url(#a11-7)" d="M48,182 C48,174 58,172 68,170"></path>
+      <path class="sr" d="M62,120 l16,16 M78,120 l-16,16"></path>
+      <rect class="s fw" x="330" y="62" width="270" height="185" rx="4"></rect>
+      <path class="s2" d="M330,99 h270 M330,136 h270 M330,173 h270 M330,210 h270 M460,62 v185"></path>
+      <rect class="s fy" x="466" y="103" width="62" height="66" rx="3"></rect>
+    </g>
+    <text x="165" y="94" text-anchor="middle">L2 switch</text>
+    <text x="70" y="108" text-anchor="middle" class="sm">E1/0/1</text>
+    <text x="180" y="108" text-anchor="middle" class="sm">E1/0/3</text>
+    <text x="235" y="108" text-anchor="middle" class="sm">E1/0/4</text>
+    <text x="70" y="164" text-anchor="middle" class="sm">hub</text>
+    <text x="150" y="132" class="red">tashlanadi</text>
+    <text x="48" y="248" text-anchor="middle" class="sm">PCA</text>
+    <text x="92" y="248" text-anchor="middle" class="sm">PCB</text>
+    <text x="180" y="248" text-anchor="middle" class="sm">PCC</text>
+    <text x="235" y="248" text-anchor="middle" class="sm">PCD</text>
+    <text x="395" y="87" text-anchor="middle" class="red">MAC</text>
+    <text x="530" y="87" text-anchor="middle" class="red">Port</text>
+    <text x="395" y="124" text-anchor="middle">MAC_A</text>
+    <text x="530" y="124" text-anchor="middle">E1/0/1</text>
+    <text x="395" y="161" text-anchor="middle">MAC_B</text>
+    <text x="530" y="161" text-anchor="middle">E1/0/1</text>
+    <text x="395" y="198" text-anchor="middle">MAC_C</text>
+    <text x="530" y="198" text-anchor="middle">E1/0/3</text>
+    <text x="395" y="235" text-anchor="middle">MAC_D</text>
+    <text x="530" y="235" text-anchor="middle">E1/0/4</text>
+  </svg><p class="cap">3-rasm. PCA → PCB: ikkalasi ham E1/0/1 da — uzatilmaydi</p><h2>7. Broadcast domen</h2><svg class="sk" viewBox="0 0 620 265" role="img" aria-label="Broadcast domenlar chegarasi">
+    <defs>
+      <filter id="r11-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="31" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r11-8)">
+      <rect class="s fy" x="250" y="30" width="120" height="38" rx="5"></rect>
+      <path class="s2" d="M250,68 C220,88 180,100 170,108 M370,68 C400,88 440,100 460,108"></path>
+      <rect class="dash" x="40" y="96" width="180" height="150" rx="12"></rect>
+      <rect class="dash" x="404" y="96" width="176" height="150" rx="12"></rect>
+      <rect class="s fy" x="60" y="110" width="140" height="34" rx="4"></rect>
+      <rect class="s fy" x="420" y="110" width="140" height="34" rx="4"></rect>
+      <path class="s2" d="M100,144 v24"></path>
+      <rect class="s fw" x="60" y="168" width="80" height="24" rx="3"></rect>
+      <path class="s2" d="M76,192 v18 M124,192 v18"></path>
+      <rect class="s fw" x="60" y="210" width="32" height="26" rx="3"></rect>
+      <rect class="s fw" x="108" y="210" width="32" height="26" rx="3"></rect>
+      <path class="s2" d="M460,144 v66 M520,144 v66"></path>
+      <rect class="s fw" x="444" y="210" width="32" height="26" rx="3"></rect>
+      <rect class="s fw" x="504" y="210" width="32" height="26" rx="3"></rect>
+    </g>
+    <text x="310" y="55" text-anchor="middle">L3 switch</text>
+    <text x="310" y="102" text-anchor="middle" class="sm">L3 port — chegara</text>
+    <text x="130" y="133" text-anchor="middle">L2 switch</text>
+    <text x="490" y="133" text-anchor="middle">L2 switch</text>
+    <text x="100" y="186" text-anchor="middle" class="sm">hub</text>
+    <text x="130" y="88" text-anchor="middle" class="red">broadcast domen 1</text>
+    <text x="490" y="88" text-anchor="middle" class="red">broadcast domen 2</text>
+    <text x="76" y="258" text-anchor="middle" class="sm">PCA</text>
+    <text x="124" y="258" text-anchor="middle" class="sm">PCB</text>
+    <text x="460" y="258" text-anchor="middle" class="sm">PCC</text>
+    <text x="520" y="258" text-anchor="middle" class="sm">PCD</text>
+  </svg><h2>8. Qurilmalarni taqqoslash</h2><svg class="sk" viewBox="0 0 620 175" role="img" aria-label="Hub, L2 switch va router taqqoslash">
+    <defs>
+      <filter id="r11-9" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="41" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r11-9)">
+      <rect class="dash" x="14" y="30" width="180" height="92" rx="12"></rect>
+      <rect class="s fw" x="70" y="40" width="70" height="24" rx="3"></rect>
+      <path class="s2" d="M90,64 C70,78 55,88 47,96 M105,64 v32 M120,64 C140,78 155,88 163,96"></path>
+      <rect class="s fw" x="30" y="96" width="34" height="22" rx="3"></rect>
+      <rect class="s fw" x="88" y="96" width="34" height="22" rx="3"></rect>
+      <rect class="s fw" x="146" y="96" width="34" height="22" rx="3"></rect>
+      <rect class="s fy" x="250" y="40" width="100" height="24" rx="3"></rect>
+      <path class="s2" d="M273,64 v32 M323,64 v32"></path>
+      <rect class="s fw" x="256" y="96" width="34" height="22" rx="3"></rect>
+      <rect class="s fw" x="306" y="96" width="34" height="22" rx="3"></rect>
+      <rect class="dash" x="248" y="88" width="50" height="38" rx="8"></rect>
+      <rect class="dash" x="298" y="88" width="50" height="38" rx="8"></rect>
+      <rect class="s fy" x="480" y="40" width="70" height="24" rx="3"></rect>
+      <path class="s2" d="M490,64 C470,78 462,86 458,92 M540,64 C560,78 568,86 572,92"></path>
+      <rect class="dash" x="424" y="88" width="80" height="38" rx="10"></rect>
+      <rect class="dash" x="526" y="88" width="80" height="38" rx="10"></rect>
+      <rect class="s fw" x="447" y="96" width="34" height="22" rx="3"></rect>
+      <rect class="s fw" x="549" y="96" width="34" height="22" rx="3"></rect>
+    </g>
+    <text x="105" y="56" text-anchor="middle">HUB</text>
+    <text x="300" y="56" text-anchor="middle">L2 switch</text>
+    <text x="515" y="56" text-anchor="middle">router / L3</text>
+    <text x="105" y="146" text-anchor="middle" class="red">1 kolliziya domeni</text>
+    <text x="300" y="146" text-anchor="middle" class="red">har port — o‘z domeni</text>
+    <text x="515" y="146" text-anchor="middle" class="red">broadcast chegarasi</text>
+    <text x="105" y="168" text-anchor="middle" class="sm">1 broadcast domen</text>
+    <text x="300" y="168" text-anchor="middle" class="sm">1 broadcast domen</text>
+    <text x="515" y="168" text-anchor="middle" class="sm">2 broadcast domen</text>
+  </svg><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><p class="cap">4-rasm. Kolliziyani kommutator bo‘ladi, broadcastni — L3</p><table class="rot">
+    <tbody><tr><th></th><th>Kolliziya domeni</th><th>Broadcast domeni</th></tr>
+    <tr><td>Hub</td><td>bitta</td><td>bitta</td></tr>
+    <tr><td>L2 kommutator</td><td>har port — alohida</td><td>bitta</td></tr>
+    <tr><td>Router / L3 port</td><td>har port — alohida</td><td>har port — alohida</td></tr>
+  </tbody></table><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>Hub — fizik qatlam, bitta kolliziya domeni, CSMA/CD</li>
+      <li>L2 kommutator — kanal qatlami, IEEE 802.1D, har port alohida domen</li>
+      <li>Jadval manba MAC bo‘yicha to‘ladi, aging bilan tozalanadi</li>
+      <li>Topildi — bitta portga · topilmadi yoki broadcast — flood · o‘sha portda — tashlanadi</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>Kommutator qaysi qatlamda? <span class="ans">— kanal (L2)</span></li>
+    <li>Jadval nima bo‘yicha to‘ladi? <span class="ans">— manba MAC</span></li>
+    <li>Broadcast MAC? <span class="ans">— FF-FF-FF-FF-FF-FF</span></li>
+    <li>Broadcast domenni kim bo‘ladi? <span class="ans">— router / L3 port, VLAN</span></li>
+  </ol><div class="pg-num">— 5 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+</body>
+</html>

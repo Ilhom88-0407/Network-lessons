@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>04-bob · Keng qamrovli tarmoq asoslari</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">4-bob</div><h1 class="title">Keng qamrovli tarmoq asoslari
+    <small>Wide Area Network Fundamentals</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>WAN</b> — shahar, viloyat, davlat oralig‘ini bog‘laydigan tarmoq</li>
+      <li><b>DTE / DCE</b> — mijoz qurilmasi / operator qurilmasi, taktni DCE beradi</li>
+      <li><b>Ajratilgan liniya</b> — doimiy, nuqta-nuqta, qat‘iy tezlikdagi kanal</li>
+      <li><b>Kanal kommutatsiyasi</b> — yo‘l terib ochiladi, tugagach uziladi</li>
+      <li><b>Paket kommutatsiyasi</b> — har paket manzili bilan alohida ketadi</li>
+      <li><b>Virtual kanal (VC)</b> — bitta fizik portda ko‘p mantiqiy ulanish</li>
+    </ul>
+  </div><h2>1. Nega WAN kerak?</h2><p class="tight">LAN — bino, kampus. <mark>WAN shahar, viloyat, davlat chegarasidan o‘tadi</mark></p><ul class="tight">
+    <li>100BASE-TX — <b>100 m</b>, repeater bilan 500 m, kommutator bilan bir necha km</li>
+    <li>o‘z liniyasi — qimmat, ruxsat yo‘q → <b>operator tarmog‘i ijaraga</b></li>
+  </ul><svg class="sk" viewBox="0 0 600 215" role="img" aria-label="LAN va WAN">
+    <defs>
+      <filter id="r04-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+      <marker id="a04-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r04-1)">
+      <rect class="s fg" x="20" y="58" width="140" height="100" rx="10"></rect>
+      <rect class="s fw" x="36" y="78" width="32" height="20" rx="2"></rect>
+      <rect class="s fw" x="110" y="78" width="32" height="20" rx="2"></rect>
+      <rect class="s fy" x="70" y="124" width="40" height="18" rx="3"></rect>
+      <path class="s2" d="M52,98 v18 h18 M126,98 v18 h-16"></path>
+      <rect class="s fg" x="440" y="58" width="140" height="100" rx="10"></rect>
+      <rect class="s fw" x="456" y="78" width="32" height="20" rx="2"></rect>
+      <rect class="s fw" x="530" y="78" width="32" height="20" rx="2"></rect>
+      <rect class="s fy" x="490" y="124" width="40" height="18" rx="3"></rect>
+      <path class="s2" d="M472,98 v18 h18 M546,98 v18 h-16"></path>
+      <path class="s fb" d="M225,103 C215,78 255,63 272,80 C285,58 330,63 335,86 C362,82 372,113 350,124
+                            C340,143 250,146 236,130 C218,126 215,110 225,103 Z"></path>
+      <path class="s2" d="M160,100 C185,100 205,100 226,102 M440,100 C415,100 392,100 356,104"></path>
+      <path class="sr dash" marker-end="url(#a04-1)" d="M90,180 h400"></path>
+    </g>
+    <text x="90" y="50" text-anchor="middle">LAN — bosh ofis</text>
+    <text x="510" y="50" text-anchor="middle">LAN — filial</text>
+    <text x="290" y="114" text-anchor="middle" class="red">operator tarmog‘i</text>
+    <text x="290" y="90" text-anchor="middle">WAN</text>
+    <text x="290" y="172" text-anchor="middle" class="sm">≈ 1000 km</text>
+    <text x="290" y="205" text-anchor="middle" class="sm">Ethernet bu masofani ko‘tarmaydi</text>
+  </svg><p class="cap">1-rasm. Uzoqdagi LAN’lar operator tarmog‘i orqali bog‘lanadi</p><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>2. WAN va OSI modeli</h2><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="WAN va OSI sathlari">
+    <defs>
+      <filter id="r04-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="14" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r04-2)">
+      <rect class="dash" x="14" y="34" width="150" height="40" rx="6"></rect>
+      <rect class="dash" x="200" y="34" width="386" height="40" rx="6"></rect>
+      <rect class="s fy" x="14" y="92" width="150" height="50" rx="6"></rect>
+      <rect class="s fw" x="200" y="92" width="386" height="50" rx="6"></rect>
+      <rect class="s fy" x="14" y="160" width="150" height="70" rx="6"></rect>
+      <rect class="s fw" x="200" y="160" width="386" height="70" rx="6"></rect>
+    </g>
+    <text x="88" y="26" text-anchor="middle" class="sm">OSI sathi</text>
+    <text x="392" y="26" text-anchor="middle" class="sm">WAN da nima ishlaydi</text>
+    <text x="88" y="60" text-anchor="middle">Tarmoq sathi</text>
+    <text x="392" y="60" text-anchor="middle">IP · IPX</text>
+    <text x="88" y="123" text-anchor="middle">Kanal sathi</text>
+    <text x="392" y="112" text-anchor="middle" class="red">HDLC · PPP · LAPB</text>
+    <text x="392" y="134" text-anchor="middle" class="red">Frame Relay</text>
+    <text x="88" y="200" text-anchor="middle">Fizik sath</text>
+    <text x="392" y="182" text-anchor="middle" class="red">V.24 · V.35 · X.21</text>
+    <text x="392" y="204" text-anchor="middle" class="red">RS-232 · RS-449 · RS-530</text>
+    <text x="392" y="224" text-anchor="middle" class="sm">G.703 — E1 (Yevropa/Osiyo) · T1 (Amerika)</text>
+    <text x="300" y="246" text-anchor="middle" class="sm">WAN = kanal + fizik sath</text>
+  </svg><h2>3. Uch xil WAN ulanishi</h2><svg class="sk" viewBox="0 0 600 330" role="img" aria-label="WAN ulanish turlari">
+    <defs>
+      <filter id="r04-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="24" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a04-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r04-3)">
+      <rect class="s fy" x="236" y="16" width="128" height="40" rx="6"></rect>
+      <rect class="s fw" x="20" y="132" width="150" height="46" rx="6"></rect>
+      <rect class="s fw" x="225" y="132" width="150" height="46" rx="6"></rect>
+      <rect class="s fw" x="430" y="132" width="150" height="46" rx="6"></rect>
+      <path class="s2" marker-end="url(#a04-2)" d="M266,56 C196,82 126,106 94,128"></path>
+      <path class="s2" marker-end="url(#a04-2)" d="M300,56 v72"></path>
+      <path class="s2" marker-end="url(#a04-2)" d="M334,56 C404,82 474,106 506,128"></path>
+      <path class="s2" d="M95,178 v14 M300,178 v14 M505,178 v14"></path>
+    </g>
+    <text x="300" y="42" text-anchor="middle" class="red">WAN ulanishi</text>
+    <text x="95" y="160" text-anchor="middle">Ajratilgan liniya</text>
+    <text x="300" y="160" text-anchor="middle">Kanal kommutatsiyasi</text>
+    <text x="505" y="160" text-anchor="middle">Paket kommutatsiyasi</text>
+    <text x="95" y="220" text-anchor="middle" class="sm">analog / raqamli</text>
+    <text x="95" y="250" text-anchor="middle" class="sm">doimiy, qat‘iy tezlik</text>
+    <text x="95" y="280" text-anchor="middle" class="sm">point-to-point</text>
+    <text x="300" y="220" text-anchor="middle" class="sm">PSTN · ISDN</text>
+    <text x="300" y="250" text-anchor="middle" class="sm">kerak bo‘lganda teradi</text>
+    <text x="300" y="280" text-anchor="middle" class="sm">point-to-point</text>
+    <text x="505" y="220" text-anchor="middle" class="sm">X.25 · FR · ATM</text>
+    <text x="505" y="250" text-anchor="middle" class="sm">virtual kanal (VC)</text>
+    <text x="505" y="280" text-anchor="middle" class="sm">point-to-multipoint</text>
+    <text x="300" y="318" text-anchor="middle" class="red">WAN ni qurish uchun router kerak</text>
+  </svg><h2>4. Ajratilgan liniya <span class="en">(leased line)</span></h2><p class="tight">Mijozga <mark>doimiy, nuqta-nuqta, qat‘iy tezlikdagi</mark> o‘z liniyasi.</p><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 290" role="img" aria-label="Ajratilgan liniya ulanishi">
+    <defs>
+      <filter id="r04-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="34" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r04-4)">
+      <rect class="s fy" x="20" y="118" width="64" height="36" rx="4"></rect>
+      <rect class="s fw" x="122" y="116" width="58" height="40" rx="4"></rect>
+      <path class="s2" d="M134,128 h34 M134,144 h34"></path>
+      <rect class="s fw" x="420" y="116" width="58" height="40" rx="4"></rect>
+      <path class="s2" d="M432,128 h34 M432,144 h34"></path>
+      <rect class="s fy" x="516" y="118" width="64" height="36" rx="4"></rect>
+      <path class="s fb" d="M232,138 C222,108 262,90 282,110 C296,84 342,90 348,116 C378,112 388,148 364,160
+                            C352,182 258,186 242,167 C222,162 220,146 232,138 Z"></path>
+      <path class="s" d="M84,136 h38 M180,136 h50 M366,136 h54 M478,136 h38"></path>
+      <path class="s2" d="M20,206 v-10 h160 v10 M230,206 v-10 h140 v10 M420,206 v-10 h160 v10"></path>
+    </g>
+    <text x="52" y="108" text-anchor="middle">Router</text>
+    <text x="52" y="180" text-anchor="middle" class="red">DTE</text>
+    <text x="151" y="108" text-anchor="middle">CSU/DSU</text>
+    <text x="151" y="180" text-anchor="middle" class="red">DCE</text>
+    <text x="295" y="142" text-anchor="middle">operator tarmog‘i</text>
+    <text x="449" y="108" text-anchor="middle">CSU/DSU</text>
+    <text x="449" y="180" text-anchor="middle" class="red">DCE</text>
+    <text x="548" y="108" text-anchor="middle">Router</text>
+    <text x="548" y="180" text-anchor="middle" class="red">DTE</text>
+    <text x="100" y="230" text-anchor="middle" class="sm">mahalliy liniya ~10 m</text>
+    <text x="300" y="230" text-anchor="middle" class="sm">kirish liniyasi va tarmoq</text>
+    <text x="500" y="230" text-anchor="middle" class="sm">mahalliy liniya</text>
+    <text x="300" y="262" text-anchor="middle" class="red">DCE takt beradi · DTE taktni oladi</text>
+    <text x="300" y="286" text-anchor="middle" class="sm">tezlikni operator belgilaydi, polosa to‘liq mijozniki</text>
+  </svg><p class="cap">2-rasm. Kanal sathi: SDLC · HDLC · PPP</p><h2>5. Kanal kommutatsiyasi</h2><p class="tight">Kommutator yo‘lni <mark>faqat kerak bo‘lganda</mark> ochadi, tugagach uzadi.</p><svg class="sk" viewBox="0 0 600 350" role="img" aria-label="Kanal kommutatsiyasi, PSTN va ISDN">
+    <defs>
+      <filter id="r04-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="44" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r04-5)">
+      <rect class="s fy" x="20" y="96" width="60" height="32" rx="4"></rect>
+      <rect class="s fw" x="110" y="94" width="54" height="36" rx="4"></rect>
+      <path class="s2" d="M120,104 h34 M120,120 h34"></path>
+      <circle class="s fw" cx="218" cy="112" r="19"></circle>
+      <circle class="s fw" cx="392" cy="112" r="19"></circle>
+      <rect class="s fw" x="446" y="94" width="54" height="36" rx="4"></rect>
+      <path class="s2" d="M456,104 h34 M456,120 h34"></path>
+      <rect class="s fy" x="530" y="96" width="60" height="32" rx="4"></rect>
+      <path class="s" d="M80,112 h30 M164,112 h35 M237,112 h136 M411,112 h35 M500,112 h30"></path>
+      <path class="sr dash" d="M218,133 C244,182 366,182 390,133"></path>
+      <path class="dash" d="M14,216 h572"></path>
+      <rect class="s fy" x="20" y="266" width="58" height="34" rx="3"></rect>
+      <rect class="s fy" x="84" y="266" width="58" height="34" rx="3"></rect>
+      <rect class="s fg" x="148" y="266" width="42" height="34" rx="3"></rect>
+      <rect class="s fb" x="248" y="266" width="150" height="34" rx="3"></rect>
+      <rect class="s fb" x="430" y="266" width="150" height="34" rx="3"></rect>
+    </g>
+    <text x="50" y="86" text-anchor="middle">Router</text>
+    <text x="137" y="86" text-anchor="middle">modem / TA</text>
+    <text x="473" y="86" text-anchor="middle">modem / TA</text>
+    <text x="560" y="86" text-anchor="middle">Router</text>
+    <text x="218" y="152" text-anchor="middle" class="sm">WAN kommutator</text>
+    <text x="392" y="152" text-anchor="middle" class="sm">WAN kommutator</text>
+    <text x="305" y="60" text-anchor="middle" class="red">terib ulanadi → tugagach uziladi</text>
+    <text x="305" y="198" text-anchor="middle" class="sm">kanal seans davomida yashaydi</text>
+    <text x="104" y="256" text-anchor="middle" class="red">BRI = 2B + D → 128 kbit/s</text>
+    <text x="49" y="288" text-anchor="middle" class="sm">B 64k</text>
+    <text x="113" y="288" text-anchor="middle" class="sm">B 64k</text>
+    <text x="169" y="288" text-anchor="middle" class="sm">D</text>
+    <text x="323" y="256" text-anchor="middle" class="red">T1 PRI = 23B + D</text>
+    <text x="323" y="288" text-anchor="middle" class="sm">23 × B 64k + D</text>
+    <text x="505" y="256" text-anchor="middle" class="red">E1 PRI = 30B + D</text>
+    <text x="505" y="288" text-anchor="middle" class="sm">30 × B 64k + D</text>
+    <text x="300" y="322" text-anchor="middle" class="sm">PSTN: analog, maks. 56 kbit/s, shovqinga sezgir</text>
+    <text x="300" y="344" text-anchor="middle" class="sm">ISDN: D — signalizatsiya, B — ma’lumot</text>
+  </svg><ul class="tight">
+    <li><b>PSTN</b> — arzon, hamma binoda bor; polosa kichik</li>
+    <li><b>ISDN</b> — tez, ishonchli; 2 ta B → 2 ta ilova</li>
+  </ul><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><table class="rot">
+    <tbody><tr><th>Interfeys</th><th>BRI</th><th>T1 PRI</th><th>E1 PRI</th></tr>
+    <tr><td>B kanal</td><td>2 × 64 kbit/s</td><td>23</td><td>30</td></tr>
+    <tr><td>D kanal</td><td>1</td><td>1</td><td>1</td></tr>
+  </tbody></table><div class="box"><span class="lbl">Qoida:</span> kanal kommutatsiyasi — vaqtinchalik, kichik polosali aloqa uchun; ulanish kechikadi.</div><h2>6. Interfeys va kabellar</h2><svg class="sk" viewBox="0 0 600 310" role="img" aria-label="Serial interfeys va kabellar">
+    <defs>
+      <filter id="r04-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="54" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r04-6)">
+      <rect class="s fy" x="20" y="42" width="90" height="52" rx="4"></rect>
+      <rect class="s fw" x="110" y="58" width="12" height="20" rx="2"></rect>
+      <path class="s" d="M122,68 h78"></path>
+      <rect class="s fw" x="200" y="42" width="80" height="52" rx="4"></rect>
+      <path class="s2" d="M212,58 h56 M212,80 h56"></path>
+      <path class="s dash" d="M280,68 h90"></path>
+      <rect class="s fb" x="370" y="42" width="120" height="52" rx="4"></rect>
+      <path class="s2" d="M382,58 h96 M382,80 h96"></path>
+      <path class="s fw" d="M18,214 h30 l8,10 v14 l-8,10 h-30 l-8,-10 v-14 z"></path>
+      <path class="s fw" d="M138,214 h30 l8,10 v14 l-8,10 h-30 l-8,-10 v-14 z"></path>
+      <path class="s fw" d="M258,214 h30 l8,10 v14 l-8,10 h-30 l-8,-10 v-14 z"></path>
+      <path class="s fw" d="M378,214 h30 l8,10 v14 l-8,10 h-30 l-8,-10 v-14 z"></path>
+      <path class="s fw" d="M498,214 h30 l8,10 v14 l-8,10 h-30 l-8,-10 v-14 z"></path>
+      <path class="s2" d="M22,222 v18 M30,222 v18 M38,222 v18
+                          M142,222 v18 M150,222 v18 M158,222 v18
+                          M262,222 v18 M270,222 v18 M278,222 v18
+                          M382,222 v18 M390,222 v18 M398,222 v18
+                          M502,222 v18 M510,222 v18 M518,222 v18"></path>
+    </g>
+    <text x="65" y="34" text-anchor="middle">Router</text>
+    <text x="240" y="34" text-anchor="middle">CSU/DSU</text>
+    <text x="430" y="34" text-anchor="middle">operator tarmog‘i</text>
+    <text x="160" y="116" text-anchor="middle" class="sm">serial kabel · 28-pinli ulagich</text>
+    <text x="350" y="142" text-anchor="middle" class="sm">kirish kabeli — juftlik, RJ-11 / RJ-45</text>
+    <text x="300" y="176" text-anchor="middle" class="red">tarmoq tomondagi ulagichlar</text>
+    <text x="33" y="206" text-anchor="middle">V.24</text>
+    <text x="153" y="206" text-anchor="middle">V.35</text>
+    <text x="273" y="206" text-anchor="middle">X.21</text>
+    <text x="393" y="206" text-anchor="middle">RS-449</text>
+    <text x="513" y="206" text-anchor="middle">RS-530</text>
+    <text x="33" y="266" text-anchor="middle" class="sm">DB-25</text>
+    <text x="153" y="266" text-anchor="middle" class="sm">DB-34</text>
+    <text x="273" y="266" text-anchor="middle" class="sm">DB-15</text>
+    <text x="393" y="266" text-anchor="middle" class="sm">DB-37</text>
+    <text x="513" y="266" text-anchor="middle" class="sm">DB-25</text>
+    <text x="300" y="300" text-anchor="middle" class="sm">DTE kabel — erkak (pin) · DCE — urg‘ochi (teshik)</text>
+  </svg><table class="rot">
+    <tbody><tr><th></th><th>V.24 <span class="en">(RS-232)</span></th><th>V.35</th></tr>
+    <tr><td>Rejim</td><td>sinxron + asinxron</td><td>faqat sinxron</td></tr>
+    <tr><td>Maks. tezlik</td><td>64 000 bit/s sinx · 115 200 bit/s asinx</td><td>2 048 000 bit/s (2 Mbit/s)</td></tr>
+    <tr><td>9600 bit/s da</td><td>30 m</td><td>312 m</td></tr>
+  </tbody></table><p class="tight">X.21 · RS-449 · RS-530 — tezlik va masofasi V.35 ga yaqin, hammasi 2 Mbit/s.</p><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 205" role="img" aria-label="Serial interfeys rejimlari">
+    <defs>
+      <filter id="r04-9" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="84" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a04-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r04-9)">
+      <rect class="s fy" x="230" y="10" width="140" height="34" rx="6"></rect>
+      <rect class="s fw" x="80" y="80" width="160" height="34" rx="6"></rect>
+      <rect class="s fw" x="360" y="80" width="160" height="34" rx="6"></rect>
+      <path class="s2" marker-end="url(#a04-5)" d="M280,44 C230,58 190,68 164,76"></path>
+      <path class="s2" marker-end="url(#a04-5)" d="M320,44 C370,58 410,68 436,76"></path>
+      <path class="s2" d="M160,114 v14 M440,114 v14"></path>
+    </g>
+    <text x="300" y="32" text-anchor="middle" class="red">Serial interfeys</text>
+    <text x="160" y="103" text-anchor="middle">sinxron</text>
+    <text x="440" y="103" text-anchor="middle">asinxron</text>
+    <text x="160" y="150" text-anchor="middle" class="sm">DTE rejimi — asosiy</text>
+    <text x="160" y="172" text-anchor="middle" class="sm">DCE rejimi</text>
+    <text x="440" y="150" text-anchor="middle" class="sm">flow rejimi</text>
+    <text x="440" y="172" text-anchor="middle" class="sm">protokol rejimi — PPP</text>
+    <text x="300" y="198" text-anchor="middle" class="sm">asinxron — modem yoki ISDN TA bilan dialup</text>
+  </svg><h2>7. Paket kommutatsiyasi</h2><p class="tight">Paketlarga bo‘linadi, har paketda <mark>jo‘natuvchi va qabul qiluvchi manzili</mark>.</p><svg class="sk" viewBox="0 0 600 400" role="img" aria-label="Paket kommutatsiyasi va virtual kanallar">
+    <defs>
+      <filter id="r04-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="64" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a04-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+      <marker id="a04-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r04-7)">
+      <rect class="s fy" x="20" y="180" width="66" height="38" rx="4"></rect>
+      <circle class="s fw" cx="190" cy="110" r="22"></circle>
+      <circle class="s fw" cx="300" cy="250" r="22"></circle>
+      <circle class="s fw" cx="430" cy="110" r="22"></circle>
+      <rect class="s fy" x="510" y="58" width="70" height="36" rx="4"></rect>
+      <rect class="s fy" x="510" y="300" width="70" height="36" rx="4"></rect>
+      <path class="s2" d="M86,190 C120,160 152,126 168,116 M212,110 h196 M452,102 C476,90 496,82 512,80
+                          M86,208 C150,228 232,246 278,250 M322,258 C390,282 462,302 510,312
+                          M200,131 C214,172 240,212 282,238"></path>
+      <path class="sr dash" marker-end="url(#a04-3)" d="M88,186 C124,156 154,124 170,112"></path>
+      <path class="sg dash" marker-end="url(#a04-4)" d="M88,212 C152,232 232,250 278,254"></path>
+      <rect class="s fy" x="290" y="98" width="22" height="16" rx="3"></rect>
+      <rect class="s fg" x="390" y="272" width="22" height="16" rx="3"></rect>
+      <rect class="s fy" x="128" y="140" width="22" height="16" rx="3"></rect>
+    </g>
+    <text x="53" y="170" text-anchor="middle">Router A</text>
+    <text x="190" y="72" text-anchor="middle" class="sm">paket kommutator</text>
+    <text x="300" y="292" text-anchor="middle" class="sm">paket kommutator</text>
+    <text x="430" y="72" text-anchor="middle" class="sm">paket kommutator</text>
+    <text x="545" y="48" text-anchor="middle">Router B</text>
+    <text x="545" y="352" text-anchor="middle">Router C</text>
+    <text x="300" y="26" text-anchor="middle" class="red">virtual kanal (VC) — bitta fizik port, ko‘p peer</text>
+    <text x="118" y="250" text-anchor="middle" class="sm">paketda 2 manzil</text>
+    <text x="300" y="374" text-anchor="middle" class="sm">X.25 · Frame Relay · ATM</text>
+    <text x="300" y="396" text-anchor="middle" class="sm">sinxron ajratilgan liniya bilan ulanadi</text>
+  </svg><div class="pg-num">— 5 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><table class="rot">
+    <tbody><tr><th></th><th>X.25</th><th>Frame Relay</th><th>ATM</th></tr>
+    <tr><td>Tezlik</td><td>64 kbit/s, 1992-dan 2 Mbit/s</td><td>64 kbit/s – 2 Mbit/s</td><td>1000 Mbit/s gacha</td></tr>
+    <tr><td>Xususiyat</td><td>xato tuzatish, oqim nazorati — sekin</td><td>X.25 ning yengili, kechikish kam</td><td>hujayra (cell), optika, qimmat</td></tr>
+  </tbody></table><div class="box"><span class="lbl">+ / −:</span> moslashuvchan, arzonroq; sozlash murakkab, kechikish katta. Frame Relay tiqilishga sezgir.</div><h2>8. Uch rejim — taqqoslash</h2><svg class="sk" viewBox="0 0 600 320" role="img" aria-label="Uch ulanish rejimining taqqoslashi">
+    <defs>
+      <filter id="r04-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="74" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r04-8)">
+      <rect class="s fg" x="12" y="28" width="184" height="250" rx="12"></rect>
+      <rect class="s fb" x="208" y="28" width="184" height="250" rx="12"></rect>
+      <rect class="s fy" x="404" y="28" width="184" height="250" rx="12"></rect>
+      <path class="s2" d="M30,72 h148 M226,72 h148 M422,72 h148"></path>
+      <rect class="s fw" x="40" y="96" width="40" height="24" rx="3"></rect>
+      <rect class="s fw" x="128" y="96" width="40" height="24" rx="3"></rect>
+      <path class="s" d="M80,108 h48"></path>
+      <rect class="s fw" x="236" y="96" width="40" height="24" rx="3"></rect>
+      <rect class="s fw" x="324" y="96" width="40" height="24" rx="3"></rect>
+      <path class="dash" d="M276,108 h48"></path>
+      <rect class="s fw" x="432" y="96" width="40" height="24" rx="3"></rect>
+      <rect class="s fw" x="520" y="96" width="40" height="24" rx="3"></rect>
+      <path class="s2" d="M472,104 C488,92 504,92 520,102 M472,114 C488,126 504,126 520,116"></path>
+      <rect class="s fy" x="486" y="94" width="14" height="10" rx="2"></rect>
+      <rect class="s fg" x="494" y="116" width="14" height="10" rx="2"></rect>
+    </g>
+    <text x="104" y="54" text-anchor="middle" class="red">Ajratilgan liniya</text>
+    <text x="300" y="54" text-anchor="middle" class="red">Kanal komm.</text>
+    <text x="496" y="54" text-anchor="middle" class="red">Paket komm.</text>
+    <text x="104" y="158" text-anchor="middle" class="sm">+ ishonchli, kechikish kam</text>
+    <text x="104" y="186" text-anchor="middle" class="sm">+ polosa tanlovi keng</text>
+    <text x="104" y="214" text-anchor="middle" class="sm">− qimmat, bo‘sh turadi</text>
+    <text x="104" y="242" text-anchor="middle" class="sm">− faqat nuqta-nuqta</text>
+    <text x="300" y="158" text-anchor="middle" class="sm">+ o‘rnatish arzon</text>
+    <text x="300" y="186" text-anchor="middle" class="sm">+ kerakda ulanadi</text>
+    <text x="300" y="214" text-anchor="middle" class="sm">− polosa kichik</text>
+    <text x="300" y="242" text-anchor="middle" class="sm">− ulanish kechikadi</text>
+    <text x="496" y="158" text-anchor="middle" class="sm">+ arzon, moslashuvchan</text>
+    <text x="496" y="186" text-anchor="middle" class="sm">+ ko‘p peer bir portda</text>
+    <text x="496" y="214" text-anchor="middle" class="sm">− sozlash murakkab</text>
+    <text x="496" y="242" text-anchor="middle" class="sm">− kechikish katta</text>
+    <text x="300" y="306" text-anchor="middle" class="red">Hammasida: DTE ↔ DCE va kanal sathi protokoli</text>
+  </svg><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>WAN — kanal sathi + fizik sath; operator quradi</li>
+      <li>Fizik: V.24 · V.35 · X.21 · RS-449 · RS-530 · G.703 (E1/T1)</li>
+      <li>Kanal: HDLC · PPP · LAPB · Frame Relay · SLIP · SDLC</li>
+      <li>3 rejim: ajratilgan liniya · kanal · paket kommutatsiyasi</li>
+      <li>Router = DTE, CSU/DSU = DCE va taktni beradi</li>
+    </ul>
+  </div><div class="pg-num">— 6 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>WAN qaysi 2 sathda? <span class="ans">— fizik va kanal</span></li>
+    <li>V.35 maks. tezligi? <span class="ans">— 2 Mbit/s, faqat sinxron</span></li>
+    <li>ISDN BRI? <span class="ans">— 2B + D = 128 kbit/s</span></li>
+    <li>Taktni kim beradi? <span class="ans">— DCE (CSU/DSU)</span></li>
+    <li>Point-to-multipoint qaysi rejim? <span class="ans">— paket kommutatsiyasi</span></li>
+  </ol><div class="pg-num">— 7 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+
+<!-- ================= 6-sahifa ================= -->
+
+</body>
+</html>

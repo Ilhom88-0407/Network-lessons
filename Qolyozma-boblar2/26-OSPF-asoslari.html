@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>26-bob · OSPF asoslari</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">26-bob</div><h1 class="title">OSPF asoslari
+    <small>OSPF Basics</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>OSPF</b> — link-state ichki shlyuz protokoli (IGP), RFC 2328</li>
+      <li><b>LSA</b> — tarmoq holati haqidagi e’lon — qo‘shnilarga tarqaladi</li>
+      <li><b>LSDB</b> — LSA lardan yig‘ilgan tarmoq xaritasi bazasi</li>
+      <li><b>SPF</b> — Dijkstra algoritmi — xaritadan eng qisqa yo‘l</li>
+      <li><b>Cost</b> — interfeys metrikasi; yo‘l narxi — costlar yig‘indisi</li>
+    </ul>
+  </div><h2>1. RIP nega yetmaydi</h2><ul class="tight">
+    <li><b>hop</b> sanaydi — polosa/kechikish hisobga olinmaydi</li>
+    <li><b>16 hop</b> = cheksiz — tarmoq diametri kichik</li>
+    <li>sekin konvergensiya — suppress timer ushlab turadi</li>
+    <li>30 s da <b>butun jadval</b>: 1000 marshrut ≈ 160 KB</li>
+  </ul><svg class="sk" viewBox="0 0 600 205" role="img" aria-label="RIP hop bilan optimal bolmagan yol tanlaydi">
+    <defs>
+      <filter id="r26-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+      <marker id="a26-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r26-1)">
+      <rect class="s fy" x="90" y="100" width="48" height="26" rx="4"></rect>
+      <rect class="s fy" x="450" y="100" width="48" height="26" rx="4"></rect>
+      <rect class="s fy" x="206" y="36" width="48" height="26" rx="4"></rect>
+      <rect class="s fy" x="356" y="36" width="48" height="26" rx="4"></rect>
+      <path class="s2" d="M138,104 C170,96 190,66 208,54"></path>
+      <path class="s2" d="M254,49 h102"></path>
+      <path class="s2" d="M404,54 C424,66 440,96 450,104"></path>
+      <path class="s" d="M114,126 v42 h360 v-42"></path>
+      <path class="sg" d="M140,100 C176,92 194,62 210,50 M256,45 h98 M406,50 C426,62 442,92 452,100"></path>
+      <path class="s2" d="M60,113 h30 M498,113 h34"></path>
+      <rect class="s fw" x="28" y="102" width="30" height="22" rx="3"></rect>
+      <rect class="s fw" x="534" y="102" width="30" height="22" rx="3"></rect>
+    </g>
+    <text x="114" y="118" text-anchor="middle">RTA</text>
+    <text x="474" y="118" text-anchor="middle">RTB</text>
+    <text x="230" y="54" text-anchor="middle">RTC</text>
+    <text x="380" y="54" text-anchor="middle">RTD</text>
+    <text x="305" y="20" text-anchor="middle" class="grn">3 hop · t = 3 s</text>
+    <text x="305" y="40" text-anchor="middle" class="sm">2 Mbit/s</text>
+    <text x="152" y="64" text-anchor="middle" class="sm">2 Mbit/s</text>
+    <text x="444" y="62" text-anchor="middle" class="sm">2 Mbit/s</text>
+    <text x="294" y="190" text-anchor="middle" class="red">1 hop · 64 Kbit/s · 32 s</text>
+    <text x="114" y="88" text-anchor="middle" class="sm">10.1.0.0/24</text>
+    <text x="474" y="88" text-anchor="middle" class="sm">10.2.0.0/24</text>
+  </svg><p class="cap">1-rasm. RIP 1 hop tanlaydi: 32 s, uzun yo‘l — 3 s</p><h2>2. OSPF nima</h2><p class="tight"><mark>Link-state</mark> ichki shlyuz protokoli, IETF <span class="en">RFC 2328 = OSPFv2</span></p><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><ul class="tight">
+    <li>yo‘lni <b>SPF (Dijkstra)</b> hisoblaydi</li>
+    <li>IP ichida, <b>protokol 89</b> — ishonchlilikni o‘zi ta’minlaydi</li>
+    <li>paketlar multicast <b>224.0.0.5</b> ga ketadi</li>
+    <li><b>inkremental</b> — faqat so‘ralgan LSA</li>
+  </ul><svg class="sk" viewBox="0 0 600 130" role="img" aria-label="OSPF paketi IP ichida va multicast manzil">
+    <defs>
+      <filter id="r26-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="17" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a26-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r26-2)">
+      <rect class="s" x="20" y="50" width="250" height="44" rx="4"></rect>
+      <rect class="s fb" x="30" y="58" width="90" height="28" rx="3"></rect>
+      <rect class="s fy" x="126" y="58" width="136" height="28" rx="3"></rect>
+      <rect class="s fy" x="366" y="52" width="48" height="26" rx="4"></rect>
+      <rect class="s fw" x="510" y="30" width="44" height="24" rx="3"></rect>
+      <rect class="s fw" x="510" y="94" width="44" height="24" rx="3"></rect>
+      <path class="sr" marker-end="url(#a26-2)" d="M416,58 C450,50 486,44 506,42"></path>
+      <path class="sr" marker-end="url(#a26-2)" d="M416,72 C450,84 486,100 506,106"></path>
+    </g>
+    <text x="75" y="77" text-anchor="middle" class="sm">IP sarlavha</text>
+    <text x="194" y="77" text-anchor="middle" class="sm">OSPF paketi</text>
+    <text x="145" y="40" text-anchor="middle" class="red">protokol = 89</text>
+    <text x="145" y="112" text-anchor="middle" class="sm">ustida TCP yo‘q</text>
+    <text x="390" y="70" text-anchor="middle">RTA</text>
+    <text x="462" y="24" text-anchor="middle" class="red">224.0.0.5</text>
+    <text x="452" y="120" text-anchor="middle" class="sm">multicast</text>
+    <text x="532" y="46" text-anchor="middle" class="sm">RTB</text>
+    <text x="532" y="110" text-anchor="middle" class="sm">RTC</text>
+  </svg><h2>3. To‘rt bosqich</h2><svg class="sk" viewBox="0 0 600 285" role="img" aria-label="OSPF ishlashining tort bosqichi">
+    <defs>
+      <filter id="r26-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a26-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r26-3)">
+      <rect class="s fw" x="150" y="10" width="300" height="44" rx="10"></rect>
+      <rect class="s fw" x="150" y="74" width="300" height="44" rx="10"></rect>
+      <rect class="s fw" x="150" y="138" width="300" height="44" rx="10"></rect>
+      <rect class="s fy" x="150" y="202" width="300" height="44" rx="10"></rect>
+      <path class="s2" marker-end="url(#a26-3)" d="M300,54 v18"></path>
+      <path class="s2" marker-end="url(#a26-3)" d="M300,118 v18"></path>
+      <path class="s2" marker-end="url(#a26-3)" d="M300,182 v18"></path>
+      <path class="s2" marker-end="url(#a26-3)" d="M150,96 h-16"></path>
+      <path class="s2" marker-end="url(#a26-3)" d="M150,160 h-16"></path>
+      <path class="s2" marker-end="url(#a26-3)" d="M450,224 h14"></path>
+      <rect class="s fw" x="26" y="84" width="104" height="24" rx="3"></rect>
+      <rect class="s fw" x="26" y="148" width="104" height="24" rx="3"></rect>
+      <rect class="s fg" x="468" y="212" width="114" height="24" rx="3"></rect>
+    </g>
+    <text x="300" y="30" text-anchor="middle">1) qo‘shni topish</text>
+    <text x="300" y="47" text-anchor="middle" class="sm">Hello, davriy</text>
+    <text x="300" y="94" text-anchor="middle">2) adjacency</text>
+    <text x="300" y="111" text-anchor="middle" class="sm">DR/BDR bilan</text>
+    <text x="300" y="158" text-anchor="middle">3) LSA almashish</text>
+    <text x="300" y="175" text-anchor="middle" class="sm">LSDB yig‘iladi</text>
+    <text x="300" y="222" text-anchor="middle">4) SPF hisobi</text>
+    <text x="300" y="239" text-anchor="middle" class="sm">har router mustaqil</text>
+    <text x="78" y="101" text-anchor="middle" class="sm">qo‘shni jadvali</text>
+    <text x="78" y="165" text-anchor="middle" class="sm">LSDB</text>
+    <text x="525" y="229" text-anchor="middle" class="sm">marshrut jadvali</text>
+    <text x="300" y="272" text-anchor="middle" class="red">LSDB hammada bir xil</text>
+  </svg><ul class="tight">
+    <li><b>adjacency</b> — nuqta-nuqta virtual kanal</li>
+    <li>LSA lar yig‘ilib <b>LSDB</b> — butun topologiya</li>
+  </ul><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>4. Hello paketi</h2><svg class="sk" viewBox="0 0 600 275" role="img" aria-label="Hello paket va qoshni jadvali">
+    <defs>
+      <filter id="r26-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="11" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a26-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r26-4)">
+      <rect class="s fy" x="40" y="70" width="60" height="32" rx="4"></rect>
+      <rect class="s fy" x="500" y="70" width="60" height="32" rx="4"></rect>
+      <path class="s" d="M100,86 h400"></path>
+      <path class="sg" marker-end="url(#a26-4)" d="M110,52 h380"></path>
+      <path class="sg" marker-end="url(#a26-4)" d="M490,112 h-380"></path>
+      <rect class="s fw" x="60" y="162" width="480" height="30" rx="3"></rect>
+      <path class="s2" d="M156,162 v30 M252,162 v30 M348,162 v30 M444,162 v30"></path>
+      <rect class="s fw" x="60" y="224" width="480" height="46" rx="3"></rect>
+      <path class="s2" d="M60,247 h480 M220,224 v46 M380,224 v46"></path>
+    </g>
+    <text x="70" y="92" text-anchor="middle">RTA</text>
+    <text x="530" y="92" text-anchor="middle">RTB</text>
+    <text x="140" y="80" text-anchor="middle" class="sm">10.1.0.1/24</text>
+    <text x="460" y="80" text-anchor="middle" class="sm">10.1.0.2/24</text>
+    <text x="300" y="40" text-anchor="middle" class="red">Hello → 224.0.0.5</text>
+    <text x="70" y="134" text-anchor="middle" class="sm">ID 1.1.1.1</text>
+    <text x="530" y="134" text-anchor="middle" class="sm">ID 2.2.2.2</text>
+    <text x="300" y="154" text-anchor="middle" class="red">Hello maydonlari</text>
+    <text x="108" y="182" text-anchor="middle" class="sm">Router ID</text>
+    <text x="204" y="182" text-anchor="middle" class="sm">Area ID</text>
+    <text x="300" y="182" text-anchor="middle" class="sm">maska</text>
+    <text x="396" y="182" text-anchor="middle" class="sm">DR/BDR</text>
+    <text x="492" y="182" text-anchor="middle" class="sm">prioritet</text>
+    <text x="300" y="216" text-anchor="middle" class="red">qo‘shni jadvali</text>
+    <text x="140" y="241" text-anchor="middle" class="sm">Router ID</text>
+    <text x="300" y="241" text-anchor="middle" class="sm">manzil</text>
+    <text x="460" y="241" text-anchor="middle" class="sm">holat</text>
+    <text x="140" y="264" text-anchor="middle" class="sm">2.2.2.2</text>
+    <text x="300" y="264" text-anchor="middle" class="sm">10.1.0.2</text>
+    <text x="460" y="264" text-anchor="middle" class="sm">2-Way</text>
+  </svg><p class="tight">Qo‘shni manzili = hello’ning <mark>manba IP</mark>si; routerni AS ichida
+  <b>Router ID</b> tanitadi — loopback qulay.</p><h2>5. Qo‘shni holatlari</h2><svg class="sk" viewBox="0 0 600 175" role="img" aria-label="Qoshni holatlari Down Init 2-Way Full">
+    <defs>
+      <filter id="r26-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="5" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a26-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r26-5)">
+      <ellipse class="s fw" cx="70" cy="70" rx="52" ry="30"></ellipse>
+      <ellipse class="s fw" cx="210" cy="70" rx="52" ry="30"></ellipse>
+      <ellipse class="s fb" cx="350" cy="70" rx="52" ry="30"></ellipse>
+      <ellipse class="s fg" cx="505" cy="70" rx="52" ry="30"></ellipse>
+      <path class="sr" marker-end="url(#a26-5)" d="M124,70 h28"></path>
+      <path class="sr" marker-end="url(#a26-5)" d="M264,70 h28"></path>
+      <path class="sr" marker-end="url(#a26-5)" d="M404,70 h43"></path>
+      <path class="s2" d="M140,84 v18 M280,84 v18 M425,84 v18"></path>
+    </g>
+    <text x="70" y="76" text-anchor="middle">Down</text>
+    <text x="210" y="76" text-anchor="middle">Init</text>
+    <text x="350" y="76" text-anchor="middle">2-Way</text>
+    <text x="505" y="76" text-anchor="middle">Full</text>
+    <text x="140" y="120" text-anchor="middle" class="sm">hello keldi</text>
+    <text x="283" y="120" text-anchor="middle" class="sm">parametrlar mos</text>
+    <text x="428" y="120" text-anchor="middle" class="sm">LSDB sinxron</text>
+    <text x="180" y="162" text-anchor="middle" class="grn">DR/BDR bilan — Full</text>
+    <text x="440" y="162" text-anchor="middle" class="red">DRother bilan — 2-Way</text>
+  </svg><p class="cap">2-rasm. Holat qo‘shni jadvalida yoziladi</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>6. Nega DR/BDR kerak</h2><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="Adjacency soni DR bilan va DR siz">
+    <defs>
+      <filter id="r26-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="13" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r26-6)">
+      <circle class="s fw" cx="145" cy="32" r="15"></circle>
+      <circle class="s fw" cx="219" cy="86" r="15"></circle>
+      <circle class="s fw" cx="191" cy="173" r="15"></circle>
+      <circle class="s fw" cx="99" cy="173" r="15"></circle>
+      <circle class="s fw" cx="71" cy="86" r="15"></circle>
+      <path class="s2" d="M156,42 L208,76 M152,47 L186,158 M138,47 L106,158 M134,42 L82,76
+                          M215,101 L196,158 M204,94 L114,166 M205,92 L86,94
+                          M114,173 h62 M185,159 L77,99 M96,158 L78,101"></path>
+      <path class="dash" d="M300,10 v230"></path>
+      <circle class="s fy" cx="430" cy="48" r="19"></circle>
+      <circle class="s fg" cx="518" cy="48" r="19"></circle>
+      <circle class="s fw" cx="390" cy="152" r="15"></circle>
+      <circle class="s fw" cx="458" cy="178" r="15"></circle>
+      <circle class="s fw" cx="526" cy="152" r="15"></circle>
+      <path class="s2" d="M449,48 h50
+                          M396,138 L420,66 M401,143 L504,60
+                          M457,163 L432,68 M463,163 L512,67
+                          M521,134 L436,64 M523,137 L519,68"></path>
+    </g>
+    <text x="145" y="37" text-anchor="middle" class="sm">A</text>
+    <text x="219" y="91" text-anchor="middle" class="sm">B</text>
+    <text x="191" y="178" text-anchor="middle" class="sm">C</text>
+    <text x="99" y="178" text-anchor="middle" class="sm">D</text>
+    <text x="71" y="91" text-anchor="middle" class="sm">E</text>
+    <text x="430" y="53" text-anchor="middle" class="sm">DR</text>
+    <text x="518" y="53" text-anchor="middle" class="sm">BDR</text>
+    <text x="390" y="157" text-anchor="middle" class="sm">C</text>
+    <text x="458" y="183" text-anchor="middle" class="sm">D</text>
+    <text x="526" y="157" text-anchor="middle" class="sm">E</text>
+    <text x="148" y="222" text-anchor="middle" class="red">DR yo‘q: n(n-1)/2 = 10</text>
+    <text x="150" y="243" text-anchor="middle" class="sm">hamma bilan hamma</text>
+    <text x="452" y="222" text-anchor="middle" class="red">DR/BDR: 2(n-2)+1 = 7</text>
+    <text x="452" y="243" text-anchor="middle" class="sm">faqat DR/BDR bilan</text>
+  </svg><table class="rot">
+    <tbody><tr><th>Routerlar</th><th>DR yo‘q</th><th>DR/BDR bilan</th></tr>
+    <tr><td>5</td><td>10</td><td>7</td></tr>
+    <tr><td>10</td><td>45</td><td>17</td></tr>
+  </tbody></table><p class="tight">DR <mark>interfeysga</mark> tegishli, routerga emas: bir tarmoqda DR,
+  boshqasida DRother.</p><h2>7. DR/BDR saylovi</h2><svg class="sk" viewBox="0 0 600 260" role="img" aria-label="DR va BDR saylovi prioritetlar bilan">
+    <defs>
+      <filter id="r26-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="19" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r26-7)">
+      <rect class="s fy" x="38" y="70" width="64" height="32" rx="4"></rect>
+      <rect class="s fy" x="148" y="70" width="64" height="32" rx="4"></rect>
+      <rect class="s fw" x="258" y="70" width="64" height="32" rx="4"></rect>
+      <rect class="s fy" x="368" y="70" width="64" height="32" rx="4"></rect>
+      <rect class="s fy" x="478" y="70" width="64" height="32" rx="4"></rect>
+      <path class="s" d="M30,150 h540"></path>
+      <path class="s2" d="M70,102 v12 M70,132 v18 M180,102 v12 M180,132 v18 M290,102 v12 M290,132 v18 M400,102 v12 M400,132 v18 M510,102 v12 M510,132 v18"></path>
+      <path class="sr" d="M368,68 h64 M368,104 h64"></path>
+      <path class="sg" d="M478,68 h64 M478,104 h64"></path>
+    </g>
+    <text x="70" y="92" text-anchor="middle">RTA</text>
+    <text x="180" y="92" text-anchor="middle">RTB</text>
+    <text x="290" y="92" text-anchor="middle">RTC</text>
+    <text x="400" y="92" text-anchor="middle">RTD</text>
+    <text x="510" y="92" text-anchor="middle">RTE</text>
+    <text x="70" y="58" text-anchor="middle" class="sm">Pri = 2</text>
+    <text x="180" y="58" text-anchor="middle" class="sm">Pri = 1</text>
+    <text x="290" y="58" text-anchor="middle" class="red">Pri = 0</text>
+    <text x="400" y="58" text-anchor="middle" class="sm">Pri = 5</text>
+    <text x="510" y="58" text-anchor="middle" class="sm">Pri = 3</text>
+    <text x="70" y="126" text-anchor="middle" class="sm">1.1.1.1</text>
+    <text x="180" y="126" text-anchor="middle" class="sm">2.2.2.2</text>
+    <text x="290" y="126" text-anchor="middle" class="sm">3.3.3.3</text>
+    <text x="400" y="126" text-anchor="middle" class="sm">4.4.4.4</text>
+    <text x="510" y="126" text-anchor="middle" class="sm">5.5.5.5</text>
+    <text x="70" y="176" text-anchor="middle" class="sm">DRother</text>
+    <text x="180" y="176" text-anchor="middle" class="sm">DRother</text>
+    <text x="290" y="176" text-anchor="middle" class="sm">saylovda yo‘q</text>
+    <text x="400" y="176" text-anchor="middle" class="red">DR</text>
+    <text x="510" y="176" text-anchor="middle" class="grn">BDR</text>
+    <text x="300" y="212" text-anchor="middle" class="red">avval BDR, keyin DR saylanadi</text>
+    <text x="300" y="242" text-anchor="middle" class="sm">keyin kelgan yuqori prioritetli router DR bo‘lolmaydi</text>
+  </svg><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="box"><span class="lbl">Qoida:</span> prioritet <b>0…255</b>; 0 — qatnashmaydi ·
+  teng bo‘lsa <mark>katta Router ID</mark> yutadi · da’vogar yo‘q — BDR DR bo‘ladi.</div><h2>8. LSA almashinuvi</h2><svg class="sk" viewBox="0 0 600 245" role="img" aria-label="LSA almashinuvining tort qadami">
+    <defs>
+      <filter id="r26-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="23" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a26-8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r26-8)">
+      <rect class="s fy" x="88" y="24" width="64" height="30" rx="4"></rect>
+      <rect class="s fy" x="448" y="24" width="64" height="30" rx="4"></rect>
+      <path class="dash" d="M120,54 v170 M480,54 v170"></path>
+      <path class="s2" marker-end="url(#a26-8)" d="M120,80 h356"></path>
+      <path class="s2" marker-end="url(#a26-8)" d="M480,115 h-356"></path>
+      <path class="s2" marker-end="url(#a26-8)" d="M120,150 h356"></path>
+      <path class="sg" marker-end="url(#a26-8)" d="M480,185 h-356"></path>
+    </g>
+    <text x="120" y="44" text-anchor="middle">RTA</text>
+    <text x="480" y="44" text-anchor="middle">RTB</text>
+    <text x="300" y="72" text-anchor="middle" class="sm">1) LSA ro‘yxati (digest)</text>
+    <text x="300" y="107" text-anchor="middle" class="sm">2) yetmagan LSA so‘rovi</text>
+    <text x="300" y="142" text-anchor="middle" class="sm">3) so‘ralgan LSA lar</text>
+    <text x="300" y="177" text-anchor="middle" class="sm">4) tasdiq (Ack)</text>
+    <text x="300" y="205" text-anchor="middle" class="sm">o‘zgarish bo‘lmasa — har 30 minutda digest</text>
+    <text x="300" y="234" text-anchor="middle" class="grn">LSDB sinxron → holat Full</text>
+  </svg><p class="tight"><b>Ketma-ket raqam</b> — takror paket ishlanmaydi; javob kelmasa qayta
+  yuboriladi. LSA maska tashiydi → <mark>VLSM</mark>.</p><h2>9. Cost — interfeys metrikasi</h2><svg class="sk" viewBox="0 0 600 165" role="img" aria-label="Cost formulasi va misollar">
+    <defs>
+      <filter id="r26-9" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="29" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r26-9)">
+      <rect class="s fy" x="140" y="2" width="320" height="34" rx="10"></rect>
+      <path class="s2" d="M20,70 h560 M20,98 h560 M20,126 h560 M20,154 h560"></path>
+      <path class="s2" d="M20,70 v84 M180,70 v84 M420,70 v84 M580,70 v84"></path>
+    </g>
+    <text x="300" y="25" text-anchor="middle" class="red">cost = 100 ÷ polosa (Mbit/s)</text>
+    <text x="100" y="64" text-anchor="middle" class="sm">polosa</text>
+    <text x="300" y="64" text-anchor="middle" class="sm">hisob</text>
+    <text x="500" y="64" text-anchor="middle" class="sm">cost</text>
+    <text x="100" y="92" text-anchor="middle" class="sm">64 kbit/s</text>
+    <text x="300" y="92" text-anchor="middle" class="sm">100 ÷ 0,064</text>
+    <text x="500" y="92" text-anchor="middle" class="red">1562</text>
+    <text x="100" y="120" text-anchor="middle" class="sm">2 Mbit/s</text>
+    <text x="300" y="120" text-anchor="middle" class="sm">100 ÷ 2</text>
+    <text x="500" y="120" text-anchor="middle" class="red">50</text>
+    <text x="100" y="148" text-anchor="middle" class="sm">100 Mbit/s</text>
+    <text x="300" y="148" text-anchor="middle" class="sm">100 ÷ 100</text>
+    <text x="500" y="148" text-anchor="middle" class="red">1</text>
+  </svg><p class="tight">Yo‘l narxi = <mark>chiquvchi interfeyslar</mark> cost yig‘indisi;
+  qo‘lda <b>ospf cost</b> <span class="en">value</span>.</p><div class="pg-num">— 5 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>10. SPF daraxti</h2><svg class="sk" viewBox="0 0 600 315" role="img" aria-label="LSDB grafi va SPF daraxti">
+    <defs>
+      <filter id="r26-10" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="31" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a26-10" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r26-10)">
+      <circle class="s fw" cx="70" cy="58" r="20"></circle>
+      <circle class="s fw" cx="240" cy="58" r="20"></circle>
+      <circle class="s fw" cx="70" cy="215" r="20"></circle>
+      <circle class="s fw" cx="240" cy="215" r="20"></circle>
+      <path class="s2" d="M90,58 h130 M70,78 v117 M240,78 v117 M90,215 h130"></path>
+      <path class="dash" d="M300,14 v286"></path>
+      <circle class="s fy" cx="430" cy="58" r="20"></circle>
+      <circle class="s fw" cx="370" cy="150" r="20"></circle>
+      <circle class="s fw" cx="510" cy="150" r="20"></circle>
+      <circle class="s fw" cx="370" cy="245" r="20"></circle>
+      <path class="sg" marker-end="url(#a26-10)" d="M416,75 L382,130"></path>
+      <path class="sg" marker-end="url(#a26-10)" d="M444,75 L498,130"></path>
+      <path class="sg" marker-end="url(#a26-10)" d="M370,170 v52"></path>
+    </g>
+    <text x="70" y="64" text-anchor="middle">A</text>
+    <text x="240" y="64" text-anchor="middle">B</text>
+    <text x="70" y="221" text-anchor="middle">C</text>
+    <text x="240" y="221" text-anchor="middle">D</text>
+    <text x="155" y="48" text-anchor="middle" class="red">1</text>
+    <text x="50" y="140" text-anchor="middle" class="red">5</text>
+    <text x="262" y="140" text-anchor="middle" class="red">2</text>
+    <text x="155" y="243" text-anchor="middle" class="red">3</text>
+    <text x="155" y="26" text-anchor="middle" class="sm">LSDB = og‘irlikli graf</text>
+    <text x="150" y="300" text-anchor="middle" class="sm">hammada bir xil</text>
+    <text x="430" y="64" text-anchor="middle">A</text>
+    <text x="370" y="156" text-anchor="middle">B</text>
+    <text x="510" y="156" text-anchor="middle">C</text>
+    <text x="370" y="251" text-anchor="middle">D</text>
+    <text x="430" y="26" text-anchor="middle" class="grn">SPT — ildiz A</text>
+    <text x="388" y="112" text-anchor="middle" class="red">1</text>
+    <text x="476" y="112" text-anchor="middle" class="red">5</text>
+    <text x="386" y="202" text-anchor="middle" class="red">2</text>
+    <text x="440" y="300" text-anchor="middle" class="sm">A→D = 3, A→C = 5</text>
+  </svg><ul class="tight">
+    <li>og‘irlikli yo‘naltirilgan graf, ildiz — router o‘zi</li>
+    <li>eng kichik cost’li shox — OSPF jadvaliga</li>
+    <li>cost teng — ikkalasi ham (teng narxli)</li>
+  </ul><h2>11. Area’larga bo‘lish</h2><svg class="sk" viewBox="0 0 600 285" role="img" aria-label="Area 0 backbone ABR va ASBR">
+    <defs>
+      <filter id="r26-11" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="37" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a26-11" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r26-11)">
+      <rect class="s fg" x="20" y="60" width="150" height="120" rx="14"></rect>
+      <rect class="s fb" x="225" y="60" width="150" height="120" rx="14"></rect>
+      <rect class="s fg" x="430" y="60" width="150" height="120" rx="14"></rect>
+      <rect class="s fw" x="48" y="95" width="44" height="24" rx="3"></rect>
+      <rect class="s fw" x="48" y="150" width="44" height="24" rx="3"></rect>
+      <rect class="s fw" x="238" y="95" width="64" height="24" rx="3"></rect>
+      <rect class="s fw" x="298" y="150" width="64" height="24" rx="3"></rect>
+      <rect class="s fw" x="478" y="95" width="44" height="24" rx="3"></rect>
+      <rect class="s fw" x="478" y="150" width="44" height="24" rx="3"></rect>
+      <rect class="s fy" x="175" y="107" width="44" height="26" rx="3"></rect>
+      <rect class="s fy" x="380" y="107" width="44" height="26" rx="3"></rect>
+      <path class="s2" d="M70,119 v31 M92,107 C120,110 150,114 175,118
+                          M270,119 L330,150 M302,107 C330,112 356,116 380,118
+                          M219,120 h19 M424,120 h54 M500,119 v31"></path>
+      <path class="sr" marker-end="url(#a26-11)" d="M60,174 C54,196 52,208 56,224"></path>
+      <path class="s fw" d="M64,226 C58,214 78,206 88,214 C96,204 118,208 120,220 C136,218 140,234 128,240 C120,250 76,252 70,242 C60,240 58,232 64,226 Z"></path>
+      <path class="sg" marker-end="url(#a26-11)" d="M402,133 C400,160 398,180 396,198"></path>
+    </g>
+    <text x="95" y="50" text-anchor="middle" class="red">Area 1</text>
+    <text x="300" y="50" text-anchor="middle" class="red">Area 0 — backbone</text>
+    <text x="505" y="50" text-anchor="middle" class="red">Area 10.0.0.1</text>
+    <text x="197" y="124" text-anchor="middle" class="sm">ABR</text>
+    <text x="402" y="124" text-anchor="middle" class="sm">ABR</text>
+    <text x="70" y="111" text-anchor="middle" class="sm">ichki</text>
+    <text x="70" y="166" text-anchor="middle" class="red">ASBR</text>
+    <text x="270" y="111" text-anchor="middle" class="sm">backbone</text>
+    <text x="330" y="166" text-anchor="middle" class="sm">backbone</text>
+    <text x="500" y="111" text-anchor="middle" class="sm">ichki</text>
+    <text x="500" y="166" text-anchor="middle" class="sm">ichki</text>
+    <text x="178" y="246" text-anchor="middle" class="sm">boshqa AS</text>
+    <text x="460" y="216" text-anchor="middle" class="grn">summary 20.1.0.0/16</text>
+    <text x="300" y="275" text-anchor="middle" class="red">area’lar faqat Area 0 orqali gaplashadi</text>
+  </svg><p class="cap">3-rasm. Area ID — 32 bit; 0 = 0.0.0.0</p><div class="pg-num">— 6 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><table class="rot">
+    <tbody><tr><th>backbone router</th><td>kamida bitta interfeysi Area 0 da</td></tr>
+    <tr><th>ABR</th><td>area’ni Area 0 ga bog‘laydi</td></tr>
+    <tr><th>ASBR</th><td>boshqa AS bilan marshrut almashadi</td></tr>
+    <tr><th>ichki router</th><td>hamma interfeysi bitta area da</td></tr>
+  </tbody></table><h2>12. Nima foyda</h2><svg class="sk" viewBox="0 0 600 135" role="img" aria-label="Katta LSDB kichik LSDB larga bolinadi">
+    <defs>
+      <filter id="r26-12" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="41" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a26-12" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r26-12)">
+      <rect class="s fb" x="40" y="20" width="140" height="90" rx="6"></rect>
+      <path class="s2" d="M54,36 h112 M54,50 h112 M54,64 h112 M54,78 h112 M54,92 h112"></path>
+      <path class="sg" marker-end="url(#a26-12)" d="M196,65 h44"></path>
+      <rect class="s fg" x="290" y="18" width="86" height="40" rx="5"></rect>
+      <rect class="s fg" x="400" y="18" width="86" height="40" rx="5"></rect>
+      <rect class="s fg" x="345" y="70" width="86" height="40" rx="5"></rect>
+    </g>
+    <text x="110" y="128" text-anchor="middle" class="red">bitta katta LSDB</text>
+    <text x="222" y="54" text-anchor="middle" class="sm">area</text>
+    <text x="333" y="42" text-anchor="middle" class="sm">LSDB 1</text>
+    <text x="443" y="42" text-anchor="middle" class="sm">LSDB 0</text>
+    <text x="388" y="94" text-anchor="middle" class="sm">LSDB 2</text>
+    <text x="420" y="128" text-anchor="middle" class="red">kichik LSDB lar</text>
+  </svg><p class="tight">Xotira/CPU tejaladi; Hello va LSA <mark>area ichida</mark> qoladi;
+  ABR da <b>summarizatsiya</b> — LSA kamayadi.</p><h2>13. Sozlash tartibi</h2><svg class="sk" viewBox="0 0 600 215" role="img" aria-label="OSPF sozlash buyruqlari ketma-ketligi">
+    <defs>
+      <filter id="r26-13" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="43" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"></feDisplacementMap>
+      </filter>
+      <marker id="a26-13" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r26-13)">
+      <rect class="s fw" x="30" y="20" width="230" height="34" rx="6"></rect>
+      <rect class="s fw" x="60" y="64" width="240" height="34" rx="6"></rect>
+      <rect class="s fw" x="90" y="108" width="300" height="34" rx="6"></rect>
+      <rect class="s fy" x="120" y="152" width="440" height="34" rx="6"></rect>
+      <path class="s2" marker-end="url(#a26-13)" d="M45,54 v6 C45,62 50,64 58,64"></path>
+      <path class="s2" marker-end="url(#a26-13)" d="M75,98 v6 C75,106 80,108 88,108"></path>
+      <path class="s2" marker-end="url(#a26-13)" d="M105,142 v6 C105,150 110,152 118,152"></path>
+    </g>
+    <text x="40" y="42" class="sm">[RTA] router id 1.1.1.1</text>
+    <text x="70" y="86" class="sm">[RTA] ospf 1</text>
+    <text x="100" y="130" class="sm">[RTA-ospf-1] area 0</text>
+    <text x="130" y="174" class="sm">network 10.0.0.0 0.0.0.255</text>
+    <text x="440" y="42" text-anchor="middle" class="red">loopback manzili</text>
+    <text x="420" y="86" text-anchor="middle" class="sm">bir nechta jarayon</text>
+    <text x="480" y="130" text-anchor="middle" class="sm">area ID — 0 yoki 0.0.0.0</text>
+    <text x="300" y="206" text-anchor="middle" class="red">wildcard: 0 — solishtir, 1 — e’tiborsiz</text>
+  </svg><table class="rot">
+    <tbody><tr><th>display ospf peer</th><td>qo‘shnilar, holat, DR/BDR</td></tr>
+    <tr><th>display ospf lsdb</th><td>LSDB — area da bir xil</td></tr>
+    <tr><th>display ospf routing</th><td>cost, next hop, Stub / Transit</td></tr>
+  </tbody></table><p class="tight">Interfeysda: <b>ospf dr-priority</b> · <b>ospf cost</b>. Tiklash:
+  <b>reset ospf</b> <span class="en">process</span>.</p><div class="pg-num">— 7 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>link-state IGP, SPF hisobi — halqa yo‘q</li>
+      <li>IP protokol 89, multicast 224.0.0.5, VLSM</li>
+      <li>Down → Init → 2-Way → Full</li>
+      <li>DR/BDR adjacency sonini n(n-1)/2 dan 2(n-2)+1 ga tushiradi</li>
+      <li>cost = 100 ÷ polosa (Mbit/s)</li>
+      <li>Area 0 — backbone; ABR va ASBR chegarada</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>OSPF IP protokol raqami? <span class="ans">— 89</span></li>
+    <li>Hello qaysi manzilga? <span class="ans">— 224.0.0.5</span></li>
+    <li>10 router, DR bilan necha adjacency? <span class="ans">— 17</span></li>
+    <li>2 Mbit/s interfeys cost? <span class="ans">— 50</span></li>
+  </ol><div class="pg-num">— 8 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+
+<!-- ================= 6-sahifa ================= -->
+
+
+<!-- ================= 7-sahifa ================= -->
+
+</body>
+</html>

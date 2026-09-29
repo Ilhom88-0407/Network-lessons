@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>23-bob · Marshrutlash protokollariga umumiy nazar</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">23-bob</div><h1 class="title">Marshrutlash protokollariga umumiy nazar
+    <small>Overview of Routing Protocols</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>Marshrutlanuvchi protokol</b> — uzatiladigan ma’lumot protokoli, masalan IP</li>
+      <li><b>Marshrutlash protokoli</b> — marshrutlarni topib beradi: RIP, OSPF, BGP</li>
+      <li><b>AS (avtonom tizim)</b> — bitta boshqaruvdagi tarmoqlar guruhi</li>
+      <li><b>IGP / EGP</b> — AS ichidagi / AS’lar orasidagi protokol</li>
+      <li><b>Masofa-vektor</b> — qo‘shni aytgan masofaga ishonadi (RIP)</li>
+      <li><b>Kanal holati</b> — butun topologiyani biladi, SPF hisoblaydi (OSPF)</li>
+    </ul>
+  </div><h2>1. Ikki xil “protokol”</h2><p class="tight">Marshrutni <mark>protokol hisoblaydi</mark>, paketni esa <mark class="g">boshqa protokol tashiydi</mark>.</p><svg class="sk" viewBox="0 0 600 190" role="img" aria-label="Marshrutlash va marshrutlanuvchi protokollar">
+    <defs>
+      <filter id="r23-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r23-1)">
+      <rect class="s fb" x="25" y="40" width="250" height="140" rx="12"></rect>
+      <rect class="s fg" x="325" y="40" width="250" height="140" rx="12"></rect>
+      <path class="dash" d="M300,44 v132"></path>
+    </g>
+    <text x="150" y="30" text-anchor="middle" class="red">marshrutlash protokoli</text>
+    <text x="150" y="68" text-anchor="middle" class="sm">marshrutni hisoblaydi</text>
+    <text x="150" y="94" text-anchor="middle" class="sm">transport / ilova sathi</text>
+    <text x="150" y="126" text-anchor="middle">RIP · OSPF · BGP</text>
+    <text x="150" y="160" text-anchor="middle" class="sm">algoritm bilan</text>
+    <text x="450" y="30" text-anchor="middle" class="red">marshrutlanuvchi</text>
+    <text x="450" y="68" text-anchor="middle" class="sm">router uzatib beradi</text>
+    <text x="450" y="94" text-anchor="middle" class="sm">tarmoq sathi (L3)</text>
+    <text x="450" y="126" text-anchor="middle">IP · IPX</text>
+    <text x="450" y="160" text-anchor="middle" class="sm">manzil formatini belgilaydi</text>
+  </svg><p class="cap">1-rasm. Biri yo‘lni topadi, ikkinchisi yo‘ldan yuradi</p><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>2. Protokol stekidagi joyi</h2><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="RIP OSPF BGP protokol stekida qaysi sathda">
+    <defs>
+      <filter id="r23-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="13" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r23-2)">
+      <rect class="s fy" x="40" y="56" width="90" height="32" rx="4"></rect>
+      <rect class="s fy" x="135" y="56" width="85" height="32" rx="4"></rect>
+      <rect class="s fy" x="225" y="56" width="95" height="32" rx="4"></rect>
+      <rect class="s fb" x="135" y="94" width="85" height="32" rx="4"></rect>
+      <rect class="s fb" x="225" y="94" width="95" height="32" rx="4"></rect>
+      <rect class="s fg" x="40" y="126" width="280" height="32" rx="4"></rect>
+      <rect class="s fw" x="40" y="158" width="280" height="32" rx="4"></rect>
+      <rect class="s fw" x="40" y="190" width="280" height="32" rx="4"></rect>
+      <path class="s2" d="M85,88 v38"></path>
+      <path class="dash" d="M320,74 h42 M320,108 h42 M320,142 h42"></path>
+    </g>
+    <text x="180" y="42" text-anchor="middle" class="red">protokol steki</text>
+    <text x="85" y="78" text-anchor="middle">OSPF</text>
+    <text x="177" y="78" text-anchor="middle">RIP</text>
+    <text x="272" y="78" text-anchor="middle">BGP</text>
+    <text x="177" y="116" text-anchor="middle">UDP</text>
+    <text x="272" y="116" text-anchor="middle">TCP</text>
+    <text x="180" y="148" text-anchor="middle">IP</text>
+    <text x="180" y="180" text-anchor="middle">Kanal sathi</text>
+    <text x="180" y="212" text-anchor="middle">Fizik sath</text>
+    <text x="430" y="78" text-anchor="middle" class="sm">OSPF → IP, proto 89</text>
+    <text x="430" y="112" text-anchor="middle" class="sm">RIP → UDP, port 520</text>
+    <text x="430" y="146" text-anchor="middle" class="sm">BGP → TCP, port 179</text>
+  </svg><p class="cap">2-rasm. OSPF ishonchlilikni o‘zi ta’minlaydi, BGP — TCP hisobiga</p><h2>3. Dinamik protokol qanday ishlaydi</h2><p class="tight">Tarmoqdagi <mark>hamma router bir xil protokolni</mark> yuritishi kerak.</p><svg class="sk" viewBox="0 0 600 330" role="img" aria-label="Dinamik marshrutlash protokolining tort qadami">
+    <defs>
+      <filter id="r23-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="21" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a23-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r23-3)">
+      <rect class="s fw" x="40" y="40" width="225" height="78" rx="10"></rect>
+      <rect class="s fw" x="335" y="40" width="225" height="78" rx="10"></rect>
+      <rect class="s fg" x="335" y="160" width="225" height="78" rx="10"></rect>
+      <rect class="s fy" x="40" y="160" width="225" height="78" rx="10"></rect>
+      <path class="s2" marker-end="url(#a23-1)" d="M267,79 h62"></path>
+      <path class="s2" marker-end="url(#a23-1)" d="M447,120 v34"></path>
+      <path class="s2" marker-end="url(#a23-1)" d="M333,199 h-62"></path>
+      <path class="s2" d="M80,292 h440"></path>
+      <rect class="s fy" x="112" y="286" width="18" height="12" rx="2"></rect>
+      <rect class="s fy" x="192" y="286" width="18" height="12" rx="2"></rect>
+      <rect class="s fy" x="272" y="286" width="18" height="12" rx="2"></rect>
+      <rect class="s fy" x="352" y="286" width="18" height="12" rx="2"></rect>
+      <rect class="s fy" x="432" y="286" width="18" height="12" rx="2"></rect>
+    </g>
+    <text x="152" y="72" text-anchor="middle">1. qo‘shnini topish</text>
+    <text x="152" y="98" text-anchor="middle" class="sm">broadcast yoki unicast</text>
+    <text x="447" y="72" text-anchor="middle">2. jadval almashish</text>
+    <text x="447" y="98" text-anchor="middle" class="sm">qo‘shnilarga yuboradi</text>
+    <text x="300" y="142" text-anchor="middle" class="red">hamma router bir xil protokol</text>
+    <text x="447" y="192" text-anchor="middle">3. hisoblash</text>
+    <text x="447" y="218" text-anchor="middle" class="sm">next hop + metrika</text>
+    <text x="152" y="192" text-anchor="middle">4. kuzatish</text>
+    <text x="152" y="218" text-anchor="middle" class="sm">davriy protokol paketi</text>
+    <text x="300" y="268" text-anchor="middle" class="sm">qo‘shni tirikligini kuzatish</text>
+    <text x="300" y="320" text-anchor="middle" class="sm red">vaqt ichida javob yo‘q → qo‘shni o‘lik</text>
+  </svg><p class="cap">3-rasm. To‘rt qadam: topish → almashish → hisoblash → kuzatish</p><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><ul class="tight">
+    <li><b>topish</b> — o‘zini bevosita ulangan segmentlarda tanitadi</li>
+    <li><b>almashish</b> — jadval qo‘shnidan qo‘shniga o‘tadi</li>
+    <li><b>hisoblash</b> — algoritm next hop va metrikani beradi</li>
+    <li><b>kuzatish</b> — davriy paket bilan nosozlik aniqlanadi</li>
+  </ul><div class="box"><span class="lbl">Sabab:</span> har protokolning o‘z “tili” bor — turli protokol
+    yuritgan routerlar bir-birini tushunmaydi.</div><h2>4. IGP va EGP</h2><p class="tight">Bo‘linish <mark>ish doirasiga</mark> qarab: AS ichida — IGP, AS’lar orasida — EGP.</p><svg class="sk" viewBox="0 0 600 340" role="img" aria-label="Ikki avtonom sistema IGP va EGP">
+    <defs>
+      <filter id="r23-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="9" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r23-4)">
+      <rect class="s fb" x="25" y="60" width="250" height="185" rx="35"></rect>
+      <rect class="s fg" x="325" y="60" width="250" height="185" rx="35"></rect>
+      <rect class="s fy" x="60" y="95" width="64" height="32" rx="4"></rect>
+      <rect class="s fy" x="160" y="95" width="64" height="32" rx="4"></rect>
+      <rect class="s fy" x="105" y="180" width="64" height="32" rx="4"></rect>
+      <rect class="s fy" x="360" y="95" width="64" height="32" rx="4"></rect>
+      <rect class="s fy" x="460" y="95" width="64" height="32" rx="4"></rect>
+      <rect class="s fy" x="410" y="180" width="64" height="32" rx="4"></rect>
+      <path class="s2" d="M124,111 h36 M92,127 C98,150 104,170 110,180 M192,127 C184,150 172,172 164,180"></path>
+      <path class="s2" d="M424,111 h36 M392,127 C398,150 404,170 410,180 M492,127 C484,150 472,172 464,180"></path>
+      <path class="sr" d="M224,111 h136"></path>
+      <path class="sr" d="M292,54 v54"></path>
+      <path class="dash" d="M292,60 v185"></path>
+    </g>
+    <text x="150" y="48" text-anchor="middle" class="red">AS 100</text>
+    <text x="450" y="48" text-anchor="middle" class="red">AS 200</text>
+    <text x="92" y="115" text-anchor="middle">RTA</text>
+    <text x="192" y="115" text-anchor="middle">RTB</text>
+    <text x="292" y="46" text-anchor="middle" class="red">BGP (EGP)</text>
+    <text x="392" y="115" text-anchor="middle">RTD</text>
+    <text x="492" y="115" text-anchor="middle">RTE</text>
+    <text x="137" y="200" text-anchor="middle">RTC</text>
+    <text x="442" y="200" text-anchor="middle">RTF</text>
+    <text x="150" y="232" text-anchor="middle" class="sm">IGP ichida: RIP · OSPF · IS-IS</text>
+    <text x="450" y="232" text-anchor="middle" class="sm">bitta yoki bir necha IGP</text>
+    <text x="300" y="272" text-anchor="middle" class="sm">AS = umumiy siyosat, bitta boshqaruv hududi</text>
+    <text x="300" y="302" text-anchor="middle" class="sm">tashqi dunyo AS’ni bitta butunlik deb ko‘radi</text>
+    <text x="300" y="332" text-anchor="middle" class="sm red">AS raqamini IANA beradi — noyob</text>
+  </svg><p class="cap">4-rasm. IGP — chegara ichida, EGP — chegaradan tashqariga</p><table class="rot">
+    <tbody><tr><th>IGP</th><td>RIP · OSPF · IS-IS</td><td>AS ichida marshrut topadi</td></tr>
+    <tr><th>EGP</th><td>BGP</td><td>AS’lar orasida, siyosat va filtr</td></tr>
+  </tbody></table><svg class="sk" viewBox="0 0 600 110" role="img" aria-label="AS raqamlari diapazoni">
+    <defs>
+      <filter id="r23-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="19" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r23-7)">
+      <rect class="s fb" x="40" y="40" width="380" height="30" rx="4"></rect>
+      <rect class="s fy" x="420" y="40" width="140" height="30" rx="4"></rect>
+      <path class="s2" d="M40,76 v8 M420,76 v8 M560,76 v8"></path>
+    </g>
+    <text x="300" y="26" text-anchor="middle" class="red">AS ID diapazoni</text>
+    <text x="230" y="60" text-anchor="middle">1 – 64511</text>
+    <text x="490" y="60" text-anchor="middle" class="sm">64512 – 65535</text>
+    <text x="230" y="98" text-anchor="middle" class="sm">ommaviy (registratsiya)</text>
+    <text x="490" y="98" text-anchor="middle" class="sm">xususiy</text>
+  </svg><p class="cap">5-rasm. Ommaviy va xususiy AS raqamlari</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><ul class="tight">
+    <li><b>AS</b> — umumiy marshrut siyosati, bitta boshqaruv hududi</li>
+    <li>AS ichida bir necha xil IGP yurishi mumkin</li>
+    <li>AS raqami noyob — IANA beradi</li>
+  </ul><h2>5. D-V va Link-State</h2><svg class="sk" viewBox="0 0 600 330" role="img" aria-label="Distance-Vector va Link-State protokollari taqqoslash">
+    <defs>
+      <filter id="r23-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="31" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a23-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r23-5)">
+      <path class="dash" d="M300,20 v300"></path>
+      <rect class="s fy" x="45" y="60" width="54" height="30" rx="4"></rect>
+      <rect class="s fy" x="135" y="60" width="54" height="30" rx="4"></rect>
+      <rect class="s fy" x="225" y="60" width="54" height="30" rx="4"></rect>
+      <path class="s2" marker-end="url(#a23-2)" d="M101,75 h30"></path>
+      <path class="s2" marker-end="url(#a23-2)" d="M191,75 h30"></path>
+      <rect class="s fb" x="108" y="46" width="16" height="12" rx="2"></rect>
+      <rect class="s fb" x="198" y="46" width="16" height="12" rx="2"></rect>
+      <circle class="s fw" cx="390" cy="68" r="11"></circle>
+      <circle class="s fw" cx="452" cy="68" r="11"></circle>
+      <circle class="s fw" cx="420" cy="102" r="11"></circle>
+      <circle class="s fw" cx="508" cy="86" r="11"></circle>
+      <path class="s2" d="M401,68 h40 M396,78 l16,16 M446,78 l-16,16 M463,71 l34,10 M460,74 C476,86 490,94 500,95"></path>
+    </g>
+    <text x="150" y="34" text-anchor="middle" class="red">Distance-Vector</text>
+    <text x="450" y="34" text-anchor="middle" class="red">Link-State</text>
+    <text x="72" y="80" text-anchor="middle" class="sm">R1</text>
+    <text x="162" y="80" text-anchor="middle" class="sm">R2</text>
+    <text x="252" y="80" text-anchor="middle" class="sm">R3</text>
+    <text x="150" y="140" text-anchor="middle" class="sm">qo‘shniga butun jadvalni yuboradi</text>
+    <text x="150" y="170" text-anchor="middle" class="sm">muhimi: masofa (hop) + yo‘nalish</text>
+    <text x="150" y="200" text-anchor="middle" class="sm">algoritm: Bellman-Ford</text>
+    <text x="150" y="236" text-anchor="middle">+ oddiy, kam resurs</text>
+    <text x="150" y="266" text-anchor="middle">– sekin, halqa, hop 16</text>
+    <text x="150" y="302" text-anchor="middle" class="red">RIP · BGP</text>
+    <text x="450" y="140" text-anchor="middle" class="sm">faqat o‘zgarishni (LSA) tarqatadi</text>
+    <text x="450" y="170" text-anchor="middle" class="sm">LSDB → topologiya grafi</text>
+    <text x="450" y="200" text-anchor="middle" class="sm">algoritm: Dijkstra (SPF)</text>
+    <text x="450" y="236" text-anchor="middle">+ tez, halqasiz, masshtabli</text>
+    <text x="450" y="266" text-anchor="middle">– ko‘p CPU va xotira</text>
+    <text x="450" y="302" text-anchor="middle" class="red">OSPF · IS-IS</text>
+  </svg><p class="cap">6-rasm. Masofa va yo‘nalish — yoki butun topologiya grafi</p><p class="tight">BGP ham D-V, lekin <mark>inkremental yangilash</mark> qiladi — polosa tejaladi.</p><table class="rot">
+    <tbody><tr><th></th><th>D-V</th><th>Link-State</th></tr>
+    <tr><td>algoritm</td><td>Bellman-Ford</td><td>Dijkstra (SPF)</td></tr>
+    <tr><td>yangilash</td><td>RIP davriy · BGP inkremental</td><td>o‘zgarishda, inkremental</td></tr>
+  </tbody></table><svg class="sk" viewBox="0 0 600 200" role="img" aria-label="RIP metrikasi hop soni va 16 chegarasi">
+    <defs>
+      <filter id="r23-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="23" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r23-8)">
+      <rect class="s fy" x="30" y="70" width="64" height="32" rx="4"></rect>
+      <rect class="s fy" x="120" y="70" width="64" height="32" rx="4"></rect>
+      <rect class="s fy" x="210" y="70" width="64" height="32" rx="4"></rect>
+      <rect class="s fy" x="300" y="70" width="64" height="32" rx="4"></rect>
+      <rect class="s fw" x="390" y="70" width="64" height="32" rx="4"></rect>
+      <rect class="s fw" x="480" y="70" width="64" height="32" rx="4"></rect>
+      <path class="s" d="M94,86 h26 M184,86 h26 M274,86 h26 M364,86 h26 M454,86 h26"></path>
+      <path class="sr" d="M500,108 l24,24 M524,108 l-24,24"></path>
+    </g>
+    <text x="300" y="36" text-anchor="middle" class="red">RIP: metrika = hop soni</text>
+    <text x="62" y="90" text-anchor="middle" class="sm">R1</text>
+    <text x="152" y="90" text-anchor="middle" class="sm">R2</text>
+    <text x="242" y="90" text-anchor="middle" class="sm">R3</text>
+    <text x="332" y="90" text-anchor="middle" class="sm">R4</text>
+    <text x="422" y="90" text-anchor="middle" class="sm">…</text>
+    <text x="512" y="90" text-anchor="middle" class="sm">Rn</text>
+    <text x="62" y="128" text-anchor="middle" class="sm">1</text>
+    <text x="152" y="128" text-anchor="middle" class="sm">2</text>
+    <text x="242" y="128" text-anchor="middle" class="sm">3</text>
+    <text x="332" y="128" text-anchor="middle" class="sm">4</text>
+    <text x="422" y="128" text-anchor="middle" class="sm">…</text>
+    <text x="300" y="164" text-anchor="middle" class="sm">hop chegarasi 16 — undan uzog‘i yetib bo‘lmaydi</text>
+    <text x="300" y="190" text-anchor="middle" class="sm red">shuning uchun RIP faqat kichik tarmoqda</text>
+  </svg><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><p class="cap">7-rasm. D-V ning asosiy cheklovi — hop soni</p><h2>6. Baholash ko‘rsatkichlari</h2><svg class="sk" viewBox="0 0 600 210" role="img" aria-label="Marshrutlash protokollarini baholash korsatkichlari">
+    <defs>
+      <filter id="r23-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="41" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r23-6)">
+      <path class="s2" d="M25,28 h550 M25,62 h550 M25,96 h550 M25,130 h550 M25,164 h550 M25,198 h550"></path>
+      <path class="s2" d="M250,28 v170"></path>
+    </g>
+    <text x="300" y="18" text-anchor="middle" class="red">5 ko‘rsatkich</text>
+    <text x="35" y="48">to‘g‘rilik</text>
+    <text x="262" y="48" class="sm">halqa bo‘lmasin — OSPF &gt; RIP</text>
+    <text x="35" y="82">konvergensiya</text>
+    <text x="262" y="82" class="sm">OSPF/BGP RIP’dan tezroq</text>
+    <text x="35" y="116">narx</text>
+    <text x="262" y="116" class="sm">OSPF ko‘proq CPU va xotira</text>
+    <text x="35" y="150">xavfsizlik</text>
+    <text x="262" y="150" class="sm">OSPF, RIPv2 — autentifikatsiya; RIPv1 yo‘q</text>
+    <text x="35" y="184">masshtab</text>
+    <text x="262" y="184" class="sm">RIP kichik · OSPF katta · BGP butun dunyo</text>
+  </svg><p class="cap">8-rasm. Protokol tanlash — shu beshta ustundan qaraladi</p><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>Marshrutlash protokoli — hisoblaydi; marshrutlanuvchi (IP) — tashiydi</li>
+      <li>RIP — UDP 520 · OSPF — IP 89 · BGP — TCP 179</li>
+      <li>Ish tartibi: qo‘shnini topish → almashish → hisoblash → kuzatish</li>
+      <li>IGP (RIP, OSPF, IS-IS) — AS ichida; EGP (BGP) — AS’lar orasida</li>
+      <li>AS ID: 1–64511 ommaviy, 64512–65535 xususiy</li>
+      <li>D-V — Bellman-Ford; Link-State — Dijkstra, LSA va LSDB</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>OSPF protokol raqami? <span class="ans">— 89, IP ustida</span></li>
+    <li>RIP porti? <span class="ans">— UDP 520</span></li>
+    <li>BGP porti va turi? <span class="ans">— TCP 179, EGP va D-V</span></li>
+    <li>Xususiy AS raqamlari? <span class="ans">— 64512–65535</span></li>
+    <li>Link-State algoritmi? <span class="ans">— Dijkstra (SPF)</span></li>
+  </ol><div class="pg-num">— 5 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+</body>
+</html>

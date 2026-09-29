@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>27-bob · ACL asosida paket filtrlash</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">27-bob</div><h1 class="title">ACL asosida paket filtrlash
+    <small>ACL-Based Packet Filtering</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>ACL</b> — paketni tanib olish qoidalari ketma-ketligi</li>
+      <li><b>Qoida (rule)</b> — bitta shart + amal: permit yoki deny</li>
+      <li><b>Basic ACL</b> — 2000–2999 — faqat manba IP bo‘yicha tanlaydi</li>
+      <li><b>Advanced ACL</b> — 3000–3999 — manba/maqsad, protokol, port</li>
+      <li><b>Wildcard</b> — teskari maska: 0 — tekshir, 1 — tekshirma</li>
+    </ul>
+  </div><h2>1. ACL nima</h2><p class="tight"><mark>Paketni tanib olish uchun qoidalar ketma-ketligi</mark> <span class="en">(Access Control List)</span></p><p class="tight">Har qoida = bitta amal (<b>permit</b> / <b>deny</b>) + moslash belgilari.</p><svg class="sk" viewBox="0 0 600 190" role="img" aria-label="ACL qanday joylarda ishlatiladi">
+    <defs>
+      <filter id="r27-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="27" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r27-1)">
+      <ellipse class="s fy" cx="300" cy="34" rx="88" ry="24"></ellipse>
+      <rect class="s fw" x="8" y="110" width="108" height="50" rx="7"></rect>
+      <rect class="s fw" x="126" y="110" width="108" height="50" rx="7"></rect>
+      <rect class="s fw" x="244" y="110" width="108" height="50" rx="7"></rect>
+      <rect class="s fw" x="362" y="110" width="108" height="50" rx="7"></rect>
+      <rect class="s fw" x="480" y="110" width="108" height="50" rx="7"></rect>
+      <path class="s2" d="M248,50 C180,76 110,92 62,108"></path>
+      <path class="s2" d="M276,56 C242,76 202,92 180,108"></path>
+      <path class="s2" d="M300,58 v50"></path>
+      <path class="s2" d="M324,56 C358,76 398,92 420,108"></path>
+      <path class="s2" d="M352,50 C420,76 490,92 534,108"></path>
+    </g>
+    <text x="300" y="40" text-anchor="middle" class="red">ACL — trafikni aniqlaydi</text>
+    <text x="62" y="130" text-anchor="middle">paket filtri</text>
+    <text x="62" y="150" text-anchor="middle" class="sm">permit / deny</text>
+    <text x="180" y="130" text-anchor="middle">NAT</text>
+    <text x="180" y="150" text-anchor="middle" class="sm">qaysi paket</text>
+    <text x="298" y="130" text-anchor="middle">QoS</text>
+    <text x="298" y="150" text-anchor="middle" class="sm">sinflash</text>
+    <text x="416" y="130" text-anchor="middle">route policy</text>
+    <text x="416" y="150" text-anchor="middle" class="sm">marshrut filtri</text>
+    <text x="534" y="130" text-anchor="middle">dial on demand</text>
+    <text x="534" y="150" text-anchor="middle" class="sm">qo‘ng‘iroq sababi</text>
+    <text x="300" y="182" text-anchor="middle" class="sm">belgilar: manba/maqsad IP · protokol · port · MAC · VLAN</text>
+  </svg><p class="cap">1-rasm. Bitta ACL — beshta qo‘llanish</p><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>2. Interfeysda filtrlash</h2><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="Inbound va outbound filtrlash">
+    <defs>
+      <filter id="r27-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="13" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a27-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+      <marker id="a27-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r27-2)">
+      <rect class="s fw" x="180" y="70" width="240" height="100" rx="8"></rect>
+      <rect class="s fy" x="168" y="100" width="24" height="40" rx="3"></rect>
+      <rect class="s fy" x="408" y="100" width="24" height="40" rx="3"></rect>
+      <path class="s2" marker-end="url(#a27-2)" d="M40,120 h124"></path>
+      <path class="s2" marker-end="url(#a27-2)" d="M436,120 h124"></path>
+      <path class="sr" d="M104,102 v36 M113,102 v36 M122,102 v36"></path>
+      <path class="sr" d="M484,102 v36 M493,102 v36 M502,102 v36"></path>
+      <path class="sr" marker-end="url(#a27-3)" d="M113,140 v48"></path>
+      <path class="sr" marker-end="url(#a27-3)" d="M493,140 v48"></path>
+      <path class="sr" d="M104,196 l18,16 M122,196 l-18,16"></path>
+      <path class="sr" d="M484,196 l18,16 M502,196 l-18,16"></path>
+    </g>
+    <text x="300" y="60" text-anchor="middle">router: marshrutlash</text>
+    <text x="300" y="118" text-anchor="middle" class="sm">forwarding process</text>
+    <text x="300" y="142" text-anchor="middle" class="sm">marshrut jadvali bo‘yicha</text>
+    <text x="113" y="42" text-anchor="middle" class="red">inbound filtr</text>
+    <text x="493" y="42" text-anchor="middle" class="red">outbound filtr</text>
+    <text x="52" y="104" text-anchor="middle">kiruvchi</text>
+    <text x="552" y="104" text-anchor="middle">chiquvchi</text>
+    <text x="113" y="224" text-anchor="middle" class="red">drop</text>
+    <text x="493" y="224" text-anchor="middle" class="red">drop</text>
+    <text x="300" y="196" text-anchor="middle" class="sm">filtr qo‘yilmagan bo‘lsa — hammasi o‘tadi</text>
+  </svg><p class="cap">2-rasm. Har yo‘nalishga alohida ACL: inbound va outbound</p><div class="box"><span class="lbl">Yo‘nalish:</span> <b>inbound</b> — interfeysga kirgan paket, <b>outbound</b> — interfeysdan chiqayotgan paket.</div><h2>3. Qoidalarni tekshirish tartibi</h2><svg class="sk" viewBox="0 0 600 310" role="img" aria-label="Qoidalarni ketma-ket tekshirish jarayoni">
+    <defs>
+      <filter id="r27-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="5" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a27-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r27-3)">
+      <path class="s2" marker-end="url(#a27-4)" d="M60,63 h124"></path>
+      <rect class="s fw" x="190" y="46" width="170" height="34" rx="5"></rect>
+      <rect class="s fw" x="190" y="112" width="170" height="34" rx="5"></rect>
+      <rect class="s fw" x="190" y="178" width="170" height="34" rx="5"></rect>
+      <rect class="s fy" x="190" y="244" width="170" height="56" rx="7"></rect>
+      <path class="s2" marker-end="url(#a27-4)" d="M275,80 v28"></path>
+      <path class="s2" marker-end="url(#a27-4)" d="M275,146 v28"></path>
+      <path class="s2" marker-end="url(#a27-4)" d="M275,212 v28"></path>
+      <path class="s2" d="M360,63 h64 M360,129 h64 M360,195 h64 M360,272 h64"></path>
+      <path class="s2" d="M424,63 v209"></path>
+      <path class="s2" marker-end="url(#a27-4)" d="M424,168 h32"></path>
+      <rect class="s fw" x="460" y="134" width="130" height="68" rx="7"></rect>
+    </g>
+    <text x="275" y="24" text-anchor="middle" class="red">qoidalar yuqoridan pastga</text>
+    <text x="60" y="48" text-anchor="middle">paket</text>
+    <text x="275" y="68" text-anchor="middle">1-qoida</text>
+    <text x="275" y="134" text-anchor="middle">2-qoida</text>
+    <text x="275" y="200" text-anchor="middle">oxirgi qoida</text>
+    <text x="275" y="266" text-anchor="middle" class="red">default action</text>
+    <text x="275" y="288" text-anchor="middle" class="sm">permit / deny</text>
+    <text x="282" y="100" class="sm">mos emas</text>
+    <text x="282" y="166" class="sm">mos emas</text>
+    <text x="282" y="232" class="sm">mos emas</text>
+    <text x="525" y="162" text-anchor="middle" class="grn">permit → o‘tadi</text>
+    <text x="525" y="186" text-anchor="middle" class="red">deny → drop</text>
+  </svg><p class="cap">3-rasm. Birinchi mos qoida ishlaydi — qolganlari tekshirilmaydi</p><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><ul class="tight">
+    <li><b>match-order config</b> — rule ID o‘sish tartibida <span class="en">(default)</span></li>
+    <li><b>match-order auto</b> — depth-first: IP diapazoni torroq qoida oldin</li>
+    <li>Mos kelmadi → <b>default action</b>: <b>firewall default permit | deny</b></li>
+  </ul><h2>4. Wildcard mask</h2><svg class="sk" viewBox="0 0 600 225" role="img" aria-label="Wildcard mask bitlari">
+    <defs>
+      <filter id="r27-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="19" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r27-4)">
+      <rect class="s fw" x="120" y="62" width="105" height="32" rx="4"></rect>
+      <rect class="s fw" x="230" y="62" width="105" height="32" rx="4"></rect>
+      <rect class="s fw" x="340" y="62" width="105" height="32" rx="4"></rect>
+      <rect class="s fw" x="450" y="62" width="105" height="32" rx="4"></rect>
+      <rect class="s fg" x="120" y="112" width="105" height="32" rx="4"></rect>
+      <rect class="s fg" x="230" y="112" width="105" height="32" rx="4"></rect>
+      <rect class="s fg" x="340" y="112" width="105" height="32" rx="4"></rect>
+      <rect class="s fy" x="450" y="112" width="105" height="32" rx="4"></rect>
+      <path class="sg" d="M120,54 v-10 h325 v10"></path>
+      <path class="sr" d="M450,54 v-10 h105 v10"></path>
+    </g>
+    <text x="282" y="36" text-anchor="middle" class="grn">0 bit — aniq mos kelsin</text>
+    <text x="502" y="36" text-anchor="middle" class="red">1 bit — e’tiborsiz</text>
+    <text x="112" y="84" text-anchor="end">IP adres</text>
+    <text x="112" y="134" text-anchor="end">wildcard</text>
+    <text x="172" y="84" text-anchor="middle">192</text>
+    <text x="282" y="84" text-anchor="middle">168</text>
+    <text x="392" y="84" text-anchor="middle">0</text>
+    <text x="502" y="84" text-anchor="middle">1</text>
+    <text x="172" y="134" text-anchor="middle">0</text>
+    <text x="282" y="134" text-anchor="middle">0</text>
+    <text x="392" y="134" text-anchor="middle">0</text>
+    <text x="502" y="134" text-anchor="middle">255</text>
+    <text x="172" y="162" text-anchor="middle" class="sm">00000000</text>
+    <text x="282" y="162" text-anchor="middle" class="sm">00000000</text>
+    <text x="392" y="162" text-anchor="middle" class="sm">00000000</text>
+    <text x="502" y="162" text-anchor="middle" class="sm">11111111</text>
+    <text x="337" y="194" text-anchor="middle" class="red">= 192.168.0.0/24 — faqat 1-24 bit tekshiriladi</text>
+    <text x="337" y="216" text-anchor="middle" class="sm">1 bitlar ketma-ket bo‘lishi shart emas</text>
+  </svg><p class="tight">IP + wildcard = adres diapazoni:</p><table class="rot">
+    <tbody><tr><th>IP</th><th>wildcard</th><th>diapazon</th></tr>
+    <tr><td>192.168.0.1</td><td>0.0.0.255</td><td>192.168.0.0/24</td></tr>
+    <tr><td>192.168.0.1</td><td>0.0.3.255</td><td>192.168.0.0/22</td></tr>
+    <tr><td>192.168.0.1</td><td>0.255.255.255</td><td>192.0.0.0/8</td></tr>
+    <tr><td>192.168.0.1</td><td>0.0.0.0</td><td>faqat 192.168.0.1</td></tr>
+    <tr><td>192.168.0.1</td><td>255.255.255.255</td><td>0.0.0.0/0 — hammasi</td></tr>
+    <tr><td>192.168.0.1</td><td>0.0.2.255</td><td>192.168.0.0/24 + 192.168.2.0/24</td></tr>
+  </tbody></table><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>5. ACL turlari</h2><svg class="sk" viewBox="0 0 600 215" role="img" aria-label="ACL turlari va raqam diapazonlari">
+    <defs>
+      <filter id="r27-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="31" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r27-5)">
+      <rect class="s fy" x="20" y="20" width="230" height="48" rx="8"></rect>
+      <rect class="s fb" x="20" y="82" width="230" height="48" rx="8"></rect>
+      <rect class="s fg" x="20" y="144" width="230" height="48" rx="8"></rect>
+      <path class="s2" d="M250,44 h14 M250,106 h14 M250,168 h14"></path>
+    </g>
+    <text x="135" y="42" text-anchor="middle" class="red">Basic ACL</text>
+    <text x="135" y="62" text-anchor="middle">2000–2999</text>
+    <text x="135" y="104" text-anchor="middle" class="red">Advanced ACL</text>
+    <text x="135" y="124" text-anchor="middle">3000–3999</text>
+    <text x="135" y="166" text-anchor="middle" class="red">Ethernet frame</text>
+    <text x="135" y="186" text-anchor="middle">4000–4999</text>
+    <text x="270" y="48">faqat manba IP</text>
+    <text x="270" y="98">manba + maqsad IP, protokol,</text>
+    <text x="270" y="118">TCP/UDP port, L3 · L4 sarlavha</text>
+    <text x="270" y="160">manba · maqsad MAC, 802.1p,</text>
+    <text x="270" y="180">LSAP — L2 protokol turi</text>
+    <text x="300" y="208" text-anchor="middle" class="sm">raqamdan tashqari ACL ga nom ham berish mumkin</text>
+  </svg><p class="cap">4-rasm. Raqam turni belgilaydi, tur esa moslash belgilarini</p><div class="box"><span class="lbl">Sozlash:</span>
+    <ul class="dash tight">
+      <li><b>acl number 2000</b> → <b>rule permit source 10.0.0.0 0.0.0.255</b></li>
+      <li><b>acl number 3000</b> → <b>rule deny tcp source 1.1.1.0 0.0.0.255 destination 3.3.3.1 0 destination-port eq 80</b></li>
+      <li>interfeysda: <b>packet-filter 2000 inbound</b></li>
+      <li>ko‘rish: <b>display acl 2001</b> · <b>display packet-filter statistics</b></li>
+    </ul>
+  </div><h2>6. Basic va advanced — misol</h2><svg class="sk" viewBox="0 0 600 270" role="img" aria-label="Basic va advanced ACL ishlash misoli">
+    <defs>
+      <filter id="r27-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="11" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a27-6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r27-6)">
+      <rect class="s fw" x="14" y="30" width="150" height="36" rx="4"></rect>
+      <rect class="s fw" x="14" y="76" width="150" height="36" rx="4"></rect>
+      <rect class="s fy" x="240" y="26" width="26" height="90" rx="4"></rect>
+      <path class="sr" d="M168,48 h56"></path>
+      <path class="sr" d="M242,40 l16,16 M258,40 l-16,16"></path>
+      <path class="sg" marker-end="url(#a27-6)" d="M168,94 h384"></path>
+      <rect class="s fw" x="14" y="170" width="190" height="36" rx="4"></rect>
+      <rect class="s fw" x="14" y="216" width="190" height="36" rx="4"></rect>
+      <rect class="s fy" x="260" y="166" width="26" height="90" rx="4"></rect>
+      <path class="sr" d="M208,188 h54"></path>
+      <path class="sr" d="M272,180 l16,16 M288,180 l-16,16"></path>
+      <path class="sg" marker-end="url(#a27-6)" d="M208,234 h344"></path>
+    </g>
+    <text x="300" y="18" text-anchor="middle" class="red">Basic ACL — faqat manba IP</text>
+    <text x="89" y="53" text-anchor="middle" class="sm">SA=1.1.1.1 → 3.3.3.3</text>
+    <text x="89" y="99" text-anchor="middle" class="sm">SA=2.2.2.1 → 3.3.3.3</text>
+    <text x="440" y="86" text-anchor="middle" class="grn">o‘tadi</text>
+    <text x="300" y="134" text-anchor="middle" class="sm">deny 1.1.1.0 0.0.0.255 · permit 2.2.2.0 0.0.0.15</text>
+    <text x="300" y="158" text-anchor="middle" class="red">Advanced ACL — IP + protokol + port</text>
+    <text x="109" y="193" text-anchor="middle" class="sm">1.1.1.1 → 3.3.3.1 TCP 80</text>
+    <text x="109" y="239" text-anchor="middle" class="sm">1.1.1.1 → 2.2.2.1 TCP 23</text>
+    <text x="450" y="226" text-anchor="middle" class="grn">o‘tadi</text>
+    <text x="300" y="266" text-anchor="middle" class="sm">X — tashlanadi, yashil — o‘tadi</text>
+  </svg><p class="cap">5-rasm. Bir xil manba, lekin advanced ACL port va maqsadni ham ko‘radi</p><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>7. config va auto — natija boshqa</h2><svg class="sk" viewBox="0 0 600 240" role="img" aria-label="Moslash tartibi config va auto taqqoslash">
+    <defs>
+      <filter id="r27-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a27-7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r27-7)">
+      <rect class="s" x="12" y="26" width="278" height="196" rx="10"></rect>
+      <rect class="s" x="310" y="26" width="278" height="196" rx="10"></rect>
+      <rect class="s fw" x="30" y="44" width="90" height="28" rx="4"></rect>
+      <rect class="s fw" x="328" y="44" width="90" height="28" rx="4"></rect>
+      <path class="s2" marker-end="url(#a27-7)" d="M75,74 v20"></path>
+      <path class="s2" marker-end="url(#a27-7)" d="M373,74 v20"></path>
+      <rect class="s fw" x="26" y="96" width="250" height="30" rx="4"></rect>
+      <rect class="s fw" x="26" y="134" width="250" height="30" rx="4"></rect>
+      <rect class="s fw" x="324" y="96" width="250" height="30" rx="4"></rect>
+      <rect class="s fw" x="324" y="134" width="250" height="30" rx="4"></rect>
+      <rect class="sr" x="23" y="93" width="256" height="36" rx="6"></rect>
+      <rect class="sr" x="321" y="93" width="256" height="36" rx="6"></rect>
+    </g>
+    <text x="151" y="20" text-anchor="middle" class="red">match-order config</text>
+    <text x="449" y="20" text-anchor="middle" class="red">match-order auto</text>
+    <text x="75" y="62" text-anchor="middle" class="sm">SA=1.1.1.1</text>
+    <text x="373" y="62" text-anchor="middle" class="sm">SA=1.1.1.1</text>
+    <text x="151" y="116" text-anchor="middle" class="sm">1) permit 1.1.1.0 0.0.0.255</text>
+    <text x="151" y="154" text-anchor="middle" class="sm">2) deny 1.1.1.1 0</text>
+    <text x="449" y="116" text-anchor="middle" class="sm">deny 1.1.1.1 0 — eng tor</text>
+    <text x="449" y="154" text-anchor="middle" class="sm">permit 1.1.1.0 0.0.0.255</text>
+    <text x="151" y="198" text-anchor="middle" class="grn">1-qoida mos → PERMIT</text>
+    <text x="449" y="198" text-anchor="middle" class="red">tor diapazon → DENY</text>
+    <text x="300" y="236" text-anchor="middle" class="sm">bir xil ACL, boshqa tartib — boshqa natija</text>
+  </svg><p class="cap">6-rasm. Qizil ramka — birinchi tekshirilgan qoida</p><div class="box"><span class="lbl">Sozlash tartibi:</span> default action → ACL turini tanlash → qoidalarni yozish (belgi + permit/deny) → interfeysga qo‘yish va yo‘nalishni ko‘rsatish.</div><h2>8. ACL ni qaysi interfeysga qo‘yish</h2><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="ACL ni joylashtirish misoli">
+    <defs>
+      <filter id="r27-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="23" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r27-8)">
+      <rect class="s fw" x="20" y="102" width="54" height="34" rx="3"></rect>
+      <path class="s2" d="M47,136 v8 M33,144 h28"></path>
+      <rect class="s fy" x="130" y="104" width="56" height="30" rx="4"></rect>
+      <rect class="s fy" x="262" y="104" width="56" height="30" rx="4"></rect>
+      <rect class="s fy" x="394" y="104" width="56" height="30" rx="4"></rect>
+      <path class="s2" d="M74,119 h56 M186,119 h76 M318,119 h76 M450,119 h30"></path>
+      <path class="s2" d="M480,119 C490,98 494,78 498,60 M480,119 C490,140 494,160 498,178"></path>
+      <path class="s2" d="M290,134 v42"></path>
+      <rect class="s fw" x="494" y="44" width="102" height="30" rx="4"></rect>
+      <rect class="s fw" x="494" y="160" width="102" height="30" rx="4"></rect>
+      <rect class="s fw" x="246" y="176" width="88" height="28" rx="4"></rect>
+      <path class="sr" d="M100,106 v26"></path>
+      <path class="sr" d="M360,106 v26"></path>
+    </g>
+    <text x="60" y="162" text-anchor="middle" class="sm">PC A 172.16.0.1</text>
+    <text x="158" y="98" text-anchor="middle">RTA</text>
+    <text x="290" y="98" text-anchor="middle">RTB</text>
+    <text x="422" y="98" text-anchor="middle">RTC</text>
+    <text x="545" y="36" text-anchor="middle" class="red">Net A</text>
+    <text x="545" y="62" text-anchor="middle" class="sm">192.168.0.0/24</text>
+    <text x="545" y="178" text-anchor="middle" class="sm">192.168.1.0/24</text>
+    <text x="545" y="206" text-anchor="middle" class="red">Net B</text>
+    <text x="290" y="166" text-anchor="middle" class="red">Net C</text>
+    <text x="290" y="194" text-anchor="middle" class="sm">192.168.2.0/24</text>
+    <text x="108" y="58" text-anchor="middle" class="sm">RTA G0/1 inbound</text>
+    <text x="108" y="78" text-anchor="middle" class="red">basic ACL 2000</text>
+    <text x="368" y="58" text-anchor="middle" class="sm">RTC G0/0 inbound</text>
+    <text x="368" y="78" text-anchor="middle" class="red">advanced ACL 3000</text>
+    <text x="300" y="224" text-anchor="middle" class="sm">PC A → Net A va Net B yopiq, qolganlari ochiq</text>
+  </svg><p class="cap">7-rasm. Ikki yechim: RTA da basic yoki RTC da advanced</p><ul class="tight">
+    <li><b>advanced ACL</b> — manbaga imkon qadar yaqin</li>
+    <li><b>basic ACL</b> — faqat manba IP; juda yaqin qo‘yilsa kerakli trafik ham yopiladi</li>
+    <li>Cheklov: L2–L4 sarlavha. Dinamik seans — <b>ASPF</b>, foydalanuvchi — <b>802.1X / AAA</b></li>
+  </ul><div class="pg-num">— 5 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>ACL = permit/deny qoidalar ro‘yxati; birinchi mos qoida ishlaydi</li>
+      <li>Basic 2000–2999 · Advanced 3000–3999 · Ethernet frame 4000–4999</li>
+      <li>wildcard: 0 = tekshiriladi, 1 = e’tiborsiz</li>
+      <li>packet-filter inbound / outbound — har yo‘nalishga alohida</li>
+      <li>Mos kelmagan paket — default action (default: permit)</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>Advanced ACL raqami? <span class="ans">— 3000–3999</span></li>
+    <li>0.0.3.255 nechta bitni tekshiradi? <span class="ans">— birinchi 22 bit</span></li>
+    <li>auto tartibda qaysi qoida oldin? <span class="ans">— diapazoni torroq</span></li>
+    <li>Default filtering action? <span class="ans">— permit</span></li>
+  </ol><div class="pg-num">— 6 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>22-bob · To‘g‘ridan-to‘g‘ri va statik marshrutlar</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">22-bob</div><h1 class="title">To‘g‘ridan-to‘g‘ri va statik marshrutlar
+    <small>Direct Routes and Static Routes</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>To‘g‘ridan-to‘g‘ri marshrut</b> — interfeys yoqilganda o‘zi paydo bo‘ladi (direct)</li>
+      <li><b>Statik marshrut</b> — qo‘lda yoziladi, o‘zgarmaydi</li>
+      <li><b>Next hop</b> — paket keyingi qaysi qurilmaga berilishi</li>
+      <li><b>Sukut marshruti</b> — 0.0.0.0/0 — mos yo‘l topilmasa ishlatiladi</li>
+      <li><b>Preference</b> — marshrut manbasiga ishonch darajasi, statikda 60</li>
+      <li><b>Null 0</b> — paketni yo‘q qiluvchi «qora tuynuk» interfeysi</li>
+    </ul>
+  </div><h2>1. Direct marshrut</h2><p class="tight">Interfeysga IP berilsa — <mark>marshrut o‘zi paydo bo‘ladi</mark>, qo‘lda yozilmaydi.</p><ul class="tight">
+    <li><b>shart</b> — fizik va kanal sathi ikkisi ham UP</li>
+    <li><b>DOWN</b> — marshrut jadvalga qo‘yilmaydi</li>
+  </ul><svg class="sk" viewBox="0 0 600 190" role="img" aria-label="Direct marshrut qanday paydo boladi">
+    <defs>
+      <filter id="r22-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+      <marker id="a22-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+      <marker id="a22-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r22-1)">
+      <rect class="s fw" x="20" y="50" width="150" height="60" rx="8"></rect>
+      <rect class="s fy" x="225" y="50" width="150" height="60" rx="8"></rect>
+      <rect class="s fg" x="425" y="50" width="150" height="60" rx="8"></rect>
+      <path class="s2" marker-end="url(#a22-1)" d="M172,80 h44"></path>
+      <path class="s2" marker-end="url(#a22-1)" d="M382,80 h44"></path>
+      <path class="sr" marker-end="url(#a22-2)" d="M300,112 v30"></path>
+      <path class="sr" d="M283,152 l34,0"></path>
+    </g>
+    <text x="300" y="26" text-anchor="middle" class="sm">qo‘lda sozlash kerak emas</text>
+    <text x="95" y="76" text-anchor="middle">IP manzil</text>
+    <text x="95" y="98" text-anchor="middle">beriladi</text>
+    <text x="300" y="76" text-anchor="middle">fizik + kanal</text>
+    <text x="300" y="98" text-anchor="middle">sath UP</text>
+    <text x="500" y="76" text-anchor="middle">direct marshrut</text>
+    <text x="500" y="98" text-anchor="middle">jadvalda</text>
+    <text x="300" y="180" text-anchor="middle" class="red">interfeys DOWN — jadvalga tushmaydi</text>
+  </svg><p class="cap">1-rasm. Direct marshrut interfeys holatiga bog‘liq</p><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>2. LAN’lar orasida marshrutlash</h2><svg class="sk" viewBox="0 0 600 270" role="img" aria-label="Bitta router uch LAN segmentini bogladi">
+    <defs>
+      <filter id="r22-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="13" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r22-2)">
+      <rect class="s fy" x="250" y="112" width="100" height="46" rx="5"></rect>
+      <rect class="s fy" x="60" y="40" width="76" height="26" rx="3"></rect>
+      <rect class="s fy" x="60" y="204" width="76" height="26" rx="3"></rect>
+      <rect class="s fy" x="470" y="122" width="76" height="26" rx="3"></rect>
+      <path class="s2" d="M250,120 C210,110 170,80 136,55"></path>
+      <path class="s2" d="M250,150 C210,165 170,195 136,217"></path>
+      <path class="s2" d="M350,135 h120"></path>
+      <rect class="s fw" x="20" y="86" width="44" height="28" rx="3"></rect>
+      <path class="s2" d="M42,114 v10 M30,124 h24"></path>
+      <rect class="s fw" x="78" y="86" width="44" height="28" rx="3"></rect>
+      <path class="s2" d="M100,114 v10 M88,124 h24"></path>
+      <path class="s2" d="M42,86 C58,74 74,68 85,66 M100,86 C104,76 108,70 110,66"></path>
+      <rect class="s fw" x="20" y="162" width="44" height="28" rx="3"></rect>
+      <rect class="s fw" x="78" y="162" width="44" height="28" rx="3"></rect>
+      <path class="s2" d="M42,190 C58,198 74,202 85,204 M100,190 C104,196 108,200 110,204"></path>
+      <rect class="s fw" x="470" y="60" width="44" height="28" rx="3"></rect>
+      <rect class="s fw" x="528" y="60" width="44" height="28" rx="3"></rect>
+      <path class="s2" d="M492,88 C496,100 498,112 500,122 M550,88 C544,100 534,112 528,122"></path>
+    </g>
+    <text x="98" y="30" text-anchor="middle" class="sm">10.1.1.0/24</text>
+    <text x="98" y="58" text-anchor="middle">SWA</text>
+    <text x="42" y="132" text-anchor="middle" class="sm">10.1.1.2</text>
+    <text x="100" y="132" text-anchor="middle" class="sm">10.1.1.3</text>
+    <text x="200" y="80" text-anchor="middle" class="sm">E0/0</text>
+    <text x="300" y="140" text-anchor="middle" class="red">RTA</text>
+    <text x="410" y="126" text-anchor="middle" class="sm">E1/0</text>
+    <text x="508" y="140" text-anchor="middle">Hub</text>
+    <text x="492" y="50" text-anchor="middle" class="sm">10.1.2.2</text>
+    <text x="550" y="50" text-anchor="middle" class="sm">10.1.2.3</text>
+    <text x="508" y="168" text-anchor="middle" class="sm">10.1.2.0/24</text>
+    <text x="200" y="200" text-anchor="middle" class="sm">E0/1</text>
+    <text x="42" y="156" text-anchor="middle" class="sm">10.1.3.2</text>
+    <text x="100" y="156" text-anchor="middle" class="sm">10.1.3.3</text>
+    <text x="98" y="222" text-anchor="middle">SWB</text>
+    <text x="98" y="252" text-anchor="middle" class="sm">10.1.3.0/24</text>
+    <text x="300" y="262" text-anchor="middle" class="sm">har bir PC uchun gateway — RTA interfeysi</text>
+  </svg><p class="cap">2-rasm. Uch interfeys — uch segment, hammasi direct marshrut</p><h2>3. VLAN’lar orasi: qimmat yechim</h2><p class="tight">Har VLAN — o‘z IP segmenti, ya’ni routerda <mark>alohida fizik port</mark>.</p><svg class="sk" viewBox="0 0 600 240" role="img" aria-label="Har VLAN uchun alohida fizik port">
+    <defs>
+      <filter id="r22-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="3" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r22-3)">
+      <rect class="s fw" x="15" y="62" width="50" height="28" rx="3"></rect>
+      <path class="s2" d="M40,90 v8 M28,98 h24"></path>
+      <rect class="s fw" x="15" y="116" width="50" height="28" rx="3"></rect>
+      <path class="s2" d="M40,144 v8 M28,152 h24"></path>
+      <rect class="s fw" x="15" y="170" width="50" height="28" rx="3"></rect>
+      <path class="s2" d="M40,198 v8 M28,206 h24"></path>
+      <rect class="s fw" x="140" y="45" width="80" height="170" rx="6"></rect>
+      <path class="s2" d="M65,76 h75 M65,130 h75 M65,184 h75"></path>
+      <rect class="s fy" x="440" y="90" width="110" height="70" rx="6"></rect>
+      <path class="s2" d="M220,76 C300,84 380,96 440,105"></path>
+      <path class="s2" d="M220,130 C300,127 380,126 440,125"></path>
+      <path class="s2" d="M220,184 C300,170 380,155 440,145"></path>
+      <path class="s2" d="M430,105 h10 M430,125 h10 M430,145 h10"></path>
+    </g>
+    <text x="180" y="35" text-anchor="middle">Switch</text>
+    <text x="180" y="82" text-anchor="middle">VLAN 1</text>
+    <text x="180" y="136" text-anchor="middle">VLAN 2</text>
+    <text x="180" y="190" text-anchor="middle">VLAN 3</text>
+    <text x="320" y="85" text-anchor="middle" class="sm">E0/0</text>
+    <text x="320" y="122" text-anchor="middle" class="sm">E0/1</text>
+    <text x="320" y="166" text-anchor="middle" class="sm">E1/0</text>
+    <text x="495" y="80" text-anchor="middle" class="red">RTA</text>
+    <text x="300" y="228" text-anchor="middle" class="red">har VLAN uchun alohida port + kabel</text>
+  </svg><p class="cap">3-rasm. VLAN ko‘p bo‘lsa — port va kabel yetmaydi</p><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>4. Bir qo‘lli marshrutlash (802.1Q + subinterfeys)</h2><svg class="sk" viewBox="0 0 600 300" role="img" aria-label="Bitta trunk kanal va subinterfeyslar">
+    <defs>
+      <filter id="r22-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="21" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r22-4)">
+      <rect class="s fw" x="60" y="90" width="90" height="120" rx="6"></rect>
+      <rect class="s fy" x="330" y="110" width="95" height="80" rx="6"></rect>
+      <path class="s" d="M150,145 h180 M150,155 h180"></path>
+      <rect class="s fy" x="200" y="142" width="26" height="16" rx="2"></rect>
+      <rect class="s fg" x="250" y="142" width="26" height="16" rx="2"></rect>
+      <path class="s2" d="M425,130 h14 M425,152 h14 M425,174 h14"></path>
+      <rect class="s fw" x="35" y="222" width="530" height="66" rx="5"></rect>
+    </g>
+    <text x="105" y="82" text-anchor="middle">Switch</text>
+    <text x="105" y="118" text-anchor="middle" class="sm">VLAN 1</text>
+    <text x="105" y="152" text-anchor="middle" class="sm">VLAN 2</text>
+    <text x="105" y="186" text-anchor="middle" class="sm">VLAN 3</text>
+    <text x="240" y="132" text-anchor="middle" class="red">802.1Q trunk</text>
+    <text x="240" y="176" text-anchor="middle" class="sm">tag: VLAN ID</text>
+    <text x="377" y="102" text-anchor="middle" class="red">RTA</text>
+    <text x="440" y="125" class="sm">G0/0.1 → 10.1.1.1</text>
+    <text x="440" y="155" class="sm">G0/0.2 → 10.1.2.1</text>
+    <text x="440" y="185" class="sm">G0/0.3 → 10.1.3.1</text>
+    <text x="280" y="210" text-anchor="middle" class="sm">bitta fizik kanal — hamma VLAN</text>
+    <text x="50" y="242" class="sm">[RTA]interface GigabitEthernet0/0.2</text>
+    <text x="50" y="262" class="sm">[RTA-GE0/0.2]vlan-type dot1q vid 2</text>
+    <text x="50" y="282" class="sm">[RTA-GE0/0.2]ip address 10.1.2.1 255.255.255.0</text>
+  </svg><p class="cap">4-rasm. Single-arm: bitta port, uch subinterfeys</p><div class="box"><span class="lbl">Qoida:</span> trunk hamma VLAN trafigini olib yuradi —
+    keng polosali kanal tanlanadi. G0/0.1 default VLAN 1, tag qo‘yilmaydi.</div><h2>5. L3 kommutatorda VLAN’lar orasi</h2><svg class="sk" viewBox="0 0 600 270" role="img" aria-label="L3 kommutator VLAN interfeyslari">
+    <defs>
+      <filter id="r22-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="9" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a22-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r22-5)">
+      <rect class="s fy" x="120" y="45" width="360" height="140" rx="10"></rect>
+      <rect class="s fw" x="230" y="62" width="140" height="38" rx="6"></rect>
+      <rect class="s fg" x="140" y="120" width="100" height="32" rx="4"></rect>
+      <rect class="s fg" x="250" y="120" width="100" height="32" rx="4"></rect>
+      <rect class="s fg" x="360" y="120" width="100" height="32" rx="4"></rect>
+      <path class="s2" marker-end="url(#a22-3)" d="M266,100 C240,106 210,112 190,118"></path>
+      <path class="s2" marker-end="url(#a22-3)" d="M300,100 v18"></path>
+      <path class="s2" marker-end="url(#a22-3)" d="M334,100 C360,106 390,112 410,118"></path>
+      <path class="s2" d="M190,185 v23 M300,185 v23 M410,185 v23"></path>
+      <rect class="s fw" x="160" y="208" width="60" height="30" rx="3"></rect>
+      <path class="s2" d="M190,238 v8 M176,246 h28"></path>
+      <rect class="s fw" x="270" y="208" width="60" height="30" rx="3"></rect>
+      <path class="s2" d="M300,238 v8 M286,246 h28"></path>
+      <rect class="s fw" x="380" y="208" width="60" height="30" rx="3"></rect>
+      <path class="s2" d="M410,238 v8 M396,246 h28"></path>
+    </g>
+    <text x="300" y="35" text-anchor="middle" class="red">L3 kommutator</text>
+    <text x="300" y="86" text-anchor="middle" class="sm">routing engine</text>
+    <text x="190" y="141" text-anchor="middle" class="sm">Vlan-int 1</text>
+    <text x="300" y="141" text-anchor="middle" class="sm">Vlan-int 2</text>
+    <text x="410" y="141" text-anchor="middle" class="sm">Vlan-int 3</text>
+    <text x="190" y="172" text-anchor="middle" class="sm">10.1.1.1/24</text>
+    <text x="300" y="172" text-anchor="middle" class="sm">10.1.2.1/24</text>
+    <text x="410" y="172" text-anchor="middle" class="sm">10.1.3.1/24</text>
+    <text x="190" y="262" text-anchor="middle" class="sm">VLAN 1</text>
+    <text x="300" y="262" text-anchor="middle" class="sm">VLAN 2</text>
+    <text x="410" y="262" text-anchor="middle" class="sm">VLAN 3</text>
+  </svg><p class="cap">5-rasm. Har VLAN uchun VLAN-interfeys, marshrut apparatda</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><ul class="tight">
+    <li><b>VLAN-interfeys</b> — router porti kabi, IP oladi</li>
+    <li><b>apparat</b> — yuqori tezlik, katta o‘tkazuvchanlik</li>
+    <li>trunk kanalidagi kechikish va nobarqarorlik yo‘q</li>
+  </ul><h2>6. Statik marshrut buyrug‘i</h2><svg class="sk" viewBox="0 0 600 205" role="img" aria-label="ip route-static buyrugi qismlari">
+    <defs>
+      <filter id="r22-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="31" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r22-6)">
+      <rect class="s fw" x="30" y="18" width="540" height="42" rx="5"></rect>
+      <path class="s2" d="M30,75 h540 M30,105 h540 M30,135 h540 M30,165 h540 M30,195 h540"></path>
+      <path class="s2" d="M215,75 v120"></path>
+    </g>
+    <text x="45" y="45">ip route-static 10.4.0.0 24 10.3.0.2</text>
+    <text x="40" y="96">dest + mask</text>
+    <text x="228" y="96" class="sm">qayerga borish kerak</text>
+    <text x="40" y="126">next-hop</text>
+    <text x="228" y="126" class="sm">qo‘shni IP — ulangan bo‘lsin</text>
+    <text x="40" y="156">interfeys</text>
+    <text x="228" y="156" class="sm">p2p yoki null 0 uchun</text>
+    <text x="40" y="186">preference</text>
+    <text x="228" y="186" class="sm">1–255, standart 60</text>
+  </svg><p class="cap">6-rasm. Broadcast interfeysda next-hop ham ko‘rsatiladi</p><div class="box"><span class="lbl">Kamchilik:</span> statik marshrut topologiya o‘zgarishiga
+    moslashmaydi — kanal tushsa, administrator qo‘lda tuzatadi. Shuning uchun faqat
+    oddiy tarmoqlarda ishlatiladi.</div><h2>7. Misol: uchdan-uchga statik marshrut</h2><p class="tight">Paket <mark>hop-by-hop</mark> uzatiladi — har routerda hamma segment yozilishi kerak.</p><svg class="sk" viewBox="0 62 600 170" role="img" aria-label="Tort router va statik marshrutlar misoli">
+    <defs>
+      <filter id="r22-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="17" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r22-7)">
+      <rect class="s fw" x="8" y="104" width="42" height="28" rx="3"></rect>
+      <path class="s2" d="M29,132 v8 M16,140 h26"></path>
+      <rect class="s fy" x="62" y="102" width="66" height="36" rx="4"></rect>
+      <rect class="s fy" x="192" y="102" width="66" height="36" rx="4"></rect>
+      <rect class="s fy" x="322" y="102" width="66" height="36" rx="4"></rect>
+      <rect class="s fy" x="452" y="102" width="66" height="36" rx="4"></rect>
+      <rect class="s fw" x="540" y="92" width="48" height="58" rx="3"></rect>
+      <path class="s2" d="M550,106 h28 M550,120 h28 M550,134 h28"></path>
+      <path class="s" d="M50,120 h12 M128,120 h64 M258,120 h64 M388,120 h64 M518,120 h22"></path>
+    </g>
+    <text x="29" y="96" text-anchor="middle" class="sm">PC</text>
+    <text x="95" y="125" text-anchor="middle" class="red">RTA</text>
+    <text x="225" y="125" text-anchor="middle" class="red">RTB</text>
+    <text x="355" y="125" text-anchor="middle" class="red">RTC</text>
+    <text x="485" y="125" text-anchor="middle" class="red">RTD</text>
+    <text x="564" y="84" text-anchor="middle" class="sm">Server</text>
+    <text x="160" y="96" text-anchor="middle" class="sm">10.2.0.0/24</text>
+    <text x="290" y="96" text-anchor="middle" class="sm">10.3.0.0/24</text>
+    <text x="420" y="96" text-anchor="middle" class="sm">10.4.0.0/24</text>
+    <text x="40" y="164" text-anchor="middle" class="sm">10.1.0.0/24</text>
+    <text x="540" y="164" text-anchor="middle" class="sm">10.5.0.0/24</text>
+    <text x="300" y="198" text-anchor="middle" class="sm">[RTB] ip route-static 10.4.0.0 255.255.255.0 10.3.0.2</text>
+    <text x="300" y="222" text-anchor="middle" class="sm red">har bir routerda hamma segmentga marshrut</text>
+  </svg><p class="cap">7-rasm. PC va Server gaplashishi uchun 4 routerda marshrut</p><div class="box"><span class="lbl">Qoida:</span> next-hop bevosita ulangan va yetib boradigan bo‘lsin —
+    aks holda router kanal sathi manzilini olmaydi.</div><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>8. Standart marshrut</h2><svg class="sk" viewBox="0 0 600 247" role="img" aria-label="Uchta statik marshrut ornida bitta standart marshrut">
+    <defs>
+      <filter id="r22-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="5" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a22-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r22-8)">
+      <rect class="s fw" x="25" y="38" width="255" height="100" rx="5"></rect>
+      <rect class="s fg" x="345" y="56" width="235" height="58" rx="5"></rect>
+      <path class="sr" marker-end="url(#a22-4)" d="M292,86 h42"></path>
+      <rect class="s fw" x="40" y="175" width="44" height="26" rx="3"></rect>
+      <path class="s2" d="M62,201 v8 M50,209 h24"></path>
+      <rect class="s fy" x="148" y="171" width="62" height="34" rx="4"></rect>
+      <path class="s fb" d="M314,186 C306,166 334,156 348,168 C358,150 390,154 394,172
+                            C414,168 422,192 406,200 C398,214 336,216 326,206 C314,204 308,194 314,186 Z"></path>
+      <path class="s2" d="M84,188 h64 M210,188 h100"></path>
+    </g>
+    <text x="150" y="28" text-anchor="middle" class="red">3 ta statik marshrut</text>
+    <text x="38" y="60" class="sm">ip route-static 10.3.0.0 24 10.2.0.2</text>
+    <text x="38" y="84" class="sm">ip route-static 10.4.0.0 24 10.2.0.2</text>
+    <text x="38" y="108" class="sm">ip route-static 10.5.0.0 24 10.2.0.2</text>
+    <text x="460" y="40" text-anchor="middle" class="red">1 ta standart marshrut</text>
+    <text x="358" y="80" class="sm">ip route-static</text>
+    <text x="358" y="102" class="sm">0.0.0.0 0.0.0.0 10.2.0.2</text>
+    <text x="62" y="166" text-anchor="middle" class="sm">PC</text>
+    <text x="179" y="166" text-anchor="middle" class="sm">RTA</text>
+    <text x="362" y="194" text-anchor="middle" class="sm">tashqi tarmoq</text>
+    <text x="300" y="238" text-anchor="middle" class="sm">stub tarmoq — bitta chiqish</text>
+  </svg><p class="cap">8-rasm. Jadval kichrayadi, tanlash tezlashadi</p><ul class="tight">
+    <li>standart marshrutni <b>OSPF · IS-IS · RIP</b> ham hosil qila oladi</li>
+    <li>Internetdagi routerlarning deyarli hammasida default bor</li>
+  </ul><h2>9. Yuk taqsimoti va zaxira</h2><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="Ikki ISPga yuk taqsimoti va zaxira marshrut">
+    <defs>
+      <filter id="r22-9" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="11" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r22-9)">
+      <rect class="s fy" x="40" y="105" width="80" height="44" rx="5"></rect>
+      <path class="sg" d="M120,115 C250,95 330,80 392,72"></path>
+      <path class="sr dash" d="M120,140 C250,160 330,176 392,186"></path>
+      <path class="s fb" d="M396,66 C388,44 418,34 432,48 C444,28 476,32 480,52
+                            C502,48 510,74 492,84 C484,98 416,100 406,88 C392,86 388,74 396,66 Z"></path>
+      <path class="s fb" d="M396,181 C388,159 418,149 432,163 C444,143 476,147 480,167
+                            C502,163 510,189 492,199 C484,213 416,215 406,203 C392,201 388,189 396,181 Z"></path>
+    </g>
+    <text x="300" y="26" text-anchor="middle" class="red">yuk taqsimoti: bir xil preference</text>
+    <text x="80" y="131" text-anchor="middle" class="red">RTA</text>
+    <text x="240" y="86" text-anchor="middle" class="sm">S0/0</text>
+    <text x="240" y="168" text-anchor="middle" class="sm">S0/1</text>
+    <text x="300" y="110" text-anchor="middle" class="sm">preference 10</text>
+    <text x="300" y="140" text-anchor="middle" class="sm">preference 60</text>
+    <text x="450" y="72" text-anchor="middle">ISP A</text>
+    <text x="450" y="187" text-anchor="middle">ISP B</text>
+    <text x="300" y="240" text-anchor="middle" class="red">zaxira: kichik preference = asosiy yo‘l</text>
+  </svg><p class="cap">9-rasm. S0/0 tushsa — trafik S0/1 orqali ketadi</p><table class="rot">
+    <tbody><tr><th>preference</th><td>bir xil → yuk taqsimoti</td><td>turlicha → zaxira</td></tr>
+    <tr><th>standart</th><td>statik marshrut = 60</td><td>diapazon 1–255</td></tr>
+  </tbody></table><div class="pg-num">— 5 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>10. Qora tuynuk marshrut (null 0)</h2><svg class="sk" viewBox="0 0 600 235" role="img" aria-label="Qora tuynuk marshrut halqani toxtatadi">
+    <defs>
+      <filter id="r22-10" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="27" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a22-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r22-10)">
+      <rect class="s fy" x="60" y="42" width="70" height="32" rx="4"></rect>
+      <rect class="s fy" x="60" y="102" width="70" height="32" rx="4"></rect>
+      <rect class="s fy" x="60" y="162" width="70" height="32" rx="4"></rect>
+      <rect class="s fy" x="250" y="100" width="80" height="40" rx="5"></rect>
+      <rect class="s fy" x="450" y="100" width="80" height="40" rx="5"></rect>
+      <path class="s2" d="M130,58 C170,70 210,92 250,108 M130,118 C170,119 210,120 250,120
+                          M130,178 C170,166 210,144 250,132"></path>
+      <path class="s" d="M330,120 h120"></path>
+      <path class="sr" d="M188,143 l14,14 M202,143 l-14,14"></path>
+      <path class="sr" marker-end="url(#a22-5)" d="M338,104 C370,88 420,88 444,102"></path>
+      <path class="sr" marker-end="url(#a22-5)" d="M444,138 C420,152 370,152 338,136"></path>
+    </g>
+    <text x="95" y="30" text-anchor="middle" class="sm">10.0.0.0/24</text>
+    <text x="95" y="60" text-anchor="middle" class="red">RTA</text>
+    <text x="95" y="90" text-anchor="middle" class="sm">10.0.1.0/24</text>
+    <text x="95" y="120" text-anchor="middle" class="red">RTB</text>
+    <text x="95" y="150" text-anchor="middle" class="sm">10.0.2.0/24</text>
+    <text x="95" y="180" text-anchor="middle" class="red">RTC</text>
+    <text x="390" y="82" text-anchor="middle" class="red">marshrut halqasi</text>
+    <text x="290" y="124" text-anchor="middle" class="red">RTD</text>
+    <text x="490" y="124" text-anchor="middle" class="red">RTE</text>
+    <text x="290" y="166" text-anchor="middle" class="sm">default → RTE</text>
+    <text x="490" y="166" text-anchor="middle" class="sm">10.0.0.0/16 → RTD</text>
+    <text x="300" y="200" text-anchor="middle" class="sm">[RTD] ip route-static 10.0.0.0 255.255.0.0 null 0</text>
+    <text x="300" y="225" text-anchor="middle" class="sm red">paket null 0 ga tashlanadi — halqa yo‘q</text>
+  </svg><p class="cap">10-rasm. RTC kanali uzilsa, RTD paketni null 0 ga beradi</p><div class="box"><span class="lbl">Eslatma:</span> null 0 interfeysiga IP berib bo‘lmaydi.
+    Yolg‘iz o‘zi foydasiz — u umumlashtirilgan marshrut bilan birga ishlaydi.</div><h2>Xulosa</h2><svg class="sk" viewBox="0 0 600 200" role="img" aria-label="Marshrut turlari jadvali">
+    <defs>
+      <filter id="r22-11" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="41" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r22-11)">
+      <path class="s2" d="M25,22 h550 M25,55 h550 M25,88 h550 M25,121 h550 M25,154 h550 M25,187 h550"></path>
+      <path class="s2" d="M175,22 v165 M390,22 v165"></path>
+    </g>
+    <text x="35" y="41" class="red">tur</text>
+    <text x="185" y="41" class="red">qanday</text>
+    <text x="400" y="41" class="red">izoh</text>
+    <text x="35" y="74">direct</text>
+    <text x="185" y="74" class="sm">IP + UP/UP</text>
+    <text x="400" y="74" class="sm">avtomatik</text>
+    <text x="35" y="107">static</text>
+    <text x="185" y="107" class="sm">next-hop yoki p2p</text>
+    <text x="400" y="107" class="sm">pref 60</text>
+    <text x="35" y="140">default</text>
+    <text x="185" y="140" class="sm">0.0.0.0 0.0.0.0</text>
+    <text x="400" y="140" class="sm">stub tarmoq</text>
+    <text x="35" y="173">null 0</text>
+    <text x="185" y="173" class="sm">qora tuynuk</text>
+    <text x="400" y="173" class="sm">halqaga qarshi</text>
+  </svg><p class="cap">11-rasm. To‘rt xil marshrut — bitta jadvalda</p><div class="pg-num">— 6 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="box">
+    <ul class="dash tight">
+      <li>Direct — IP beriladi, ikki sath UP bo‘lsa jadvalga tushadi</li>
+      <li>VLAN’lar orasi: 3 port · 1 trunk + subinterfeys · L3 kommutator</li>
+      <li>Statik marshrut qo‘lda, topologiya o‘zgarsa o‘zi tuzatilmaydi</li>
+      <li>Next-hop bevosita ulangan bo‘lishi shart</li>
+      <li>0.0.0.0/0 — standart marshrut, stub tarmoqda</li>
+      <li>null 0 — qora tuynuk, marshrut halqasini to‘xtatadi</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>Direct marshrut sharti? <span class="ans">— fizik va kanal sathi UP</span></li>
+    <li>Single-arm nechta fizik port? <span class="ans">— 1, trunk</span></li>
+    <li>Statik marshrut standart preference? <span class="ans">— 60 (1–255)</span></li>
+    <li>Standart marshrut yozilishi? <span class="ans">— 0.0.0.0 0.0.0.0</span></li>
+    <li>null 0 nima uchun? <span class="ans">— halqaga qarshi, paket tashlanadi</span></li>
+  </ol><div class="pg-num">— 7 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+
+<!-- ================= 6-sahifa ================= -->
+
+</body>
+</html>

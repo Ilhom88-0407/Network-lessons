@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>13-bob · Qamrovchi daraxt protokollari</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">13-bob</div><h1 class="title">Qamrovchi daraxt protokollari
+    <small>Spanning Tree Protocols</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>Halqa (loop)</b> — kadr aylanib qoladi, tarmoq bo‘g‘iladi</li>
+      <li><b>STP</b> — ortiqcha kanalni bloklab halqasiz daraxt yasaydi</li>
+      <li><b>BPDU</b> — kommutatorlar almashadigan boshqaruv kadri</li>
+      <li><b>Root bridge</b> — daraxt ildizi: eng kichik bridge ID</li>
+      <li><b>Bridge ID</b> — ustuvorlik (priority) + kommutator MAC manzili</li>
+    </ul>
+  </div><h2>1. Halqa nima qiladi?</h2><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="Halqada kadr kopayishi">
+    <defs>
+      <filter id="r13-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="13" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+      <marker id="a13-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r13-1)">
+      <path class="s" d="M40,50 h520"></path>
+      <path class="s" d="M40,190 h520"></path>
+      <rect class="s fy" x="120" y="100" width="60" height="40" rx="4"></rect>
+      <rect class="s fy" x="290" y="100" width="60" height="40" rx="4"></rect>
+      <rect class="s fy" x="450" y="100" width="60" height="40" rx="4"></rect>
+      <path class="s2" d="M150,100 v-50 M150,140 v50 M320,100 v-50 M320,140 v50
+                          M480,100 v-50 M480,140 v50"></path>
+      <rect class="s fw" x="40" y="14" width="48" height="24" rx="3"></rect>
+      <path class="s2" d="M64,38 v12"></path>
+      <path class="sr" marker-end="url(#a13-1)" d="M156,56 v38"></path>
+      <path class="sr" marker-end="url(#a13-1)" d="M156,146 v38"></path>
+      <path class="sr" marker-end="url(#a13-1)" d="M326,184 v-38"></path>
+      <path class="sr" marker-end="url(#a13-1)" d="M326,94 v-38"></path>
+      <path class="sr" marker-end="url(#a13-1)" d="M486,184 v-38"></path>
+      <path class="sr" marker-end="url(#a13-1)" d="M486,94 v-38"></path>
+    </g>
+    <text x="64" y="32" text-anchor="middle" class="sm">PCA</text>
+    <text x="24" y="46" text-anchor="middle" class="sm">A</text>
+    <text x="24" y="186" text-anchor="middle" class="sm">B</text>
+    <text x="150" y="124" text-anchor="middle" class="sm">SWA</text>
+    <text x="320" y="124" text-anchor="middle" class="sm">SWB</text>
+    <text x="480" y="124" text-anchor="middle" class="sm">SWC</text>
+    <text x="300" y="218" text-anchor="middle" class="red">kadr ko‘payadi va aylanadi — broadcast bo‘roni</text>
+  </svg><p class="cap">1-rasm. Ko‘prik kadrni o‘zgartirmaydi, hop hisoblagichi yo‘q</p><ul class="tight">
+    <li>MAC jadval har safar buziladi — <mark>manzil sakraydi</mark></li>
+    <li>Har o‘tishda kadrning nusxasi ikkiga ko‘payadi</li>
+  </ul><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>2. STP nima qiladi?</h2><svg class="sk" viewBox="0 0 600 200" role="img" aria-label="STP halqani daraxtga aylantiradi">
+    <defs>
+      <filter id="r13-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="23" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r13-2)">
+      <rect class="s fy" x="250" y="16" width="80" height="34" rx="4"></rect>
+      <rect class="s fy" x="90" y="100" width="76" height="32" rx="4"></rect>
+      <rect class="s fy" x="250" y="100" width="76" height="32" rx="4"></rect>
+      <rect class="s fy" x="410" y="100" width="76" height="32" rx="4"></rect>
+      <path class="s" d="M262,50 L128,100 M290,50 v50 M318,50 L448,100"></path>
+      <path class="dash" d="M166,116 h84 M326,116 h84"></path>
+      <path class="sr" d="M200,108 l14,16 M214,108 l-14,16 M360,108 l14,16 M374,108 l-14,16"></path>
+    </g>
+    <text x="290" y="38" text-anchor="middle" class="red">Root</text>
+    <text x="128" y="121" text-anchor="middle" class="sm">SWB</text>
+    <text x="288" y="121" text-anchor="middle" class="sm">SWC</text>
+    <text x="448" y="121" text-anchor="middle" class="sm">SWD</text>
+    <text x="300" y="160" text-anchor="middle" class="red">uzuq chiziq = bloklangan zaxira yo‘l</text>
+    <text x="300" y="184" text-anchor="middle" class="sm">faol yo‘l uzilsa — zaxira ochiladi</text>
+  </svg><p class="cap">2-rasm. 802.1D halqani daraxtga kesadi</p><h2>3. BPDU</h2><svg class="sk" viewBox="0 0 600 210" role="img" aria-label="BPDU almashinuvi va maydonlari">
+    <defs>
+      <filter id="r13-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="33" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r13-3)">
+      <rect class="s fy" x="250" y="14" width="80" height="34" rx="4"></rect>
+      <rect class="s fy" x="90" y="96" width="80" height="34" rx="4"></rect>
+      <rect class="s fy" x="410" y="96" width="80" height="34" rx="4"></rect>
+      <path class="s" d="M262,48 L150,96 M318,48 L430,96 M170,113 h240"></path>
+      <rect class="s fg" x="190" y="54" width="44" height="16" rx="2"></rect>
+      <rect class="s fg" x="350" y="54" width="44" height="16" rx="2"></rect>
+      <rect class="s fg" x="278" y="105" width="44" height="16" rx="2"></rect>
+      <rect class="s fw" x="60" y="166" width="480" height="34"></rect>
+      <path class="s2" d="M180,166 v34 M300,166 v34 M420,166 v34"></path>
+    </g>
+    <text x="290" y="36" text-anchor="middle" class="sm">SWA</text>
+    <text x="130" y="118" text-anchor="middle" class="sm">SWB</text>
+    <text x="450" y="118" text-anchor="middle" class="sm">SWC</text>
+    <text x="212" y="66" text-anchor="middle" class="sm">BPDU</text>
+    <text x="372" y="66" text-anchor="middle" class="sm">BPDU</text>
+    <text x="300" y="117" text-anchor="middle" class="sm">BPDU</text>
+    <text x="300" y="156" text-anchor="middle" class="sm">802.1D · daraxt BPDU almashinuvi bilan hisoblanadi</text>
+    <text x="120" y="188" text-anchor="middle" class="sm">Root ID</text>
+    <text x="240" y="188" text-anchor="middle" class="sm">Root path cost</text>
+    <text x="360" y="188" text-anchor="middle" class="sm">Desig. bridge ID</text>
+    <text x="480" y="188" text-anchor="middle" class="sm">Desig. port ID</text>
+  </svg><ul class="tight">
+    <li><b>Root ID</b> — jo‘natuvchi root deb bilgan ko‘prik ID’si</li>
+    <li><b>Root path cost</b> — root’gacha eng arzon yo‘l narxi (root’da 0)</li>
+    <li><b>Designated bridge ID</b> — segment egasi (ustuvorlik + MAC)</li>
+    <li><b>Designated port ID</b> — port ustuvorligi + port indeksi</li>
+  </ul><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>4. Root bridge tanlash</h2><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="Root bridge saylovi">
+    <defs>
+      <filter id="r13-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="43" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r13-4)">
+      <rect class="s fy" x="250" y="36" width="100" height="40" rx="4"></rect>
+      <rect class="s fw" x="60" y="160" width="100" height="40" rx="4"></rect>
+      <rect class="s fw" x="440" y="160" width="100" height="40" rx="4"></rect>
+      <path class="s" d="M262,76 L140,160 M338,76 L460,160 M160,180 h280"></path>
+      <path class="sr" d="M282,36 l18,-14 l18,14"></path>
+    </g>
+    <text x="300" y="18" text-anchor="middle" class="sm">0.0000-0000-0000</text>
+    <text x="300" y="62" text-anchor="middle" class="red">SWA = Root</text>
+    <text x="110" y="186" text-anchor="middle">SWB</text>
+    <text x="110" y="220" text-anchor="middle" class="sm">16.0000-0000-0001</text>
+    <text x="490" y="186" text-anchor="middle">SWC</text>
+    <text x="490" y="220" text-anchor="middle" class="sm">0.0000-0000-0002</text>
+    <text x="300" y="130" text-anchor="middle" class="red">eng kichik bridge ID → Root</text>
+    <text x="300" y="244" text-anchor="middle" class="sm">ustuvorlik (standart 32768) + MAC</text>
+  </svg><p class="cap">3-rasm. Ustuvorlik teng bo‘lsa — kichik MAC g‘olib</p><div class="box">Boshida har kommutator o‘zini root deb biladi. Keyin BPDU’ni
+  <mark>faqat root</mark> hosil qiladi, qolganlar uzatadi.</div><h2>5. Port rollari</h2><svg class="sk" viewBox="0 0 600 260" role="img" aria-label="Port rollari DP RP AP">
+    <defs>
+      <filter id="r13-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="53" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r13-5)">
+      <rect class="s fy" x="250" y="20" width="100" height="40" rx="4"></rect>
+      <rect class="s fw" x="60" y="140" width="100" height="40" rx="4"></rect>
+      <rect class="s fw" x="440" y="140" width="100" height="40" rx="4"></rect>
+      <path class="s" d="M262,60 L150,140 M338,60 L452,140"></path>
+      <path class="dash" d="M160,160 h280"></path>
+      <path class="sr" d="M424,152 l14,16 M438,152 l-14,16"></path>
+    </g>
+    <text x="300" y="44" text-anchor="middle" class="red">Root (SWA)</text>
+    <text x="110" y="166" text-anchor="middle">SWB</text>
+    <text x="490" y="166" text-anchor="middle">SWC</text>
+    <text x="256" y="78" text-anchor="middle" class="grn">DP</text>
+    <text x="346" y="78" text-anchor="middle" class="grn">DP</text>
+    <text x="142" y="132" text-anchor="middle" class="red">RP</text>
+    <text x="458" y="132" text-anchor="middle" class="red">RP</text>
+    <text x="180" y="150" text-anchor="middle" class="grn">DP</text>
+    <text x="402" y="156" text-anchor="middle" class="red">AP</text>
+    <text x="232" y="104" text-anchor="middle" class="sm">cost 20</text>
+    <text x="372" y="104" text-anchor="middle" class="sm">cost 20</text>
+    <text x="300" y="182" text-anchor="middle" class="sm">cost 200</text>
+    <text x="300" y="212" text-anchor="middle" class="red">DP va RP uzatadi · AP bloklangan</text>
+    <text x="300" y="240" text-anchor="middle" class="sm">root’ning hamma portlari — DP</text>
+  </svg><ul class="tight">
+    <li>Root’da hamma port — <b>DP</b> (designated)</li>
+    <li>Har root’siz ko‘prikda eng arzon port — <b>RP</b> (root port)</li>
+    <li>Har segmentda eng arzon ko‘prik — designated bridge, uning porti — <b>DP</b></li>
+    <li>Qolgani — <b>AP</b> (alternate), data bloklanadi</li>
+  </ul><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>6. Yo‘l narxi va teng holat</h2><table class="rot">
+    <tbody><tr><th>Tezlik</th><th>10 Mbit/s</th><th>100 Mbit/s</th><th>1 Gbit/s</th><th>10 Gbit/s</th></tr>
+    <tr><th>802.1D-1998</th><td>100</td><td>19</td><td>4</td><td>2</td></tr>
+    <tr><th>H3C (standart)</th><td>2000</td><td>200</td><td>20</td><td>2</td></tr>
+  </tbody></table><svg class="sk" viewBox="0 0 600 190" role="img" aria-label="Teng narxda bridge ID hal qiladi">
+    <defs>
+      <filter id="r13-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="63" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r13-6)">
+      <rect class="s fy" x="30" y="70" width="80" height="44" rx="4"></rect>
+      <rect class="s fw" x="470" y="70" width="80" height="44" rx="4"></rect>
+      <rect class="s fw" x="240" y="16" width="90" height="40" rx="4"></rect>
+      <rect class="s fw" x="240" y="126" width="90" height="40" rx="4"></rect>
+      <path class="s" d="M110,82 L240,40 M330,36 L470,78"></path>
+      <path class="s" d="M110,104 L240,150"></path>
+      <path class="dash" d="M330,150 L470,106"></path>
+    </g>
+    <text x="70" y="97" text-anchor="middle" class="red">Root</text>
+    <text x="285" y="41" text-anchor="middle" class="sm">SWB</text>
+    <text x="285" y="151" text-anchor="middle" class="sm">SWC</text>
+    <text x="510" y="97" text-anchor="middle" class="sm">SWD</text>
+    <text x="175" y="44" text-anchor="middle" class="sm">ID 0001</text>
+    <text x="175" y="160" text-anchor="middle" class="sm">ID 0002</text>
+    <text x="410" y="48" text-anchor="middle" class="grn">RP</text>
+    <text x="410" y="148" text-anchor="middle" class="red">AP</text>
+  </svg><p class="cap">4-rasm. Narx teng → kichik bridge ID, keyin port ID</p><h2>7. Port holatlari (802.1D)</h2><svg class="sk" viewBox="0 0 600 248" role="img" aria-label="STP port holatlari jadvali">
+    <defs>
+      <filter id="r13-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="73" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r13-7)">
+      <rect class="s fg" x="20" y="190" width="560" height="44"></rect>
+      <rect class="s" x="20" y="14" width="560" height="220"></rect>
+      <path class="s2" d="M180,14 v220 M20,58 h560 M20,102 h560 M20,146 h560 M20,190 h560"></path>
+    </g>
+    <text x="100" y="41" text-anchor="middle">Disabled</text>
+    <text x="380" y="41" text-anchor="middle" class="sm">BPDU yo‘q · data yo‘q</text>
+    <text x="100" y="85" text-anchor="middle">Blocking</text>
+    <text x="380" y="85" text-anchor="middle" class="sm">BPDU faqat qabul · data yo‘q</text>
+    <text x="100" y="129" text-anchor="middle">Listening</text>
+    <text x="380" y="129" text-anchor="middle" class="sm">BPDU oladi va yuboradi · data yo‘q</text>
+    <text x="100" y="173" text-anchor="middle">Learning</text>
+    <text x="380" y="173" text-anchor="middle" class="sm">BPDU + MAC o‘rganadi · data yo‘q</text>
+    <text x="100" y="217" text-anchor="middle">Forwarding</text>
+    <text x="380" y="217" text-anchor="middle" class="sm">BPDU + MAC + data uzatadi</text>
+  </svg><ul class="tight">
+    <li><b>Listening</b> va <b>Learning</b> — oraliq holatlar</li>
+  </ul><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>8. O‘tish va forward delay</h2><svg class="sk" viewBox="0 0 600 270" role="img" aria-label="STP va RSTP holat otishlari">
+    <defs>
+      <filter id="r13-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="83" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a13-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r13-8)">
+      <rect class="s fw" x="80" y="26" width="140" height="36" rx="4"></rect>
+      <rect class="s fw" x="80" y="90" width="140" height="36" rx="4"></rect>
+      <rect class="s fw" x="80" y="154" width="140" height="36" rx="4"></rect>
+      <rect class="s fg" x="80" y="218" width="140" height="36" rx="4"></rect>
+      <path class="s2" marker-end="url(#a13-2)" d="M150,62 v22 M150,126 v22 M150,190 v22"></path>
+      <rect class="s fw" x="380" y="26" width="140" height="36" rx="4"></rect>
+      <rect class="s fw" x="380" y="122" width="140" height="36" rx="4"></rect>
+      <rect class="s fg" x="380" y="218" width="140" height="36" rx="4"></rect>
+      <path class="s2" marker-end="url(#a13-2)" d="M450,62 v54 M450,158 v54"></path>
+      <path class="dash" d="M220,44 L380,38 M220,108 L380,52 M220,172 L380,142 M220,236 h160"></path>
+    </g>
+    <text x="150" y="16" text-anchor="middle" class="red">STP — 5 holat</text>
+    <text x="450" y="16" text-anchor="middle" class="red">RSTP/MSTP — 3 holat</text>
+    <text x="150" y="49" text-anchor="middle">Blocking</text>
+    <text x="150" y="113" text-anchor="middle">Listening</text>
+    <text x="150" y="177" text-anchor="middle">Learning</text>
+    <text x="150" y="241" text-anchor="middle">Forwarding</text>
+    <text x="228" y="80" class="sm">15 s</text>
+    <text x="228" y="144" class="sm">15 s</text>
+    <text x="450" y="49" text-anchor="middle">Discarding</text>
+    <text x="450" y="145" text-anchor="middle">Learning</text>
+    <text x="450" y="241" text-anchor="middle">Forwarding</text>
+    <text x="528" y="94" class="sm">15 s</text>
+    <text x="528" y="190" class="sm">15 s</text>
+  </svg><div class="box"><span class="lbl">Qoida:</span> blocking → forwarding = <mark>2 × 15 = 30 s</mark>.
+  Taymerlar: Hello 2 s · MaxAge 20 s · FwDly 15 s.</div><p class="tight">Kamchilik: topologiya tez-tez o‘zgarsa, tarmoq doim uzilib turadi.</p><h2>9. RSTP — tez konvergensiya</h2><svg class="sk" viewBox="0 0 600 215" role="img" aria-label="RSTP tezlashtirish uchta holati">
+    <defs>
+      <filter id="r13-9" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="93" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a13-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+      <marker id="a13-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r13-9)">
+      <rect class="s" x="10" y="26" width="180" height="179" rx="10"></rect>
+      <rect class="s" x="205" y="26" width="180" height="179" rx="10"></rect>
+      <rect class="s" x="400" y="26" width="180" height="179" rx="10"></rect>
+      <rect class="s fy" x="60" y="40" width="80" height="30" rx="3"></rect>
+      <rect class="s fw" x="60" y="140" width="80" height="30" rx="3"></rect>
+      <path class="s" d="M80,70 v70"></path>
+      <path class="dash" d="M125,70 v70"></path>
+      <rect class="s fy" x="220" y="56" width="55" height="30" rx="3"></rect>
+      <rect class="s fy" x="315" y="56" width="55" height="30" rx="3"></rect>
+      <path class="s" d="M275,71 h40"></path>
+      <path class="sg" marker-end="url(#a13-3)" d="M240,106 h100"></path>
+      <path class="sr" marker-end="url(#a13-4)" d="M340,136 h-100"></path>
+      <rect class="s fy" x="425" y="56" width="60" height="30" rx="3"></rect>
+      <rect class="s fw" x="495" y="130" width="48" height="28" rx="3"></rect>
+      <path class="s2" d="M519,158 v6 M507,164 h24"></path>
+      <path class="s" d="M455,86 L510,130"></path>
+    </g>
+    <text x="100" y="16" text-anchor="middle" class="red">AP → RP</text>
+    <text x="295" y="16" text-anchor="middle" class="red">handshake</text>
+    <text x="490" y="16" text-anchor="middle" class="red">edge port</text>
+    <text x="100" y="60" text-anchor="middle" class="sm">Root</text>
+    <text x="100" y="160" text-anchor="middle" class="sm">SW</text>
+    <text x="38" y="110" text-anchor="middle" class="sm">RP</text>
+    <text x="162" y="110" text-anchor="middle" class="sm">AP</text>
+    <text x="100" y="196" text-anchor="middle" class="red">~ms</text>
+    <text x="250" y="100" class="sm">propose</text>
+    <text x="290" y="156" class="sm">agree</text>
+    <text x="295" y="196" text-anchor="middle" class="red">p2p · full-duplex</text>
+    <text x="520" y="112" class="sm">edge</text>
+    <text x="490" y="196" text-anchor="middle" class="red">kechikishsiz</text>
+  </svg><p class="cap">5-rasm. RSTP = 802.1w → 802.1D-2004</p><div class="pg-num">— 5 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>10. PVST · MSTP</h2><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="MSTP bilan yuk taqsimlash">
+    <defs>
+      <filter id="r13-10" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="103" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r13-10)">
+      <path class="dash" d="M300,10 v232"></path>
+      <rect class="s fy" x="100" y="36" width="90" height="30" rx="3"></rect>
+      <rect class="s fw" x="30" y="140" width="80" height="30" rx="3"></rect>
+      <rect class="s fw" x="170" y="140" width="80" height="30" rx="3"></rect>
+      <path class="dash" d="M110,66 L70,140"></path>
+      <path class="sr" d="M82,94 l12,14 M94,94 l-12,14"></path>
+      <path class="s" d="M175,66 L210,140 M110,155 h60"></path>
+      <rect class="s fy" x="400" y="36" width="90" height="30" rx="3"></rect>
+      <rect class="s fw" x="330" y="140" width="80" height="30" rx="3"></rect>
+      <rect class="s fw" x="470" y="140" width="80" height="30" rx="3"></rect>
+      <path class="sg" d="M410,66 L370,140"></path>
+      <path class="sr" d="M475,66 L510,140"></path>
+      <path class="s2" d="M410,155 h60"></path>
+    </g>
+    <text x="145" y="22" text-anchor="middle" class="red">STP / RSTP</text>
+    <text x="145" y="57" text-anchor="middle" class="sm">SWA</text>
+    <text x="70" y="161" text-anchor="middle" class="sm">SWB</text>
+    <text x="210" y="161" text-anchor="middle" class="sm">SWC</text>
+    <text x="145" y="200" text-anchor="middle" class="sm">1 daraxt — bitta yo‘l bo‘sh</text>
+    <text x="145" y="226" text-anchor="middle" class="sm">VLAN 10 va 20 bir yo‘ldan</text>
+    <text x="445" y="22" text-anchor="middle" class="red">MSTP</text>
+    <text x="445" y="57" text-anchor="middle" class="sm">SWA</text>
+    <text x="370" y="161" text-anchor="middle" class="sm">SWB</text>
+    <text x="510" y="161" text-anchor="middle" class="sm">SWC</text>
+    <text x="445" y="200" text-anchor="middle" class="grn">instance A: VLAN 1–10</text>
+    <text x="445" y="226" text-anchor="middle" class="red">instance B: VLAN 11–20</text>
+  </svg><table class="rot">
+    <tbody><tr><th></th><th>STP</th><th>RSTP</th><th>PVST</th><th>MSTP</th></tr>
+    <tr><td>Halqani yo‘qotish</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
+    <tr><td>Tez konvergensiya</td><td>–</td><td>+</td><td>+</td><td>+</td></tr>
+    <tr><td>Yuk taqsimlash</td><td>–</td><td>–</td><td>+</td><td>+</td></tr>
+  </tbody></table><h2>11. Sozlash</h2><ul class="tight">
+    <li><b>stp global enable</b> — standartda o‘chirilgan</li>
+    <li><b>stp mode</b> stp | rstp | pvst | mstp — standarti <mark>mstp</mark></li>
+    <li><b>stp priority</b> 0 → root · 4096 → zaxira root</li>
+    <li><b>stp edged-port</b> · <b>undo stp enable</b> (port ostida)</li>
+    <li><b>display stp</b> · <b>display stp brief</b></li>
+  </ul><svg class="sk" viewBox="0 0 600 220" role="img" aria-label="STP sozlash misoli">
+    <defs>
+      <filter id="r13-11" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="113" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r13-11)">
+      <rect class="s fy" x="90" y="40" width="100" height="36" rx="4"></rect>
+      <rect class="s fy" x="300" y="40" width="100" height="36" rx="4"></rect>
+      <path class="s" d="M190,54 h110 M190,66 h110"></path>
+      <rect class="s fy" x="190" y="145" width="100" height="36" rx="4"></rect>
+      <path class="s" d="M130,76 L210,145 M370,76 L275,145"></path>
+      <rect class="s fw" x="330" y="152" width="46" height="26" rx="3"></rect>
+      <path class="s2" d="M353,178 v6 M341,184 h24 M290,166 h40"></path>
+    </g>
+    <text x="140" y="28" text-anchor="middle" class="red">priority 0 (root)</text>
+    <text x="350" y="28" text-anchor="middle" class="red">priority 4096</text>
+    <text x="140" y="64" text-anchor="middle" class="sm">SWA</text>
+    <text x="350" y="64" text-anchor="middle" class="sm">SWB</text>
+    <text x="240" y="169" text-anchor="middle" class="sm">SWC</text>
+    <text x="353" y="169" text-anchor="middle" class="sm">PC</text>
+    <text x="398" y="134" class="sm">E1/0/1 · edged-port</text>
+    <text x="300" y="210" text-anchor="middle" class="sm">ikki parallel liniya — o‘zaro zaxira</text>
+  </svg><div class="pg-num">— 6 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>STP zaxira yo‘lni bloklab halqani yo‘qotadi (802.1D)</li>
+      <li>Eng kichik bridge ID → Root; narx teng bo‘lsa ID, keyin port ID hal qiladi</li>
+      <li>Rollar: DP · RP faol, AP bloklangan</li>
+      <li>STP 5 holat, forward delay 15 s → 30 s; RSTP 3 holat</li>
+      <li>MSTP: VLAN → instance, bir necha trunk orasida yuk taqsimlash</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>Bridge ID nimadan tuziladi? <span class="ans">— ustuvorlik + MAC</span></li>
+    <li>Forward delay va to‘liq o‘tish? <span class="ans">— 15 s va 30 s</span></li>
+    <li>RSTP holatlari? <span class="ans">— discarding, learning, forwarding</span></li>
+    <li>H3C’da 1 Gbit/s narxi? <span class="ans">— 20</span></li>
+  </ol><div class="pg-num">— 7 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+
+<!-- ================= 6-sahifa ================= -->
+
+</body>
+</html>

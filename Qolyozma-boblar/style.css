@@ -1,0 +1,176 @@
+@font-face { font-family: "HandMain"; src: local("Ink Free"), local("Inkfree"); }
+@font-face { font-family: "HandAlt"; src: local("Segoe Script"); }
+
+:root {
+  --ink: #1d3461;          /* asosiy siyoh */
+  --ink2: #2b2b2b;         /* qora ruchka */
+  --red: #b5231f;          /* qizil ruchka */
+  --green: #1f6b3a;
+  --pencil: #6b7280;
+  --line: #bcd5e8;         /* daftar chiziqlari */
+  --margin-line: #e8a0a0;
+  --paper: #fdfbf3;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #6b7280; }
+
+.page {
+  position: relative;
+  width: 8in;
+  height: 10in;
+  margin: 0 auto 18px;
+  padding: 0.55in 0.5in 0.5in 1.05in;
+  background-color: var(--paper);
+  background-image:
+    repeating-linear-gradient(transparent, transparent 25px, var(--line) 25px, var(--line) 26px);
+  background-position: 0 0.55in;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,.35);
+  font-family: "HandMain", "Ink Free", "Segoe Script", cursive;
+  color: var(--ink);
+  font-size: 19px;
+  line-height: 26px;
+}
+/* chap tomondagi qizil hoshiya va teshiklar */
+.page::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0.88in;
+  border-left: 1.5px solid var(--margin-line);
+}
+.holes { position: absolute; left: 0.3in; top: 0; height: 100%; width: 22px; }
+.holes span {
+  position: absolute; left: 0; width: 20px; height: 20px; border-radius: 50%;
+  background: #e7e2d4; box-shadow: inset 0 1px 2px rgba(0,0,0,.25);
+}
+.holes span:nth-child(1) { top: 1.3in; }
+.holes span:nth-child(2) { top: 4.6in; }
+.holes span:nth-child(3) { top: 7.9in; }
+
+.pg-num {
+  position: absolute; right: 0.5in; bottom: 0.22in;
+  font-size: 17px; color: var(--pencil); transform: rotate(-2deg);
+}
+.date-line { text-align: right; color: var(--pencil); font-size: 17px; margin: -4px 0 6px; transform: rotate(-.6deg); }
+
+/* sarlavhalar */
+h1.title {
+  font-family: "HandAlt", "Segoe Script", cursive;
+  font-size: 30px; line-height: 39px; color: var(--red);
+  margin: 6px 0 2px; text-align: center; transform: rotate(-.8deg);
+}
+h1.title small { display: block; font-size: 19px; color: var(--pencil); }
+h2 {
+  font-family: "HandAlt", "Segoe Script", cursive;
+  font-size: 22px; line-height: 30px; color: var(--red);
+  margin: 14px 0 2px; transform: rotate(-.5deg);
+}
+h3 { font-size: 19.5px; line-height: 26px; color: var(--green); margin: 12px 0 0; font-weight: normal; }
+p { margin: 0 0 6px; text-indent: 4px; }
+.t1 { transform: rotate(.25deg); }
+.t2 { transform: rotate(-.3deg); }
+.t3 { transform: rotate(.15deg); }
+
+b, strong { font-weight: normal; color: var(--red); }
+.blk { color: var(--ink2); }
+.en { color: var(--pencil); font-size: 16.5px; }
+
+ul { margin: 2px 0 8px; padding-left: 26px; list-style: none; }
+ul li { position: relative; margin-bottom: 2px; }
+ul li::before { content: "•"; position: absolute; left: -18px; color: var(--red); }
+ul.dash li::before { content: "–"; }
+ol { margin: 2px 0 8px; padding-left: 30px; }
+
+/* marker bilan chizilgan joy */
+mark {
+  background: linear-gradient(180deg, rgba(255,240,120,.85) 60%, rgba(255,230,90,.55));
+  color: inherit; padding: 0 3px; border-radius: 3px; display: inline;
+  box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+mark.g { background: linear-gradient(180deg, rgba(150,240,170,.8) 60%, rgba(130,230,150,.5)); }
+
+/* qo'lda chizilgan tag chiziq */
+.ul-hand { position: relative; display: inline-block; }
+.ul-hand::after {
+  content: ""; position: absolute; left: -2px; right: -2px; bottom: -3px; height: 6px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='6'><path d='M0,4 C20,1 40,6 60,3 C80,0 100,5 120,2' stroke='%23b5231f' stroke-width='1.6' fill='none'/></svg>") repeat-x;
+  background-size: 120px 6px;
+}
+
+/* eslatma qutisi — qo'lda chizilgan ramka */
+.box {
+  margin: 8px 0; padding: 6px 13px;
+  border: 2px solid var(--ink); border-radius: 14px 6px 16px 8px / 8px 16px 6px 14px;
+  transform: rotate(-.4deg); background: rgba(255,255,255,.35);
+}
+.box.red { border-color: var(--red); }
+.box.green { border-color: var(--green); }
+.box .lbl { color: var(--red); }
+
+/* rasm — skotch bilan yopishtirilgan */
+figure {
+  position: relative; margin: 10px auto 14px; width: fit-content; max-width: 100%;
+  background: #fff; padding: 7px 7px 4px; border: 1px solid #d8d2c0;
+  box-shadow: 0 2px 6px rgba(0,0,0,.22);
+}
+figure img { display: block; max-width: 100%; max-height: 2.45in; width: auto; height: auto; }
+figure figcaption {
+  font-size: 16px; line-height: 20px; color: var(--pencil); text-align: center;
+  padding: 3px 4px 2px;
+}
+figure.tilt-l { transform: rotate(-1.1deg); }
+figure.tilt-r { transform: rotate(1deg); }
+figure .tape {
+  position: absolute; width: 74px; height: 22px; background: rgba(238, 226, 160, .75);
+  border-left: 1px dashed rgba(0,0,0,.08); border-right: 1px dashed rgba(0,0,0,.08);
+  top: -11px;
+}
+figure .tape.l { left: -18px; transform: rotate(-24deg); }
+figure .tape.r { right: -18px; transform: rotate(22deg); }
+
+/* chekkadagi qayd */
+.margin-note {
+  position: absolute; left: 0.12in; width: 0.72in; font-size: 15px; line-height: 19px;
+  color: var(--red); text-align: right; transform: rotate(-4deg);
+}
+.arrow-doodle { color: var(--red); }
+
+/* jadval — qo'lda chizilgan */
+table { width: 100%; border-collapse: collapse; margin: 6px 0 8px; font-size: 17px; }
+table th, table td { border: 1.5px solid var(--ink); padding: 3px 7px; text-align: left; }
+table th { color: var(--red); font-weight: normal; }
+table.rot { transform: rotate(-.3deg); }
+
+.qa { margin-top: 6px; }
+.qa li { margin-bottom: 4px; }
+.ans { color: var(--green); }
+
+
+/* ---- qo'lda chizilgan sxemalar ---- */
+.sk { display: block; margin: 6px auto 2px; width: 100%; height: auto; }
+.sk text { font-family: "HandMain", "Ink Free", cursive; fill: var(--ink); font-size: 15px; }
+.sk .sm { font-size: 13px; fill: var(--pencil); }
+.sk .red { fill: var(--red); }
+.sk .grn { fill: var(--green); }
+.sk .s  { stroke: var(--ink); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.sk .s2 { stroke: var(--ink); stroke-width: 1.4; fill: none; stroke-linecap: round; }
+.sk .sr { stroke: var(--red); stroke-width: 2.2; fill: none; stroke-linecap: round; }
+.sk .sg { stroke: var(--green); stroke-width: 2.2; fill: none; stroke-linecap: round; }
+.sk .dash { stroke: var(--pencil); stroke-width: 1.4; fill: none; stroke-dasharray: 5 4; }
+.sk .fy { fill: rgba(255,238,130,.55); }
+.sk .fb { fill: rgba(160,205,245,.45); }
+.sk .fg { fill: rgba(160,235,180,.45); }
+.sk .fw { fill: #fffdf5; }
+.cap { text-align: center; font-size: 16px; line-height: 20px; color: var(--pencil); margin: 0 0 8px; }
+.two { display: flex; gap: 10px; align-items: flex-start; }
+.two > div { flex: 1; }
+.kw { color: var(--red); }
+p.tight { margin: 0 0 3px; }
+ul.tight { margin: 0 0 6px; }
+ul.tight li { margin-bottom: 0; }
+
+@media print {
+  html, body { background: #fff; }
+  .page { margin: 0; box-shadow: none; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+}
+@page { size: 8in 10in; margin: 0; }

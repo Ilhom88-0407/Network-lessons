@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>30-bob · PPP — nuqta-nuqta protokoli</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">30-bob</div><h1 class="title">PPP — nuqta-nuqta protokoli
+    <small>Point-to-Point Protocol</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>PPP</b> — nuqta-nuqta kanalda tarmoq paketlarini tashiydi</li>
+      <li><b>LCP</b> — kanalni o‘rnatadi, kelishadi va uzadi</li>
+      <li><b>NCP</b> — tarmoq qatlami protokolini sozlaydi — IPCP</li>
+      <li><b>PAP</b> — parolni ochiq matnda yuboradigan autentifikatsiya</li>
+      <li><b>CHAP</b> — challenge + hash — parol liniyada ketmaydi</li>
+    </ul>
+  </div><h2>1. PPP nima?</h2><p class="tight"><mark>Nuqta-nuqta kanalda tarmoq qatlami paketlarini tashiydi</mark> <span class="en">(SLIP o‘rniga)</span></p><ul class="tight">
+    <li><b>sinxron + asinxron</b> — ajratilgan liniya, PSTN/ISDN dial-up</li>
+    <li><b>full duplex</b>, OSI da — kanal qatlami</li>
+    <li><b>SLIP</b> faqat asinxron edi va kelishuvni bilmasdi</li>
+  </ul><svg class="sk" viewBox="0 0 600 220" role="img" aria-label="PPP ishlatiladigan kanallar">
+    <defs>
+      <filter id="r30-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="5" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r30-1)">
+      <rect class="s fy" x="60" y="52" width="88" height="42" rx="5"></rect>
+      <rect class="s fy" x="452" y="52" width="88" height="42" rx="5"></rect>
+      <path class="s2" d="M74,66 h60 M74,80 h60 M466,66 h60 M466,80 h60"></path>
+      <path class="s" d="M148,73 h304"></path>
+      <rect class="s fw" x="60" y="132" width="54" height="34" rx="3"></rect>
+      <path class="s2" d="M87,166 v8 M73,174 h28"></path>
+      <path class="s fb" d="M240,148 C232,126 268,114 284,128 C296,110 336,116 340,136 C364,132 372,160 352,170 C342,186 262,188 250,174 C234,170 232,156 240,148 Z"></path>
+      <rect class="s fw" x="470" y="118" width="56" height="74" rx="4"></rect>
+      <path class="s2" d="M480,132 h36 M480,148 h36 M480,164 h36 M480,180 h36"></path>
+      <path class="s" d="M114,150 h124 M356,150 h114"></path>
+    </g>
+    <text x="300" y="24" text-anchor="middle" class="red">1) ajratilgan liniya — sinxron yoki asinxron</text>
+    <text x="104" y="42" text-anchor="middle">RTA</text>
+    <text x="496" y="42" text-anchor="middle">RTB</text>
+    <text x="300" y="64" text-anchor="middle" class="sm">PPP</text>
+    <text x="86" y="122" text-anchor="middle" class="sm">PC</text>
+    <text x="170" y="136" text-anchor="middle" class="sm">PPP</text>
+    <text x="430" y="136" text-anchor="middle" class="sm">PPP</text>
+    <text x="296" y="154" text-anchor="middle">PSTN / ISDN</text>
+    <text x="150" y="206" text-anchor="middle" class="sm">2) dial-up: PSTN yoki ISDN</text>
+    <text x="500" y="206" text-anchor="middle" class="sm">access server</text>
+  </svg><p class="cap">1-rasm. PPP har xil WAN kanallarida ishlaydi</p><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>2. Tarkibi</h2><svg class="sk" viewBox="0 0 600 200" role="img" aria-label="PPP komponentlari">
+    <defs>
+      <filter id="r30-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="13" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r30-2)">
+      <rect class="s fw" x="100" y="26" width="400" height="34" rx="4"></rect>
+      <rect class="s fg" x="100" y="74" width="190" height="40" rx="4"></rect>
+      <rect class="s fb" x="310" y="74" width="190" height="40" rx="4"></rect>
+      <rect class="s fy" x="310" y="122" width="190" height="34" rx="4"></rect>
+      <rect class="s fw" x="100" y="164" width="400" height="30" rx="4"></rect>
+      <path class="s2" d="M195,74 v-14 M405,74 v-14 M405,122 v8 M300,164 v-8"></path>
+    </g>
+    <text x="300" y="48" text-anchor="middle">tarmoq qatlami: IP · IPX</text>
+    <text x="195" y="92" text-anchor="middle" class="red">NCP</text>
+    <text x="195" y="110" text-anchor="middle" class="sm">IPCP · IPXCP</text>
+    <text x="405" y="92" text-anchor="middle" class="red">LCP</text>
+    <text x="405" y="110" text-anchor="middle" class="sm">kanalni o‘rnatadi, uzadi</text>
+    <text x="405" y="144" text-anchor="middle">PAP / CHAP</text>
+    <text x="195" y="144" text-anchor="middle" class="sm">autentifikatsiya — ixtiyoriy</text>
+    <text x="300" y="184" text-anchor="middle" class="sm">fizik muhit: sinxron / asinxron</text>
+    <text x="50" y="48" text-anchor="middle" class="sm">tarmoq</text>
+    <text x="50" y="98" text-anchor="middle" class="sm">kanal</text>
+    <text x="50" y="184" text-anchor="middle" class="sm">fizik</text>
+  </svg><h2>3. Sessiya bosqichlari</h2><svg class="sk" viewBox="0 0 600 205" role="img" aria-label="PPP sessiyasining uch bosqichi">
+    <defs>
+      <filter id="r30-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="19" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a30-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r30-3)">
+      <rect class="s fy" x="40" y="60" width="80" height="110" rx="5"></rect>
+      <rect class="s fy" x="480" y="60" width="80" height="110" rx="5"></rect>
+      <path class="s2" d="M54,76 h52 M54,92 h52 M494,76 h52 M494,92 h52"></path>
+      <path class="s" marker-end="url(#a30-3)" d="M128,84 h344"></path>
+      <path class="s" marker-end="url(#a30-3)" d="M472,128 h-344"></path>
+      <path class="s" marker-end="url(#a30-3)" d="M128,172 h344"></path>
+    </g>
+    <text x="80" y="50" text-anchor="middle">RTA</text>
+    <text x="520" y="50" text-anchor="middle">RTB</text>
+    <text x="300" y="76" text-anchor="middle" class="red">1) LCP — kanalni o‘rnatish</text>
+    <text x="300" y="120" text-anchor="middle" class="red">2) autentifikatsiya — ixtiyoriy</text>
+    <text x="300" y="162" text-anchor="middle" class="red">3) NCP — tarmoq protokoli va manzil</text>
+    <text x="300" y="196" text-anchor="middle" class="sm">har bosqich muvaffaqiyatli bo‘lsa — keyingisi</text>
+  </svg><p class="cap">2-rasm. Uchala bosqich ketma-ket bajariladi</p><ul class="tight">
+    <li><b>LCP</b> — kanal bor-yo‘qligi, MTU, autentifikatsiya usuli</li>
+    <li><b>autentifikatsiya</b> — PAP yoki CHAP, shart emas</li>
+    <li><b>NCP</b> — IPCP orqali IP manzillar aniqlanadi</li>
+  </ul><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>4. Holatlar diagrammasi</h2><svg class="sk" viewBox="0 0 600 310" role="img" aria-label="PPP holatlari diagrammasi">
+    <defs>
+      <filter id="r30-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="23" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a30-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+      <marker id="a30-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r30-4)">
+      <ellipse class="s fw" cx="90" cy="150" rx="52" ry="26"></ellipse>
+      <ellipse class="s fb" cx="280" cy="52" rx="72" ry="26"></ellipse>
+      <ellipse class="s fy" cx="280" cy="150" rx="80" ry="26"></ellipse>
+      <ellipse class="s fg" cx="280" cy="248" rx="66" ry="26"></ellipse>
+      <ellipse class="s fw" cx="490" cy="150" rx="70" ry="26"></ellipse>
+      <path class="s" marker-end="url(#a30-4)" d="M126,130 C160,102 190,74 206,62"></path>
+      <path class="s" marker-end="url(#a30-4)" d="M280,78 v42"></path>
+      <path class="s" marker-end="url(#a30-4)" d="M280,176 v44"></path>
+      <path class="sr" marker-end="url(#a30-5)" d="M360,150 h58"></path>
+      <path class="sr" marker-end="url(#a30-5)" d="M348,44 C430,44 490,86 490,120"></path>
+      <path class="s" marker-end="url(#a30-4)" d="M344,254 C430,254 490,212 490,180"></path>
+      <path class="s" marker-end="url(#a30-4)" d="M490,176 C482,290 152,296 92,182"></path>
+    </g>
+    <text x="90" y="156" text-anchor="middle">Dead</text>
+    <text x="280" y="58" text-anchor="middle">Establish</text>
+    <text x="280" y="156" text-anchor="middle">Authenticate</text>
+    <text x="280" y="254" text-anchor="middle">Network</text>
+    <text x="490" y="156" text-anchor="middle">Terminate</text>
+    <text x="150" y="100" text-anchor="middle" class="sm">UP</text>
+    <text x="332" y="104" text-anchor="middle" class="sm">LCP Opened</text>
+    <text x="342" y="206" text-anchor="middle" class="sm">muvaffaqiyat</text>
+    <text x="398" y="138" text-anchor="middle" class="sm">Fail</text>
+    <text x="438" y="34" text-anchor="middle" class="sm">Fail</text>
+    <text x="436" y="270" text-anchor="middle" class="sm">Closing</text>
+    <text x="290" y="298" text-anchor="middle" class="sm">Down — fizik qatlam yo‘q</text>
+  </svg><div class="box"><span class="lbl">Muhim:</span> tarmoq paketlari faqat mos NCP kelishuvidan keyin o‘ta boshlaydi.</div><h2>5. PAP — ikki qadam</h2><svg class="sk" viewBox="0 0 600 215" role="img" aria-label="PAP autentifikatsiyasi">
+    <defs>
+      <filter id="r30-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="29" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a30-6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r30-5)">
+      <rect class="s fy" x="40" y="60" width="110" height="50" rx="5"></rect>
+      <rect class="s fy" x="450" y="60" width="110" height="50" rx="5"></rect>
+      <path class="s2" d="M56,76 h78 M56,94 h78 M466,76 h78 M466,94 h78"></path>
+      <path class="s" marker-end="url(#a30-6)" d="M155,90 h288"></path>
+      <path class="s" marker-end="url(#a30-6)" d="M445,140 h-288"></path>
+      <rect class="s fw" x="470" y="150" width="90" height="44" rx="4"></rect>
+      <path class="s2" d="M480,164 h70 M480,178 h70"></path>
+    </g>
+    <text x="95" y="50" text-anchor="middle">tekshiriluvchi</text>
+    <text x="505" y="50" text-anchor="middle">tekshiruvchi</text>
+    <text x="290" y="82" text-anchor="middle" class="red">1) login + parol — ochiq matnda</text>
+    <text x="290" y="132" text-anchor="middle" class="red">2) Ack / Nak</text>
+    <text x="250" y="178" text-anchor="middle" class="sm">boshlovchi — tekshiriluvchi</text>
+    <text x="515" y="208" text-anchor="middle" class="sm">local user list</text>
+  </svg><p class="cap">3-rasm. PAP — ikki qo‘l siltash</p><ul class="tight">
+    <li>parol <mark>ochiq matnda</mark> ketadi — takroriy urinishdan himoya yo‘q</li>
+    <li>xato bo‘lsa kanal darhol uzilmaydi — urinishlar chegarasidan keyin</li>
+  </ul><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><p class="tight">Tekshiruvchi login va parolni <mark>local user list</mark> dan yoki RADIUS serveridan qaraydi.</p><h2>6. CHAP — uch qadam</h2><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="CHAP autentifikatsiyasi">
+    <defs>
+      <filter id="r30-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="37" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a30-7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r30-6)">
+      <rect class="s fy" x="40" y="50" width="110" height="50" rx="5"></rect>
+      <rect class="s fy" x="450" y="50" width="110" height="50" rx="5"></rect>
+      <path class="s2" d="M56,66 h78 M56,84 h78 M466,66 h78 M466,84 h78"></path>
+      <path class="sg" marker-end="url(#a30-7)" d="M445,88 h-288"></path>
+      <path class="sg" marker-end="url(#a30-7)" d="M155,136 h288"></path>
+      <path class="sg" marker-end="url(#a30-7)" d="M445,184 h-288"></path>
+      <rect class="s fg" x="180" y="196" width="240" height="36" rx="5"></rect>
+    </g>
+    <text x="95" y="40" text-anchor="middle">tekshiriluvchi</text>
+    <text x="505" y="40" text-anchor="middle">tekshiruvchi</text>
+    <text x="300" y="80" text-anchor="middle" class="red">1) Challenge: ID + tasodifiy son</text>
+    <text x="300" y="128" text-anchor="middle" class="red">2) Response: digest + login</text>
+    <text x="300" y="176" text-anchor="middle" class="red">3) Ack / Nak</text>
+    <text x="300" y="218" text-anchor="middle">MD5 (ID + parol + tasodifiy son)</text>
+    <text x="300" y="244" text-anchor="middle" class="sm">parol liniyada umuman uzatilmaydi</text>
+  </svg><p class="cap">4-rasm. CHAP ni tekshiruvchi boshlaydi</p><div class="box"><span class="lbl">Ikkalasi ham:</span> bir tomonlama va ikki tomonlama ishlay oladi.</div><h2>7. PAP va CHAP</h2><table class="rot">
+    <tbody><tr><th></th><th>PAP</th><th>CHAP</th></tr>
+    <tr><td>Qadamlar</td><td>2</td><td>3</td></tr>
+    <tr><td>Kim boshlaydi</td><td>tekshiriluvchi</td><td>tekshiruvchi</td></tr>
+    <tr><td>Parol liniyada</td><td>ochiq matn</td><td>uzatilmaydi</td></tr>
+    <tr><td>Ikki tomonlama</td><td>bor</td><td>bor</td></tr>
+  </tbody></table><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>8. PAP ni sozlash</h2><svg class="sk" viewBox="0 0 600 210" role="img" aria-label="PAP sozlash buyruqlari">
+    <defs>
+      <filter id="r30-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="41" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r30-7)">
+      <rect class="s fy" x="100" y="34" width="90" height="40" rx="5"></rect>
+      <rect class="s fy" x="410" y="34" width="90" height="40" rx="5"></rect>
+      <path class="s2" d="M114,46 h62 M114,60 h62 M424,46 h62 M424,60 h62"></path>
+      <path class="s" d="M190,54 h220"></path>
+      <path class="s2" d="M24,112 h250 M324,112 h252"></path>
+    </g>
+    <text x="145" y="26" text-anchor="middle">RTA</text>
+    <text x="455" y="26" text-anchor="middle">RTB</text>
+    <text x="300" y="48" text-anchor="middle" class="sm">Serial 1/0</text>
+    <text x="150" y="100" text-anchor="middle" class="red">tekshiruvchi (RTA)</text>
+    <text x="450" y="100" text-anchor="middle" class="red">tekshiriluvchi (RTB)</text>
+    <text x="30" y="134" class="sm">local-user abc class network</text>
+    <text x="30" y="156" class="sm">password simple abc</text>
+    <text x="30" y="178" class="sm">service-type ppp</text>
+    <text x="30" y="200" class="sm">ppp authentication-mode pap</text>
+    <text x="330" y="134" class="sm">ppp pap local-user abc</text>
+    <text x="330" y="156" class="sm">password simple abc</text>
+  </svg><h2>9. CHAP ni sozlash</h2><svg class="sk" viewBox="0 0 600 235" role="img" aria-label="CHAP sozlash buyruqlari">
+    <defs>
+      <filter id="r30-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="43" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r30-8)">
+      <rect class="s fy" x="100" y="34" width="90" height="40" rx="5"></rect>
+      <rect class="s fy" x="410" y="34" width="90" height="40" rx="5"></rect>
+      <path class="s2" d="M114,46 h62 M114,60 h62 M424,46 h62 M424,60 h62"></path>
+      <path class="s" d="M190,54 h220"></path>
+      <path class="s2" d="M24,112 h250 M324,112 h252"></path>
+    </g>
+    <text x="145" y="26" text-anchor="middle">RTA</text>
+    <text x="455" y="26" text-anchor="middle">RTB</text>
+    <text x="300" y="48" text-anchor="middle" class="sm">Serial 1/0</text>
+    <text x="150" y="100" text-anchor="middle" class="red">tekshiruvchi (RTA)</text>
+    <text x="450" y="100" text-anchor="middle" class="red">tekshiriluvchi (RTB)</text>
+    <text x="30" y="134" class="sm">local-user abc class network</text>
+    <text x="30" y="156" class="sm">password simple abc</text>
+    <text x="30" y="178" class="sm">service-type ppp</text>
+    <text x="30" y="200" class="sm">ppp authentication-mode chap</text>
+    <text x="30" y="222" class="sm">ppp chap user 123</text>
+    <text x="330" y="134" class="sm">local-user 123 class network</text>
+    <text x="330" y="156" class="sm">password simple 123</text>
+    <text x="330" y="178" class="sm">service-type ppp</text>
+    <text x="330" y="200" class="sm">ppp chap user abc</text>
+  </svg><p class="tight">Ikkinchi yo‘l: tekshiriluvchida <b>ppp chap password</b> — interfeysning standart CHAP paroli.</p><div class="pg-num">— 5 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>10. MP — Multilink PPP</h2><svg class="sk" viewBox="0 0 600 260" role="img" aria-label="MP va uni sozlashning ikki usuli">
+    <defs>
+      <filter id="r30-9" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="47" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r30-9)">
+      <rect class="s fy" x="40" y="60" width="80" height="80" rx="5"></rect>
+      <rect class="s fy" x="240" y="60" width="80" height="80" rx="5"></rect>
+      <path class="s2" d="M54,76 h52 M54,92 h52 M254,76 h52 M254,92 h52"></path>
+      <path class="s" d="M120,85 h120 M120,115 h120"></path>
+      <ellipse class="dash" cx="180" cy="100" rx="52" ry="34"></ellipse>
+      <rect class="s fw" x="340" y="50" width="240" height="90" rx="8"></rect>
+      <rect class="s fw" x="340" y="156" width="240" height="90" rx="8"></rect>
+    </g>
+    <text x="180" y="44" text-anchor="middle" class="red">bitta mantiqiy kanal</text>
+    <text x="80" y="54" text-anchor="middle">RTA</text>
+    <text x="280" y="54" text-anchor="middle">RTB</text>
+    <text x="180" y="162" text-anchor="middle" class="sm">Serial 2/0 + Serial 2/1</text>
+    <text x="180" y="196" text-anchor="middle" class="sm">polosa · zaxira · yuk taqsimoti</text>
+    <text x="180" y="224" text-anchor="middle" class="sm">fragmentatsiya — kechikish kamayadi</text>
+    <text x="460" y="76" text-anchor="middle" class="red">1) Virtual-Template</text>
+    <text x="352" y="104" class="sm">interface virtual-template 1</text>
+    <text x="352" y="128" class="sm">ppp mp virtual-template 1</text>
+    <text x="460" y="182" text-anchor="middle" class="red">2) MP-group</text>
+    <text x="352" y="210" class="sm">interface mp-group 1</text>
+    <text x="352" y="234" class="sm">ppp mp mp-group 1</text>
+  </svg><p class="cap">5-rasm. VT — login bo‘yicha bir nechta bog‘lam; MP-group — bitta bog‘lam</p><p class="tight">Ko‘p hollarda <mark>MP-group</mark> tanlanadi — soddaroq; bog‘lamga faqat fizik interfeyslar kiradi.</p><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>PPP — nuqta-nuqta, sinxron va asinxron, full duplex</li>
+      <li>Tarkibi: LCP · NCP · PAP/CHAP</li>
+      <li>Bosqichlar: LCP → autentifikatsiya → NCP</li>
+      <li>PAP — 2 qadam, parol ochiq matnda</li>
+      <li>CHAP — 3 qadam, MD5, parol uzatilmaydi</li>
+      <li>MP — bir nechta kanal bitta mantiqiy kanalda</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>CHAP necha qadam? <span class="ans">— 3</span></li>
+    <li>IP manzilni qaysi NCP kelishadi? <span class="ans">— IPCP</span></li>
+    <li>PPP ni yoqish? <span class="ans">— link-protocol ppp</span></li>
+    <li>MP ning 2 usuli? <span class="ans">— virtual-template, MP-group</span></li>
+  </ol><div class="pg-num">— 6 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+</body>
+</html>

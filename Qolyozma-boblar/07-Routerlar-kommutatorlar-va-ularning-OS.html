@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>07-bob · Routerlar, kommutatorlar va ularning OS</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">7-bob</div><h1 class="title">Routerlar, kommutatorlar va ularning OS
+    <small>Routers, Switches and Their Operating Systems</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>Router</b> — tarmoqlar orasida paketni uzatadi (3-qatlam)</li>
+      <li><b>Kommutator</b> — MAC bo‘yicha kadr uzatadi (2-qatlam)</li>
+      <li><b>Marshrut jadvali</b> — maqsad tarmoq, next hop, interfeys</li>
+      <li><b>Comware</b> — H3C qurilmalarining operatsion tizimi</li>
+    </ul>
+  </div><h2>1. Router paketni qanday uzatadi</h2><ul class="tight">
+    <li>PCA maqsad IP ni ko‘radi → uzoq tarmoq → <b>default gateway</b> RTA</li>
+    <li>RTA marshrut jadvalidan chiquvchi interfeys va <b>next hop</b> ni topadi</li>
+    <li>RTE uchun tarmoq <b>bevosita ulangan</b> — paket PCB ga beriladi</li>
+  </ul><svg class="sk" viewBox="0 0 600 280" role="img" aria-label="Router orqali paketning yoli va marshrut jadvali">
+    <defs>
+      <filter id="r07-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+      <marker id="a07-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r07-1)">
+      <rect class="s fw" x="20" y="40" width="48" height="32" rx="3"></rect>
+      <path class="s2" d="M44,72 v8 M32,80 h24"></path>
+      <rect class="s fw" x="470" y="26" width="48" height="32" rx="3"></rect>
+      <path class="s2" d="M494,58 v8 M482,66 h24"></path>
+      <rect class="s fy" x="110" y="44" width="54" height="26" rx="4"></rect>
+      <rect class="s fy" x="230" y="30" width="54" height="26" rx="4"></rect>
+      <rect class="s fy" x="350" y="30" width="54" height="26" rx="4"></rect>
+      <rect class="s fy" x="230" y="110" width="54" height="26" rx="4"></rect>
+      <rect class="s fy" x="350" y="110" width="54" height="26" rx="4"></rect>
+      <path class="s2" d="M68,56 h42 M164,52 L230,43 M164,62 L230,120 M284,43 h66
+                          M257,56 v54 M284,123 h66 M377,110 v-54 M404,43 L470,42"></path>
+      <path class="sr" marker-end="url(#a07-1)" d="M68,52 L106,52"></path>
+      <path class="sr" marker-end="url(#a07-1)" d="M166,46 L226,38"></path>
+      <path class="sr" marker-end="url(#a07-1)" d="M286,38 h60"></path>
+      <path class="sr" marker-end="url(#a07-1)" d="M406,38 L466,37"></path>
+      <rect class="s fw" x="120" y="182" width="360" height="78"></rect>
+      <path class="s2" d="M120,208 h360 M120,234 h360 M240,182 v78 M380,182 v78"></path>
+    </g>
+    <text x="44" y="32" text-anchor="middle">PCA</text>
+    <text x="494" y="18" text-anchor="middle">PCB</text>
+    <text x="137" y="36" text-anchor="middle">RTA</text>
+    <text x="257" y="22" text-anchor="middle">RTB</text>
+    <text x="377" y="22" text-anchor="middle">RTE</text>
+    <text x="257" y="152" text-anchor="middle">RTC</text>
+    <text x="377" y="152" text-anchor="middle">RTD</text>
+    <text x="300" y="176" text-anchor="middle" class="red">RTA marshrut jadvali</text>
+    <text x="180" y="202" text-anchor="middle" class="sm">maqsad</text>
+    <text x="310" y="202" text-anchor="middle" class="sm">next hop</text>
+    <text x="430" y="202" text-anchor="middle" class="sm">interfeys</text>
+    <text x="180" y="228" text-anchor="middle" class="sm">10.2.0.0/24</text>
+    <text x="310" y="228" text-anchor="middle" class="sm">RTB</text>
+    <text x="430" y="228" text-anchor="middle" class="sm">G0/1</text>
+    <text x="180" y="254" text-anchor="middle" class="sm">0.0.0.0/0</text>
+    <text x="310" y="254" text-anchor="middle" class="sm">RTC</text>
+    <text x="430" y="254" text-anchor="middle" class="sm">G0/2</text>
+  </svg><p class="cap">1-rasm. Har router mustaqil qaror qiladi — jadval bo‘yicha keyingi hopga</p><div class="box"><span class="lbl">Yana:</span> router turli muhitni bog‘laydi, broadcastni to‘xtatadi, marshrutlarni almashib eng yaxshisini tanlaydi.</div><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>2. Router xususiyatlari</h2><ul class="tight">
+    <li>OSI <b>1 · 2 · 3</b> qatlamda ishlaydi</li>
+    <li>qaror <b>tarmoq qatlami manzili</b> (IP) bo‘yicha</li>
+    <li>turli turdagi interfeyslar</li>
+    <li>ko‘p kanal protokollari</li>
+    <li>ko‘p marshrutlash protokollari</li>
+  </ul><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="Router qatlamlari va turli muhitlar">
+    <defs>
+      <filter id="r07-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="17" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r07-2)">
+      <rect class="s fw" x="20" y="40" width="130" height="24"></rect>
+      <rect class="s fw" x="20" y="64" width="130" height="24"></rect>
+      <rect class="s fw" x="20" y="88" width="130" height="24"></rect>
+      <rect class="s fw" x="20" y="112" width="130" height="24"></rect>
+      <rect class="s fy" x="20" y="136" width="130" height="24"></rect>
+      <rect class="s fy" x="20" y="160" width="130" height="24"></rect>
+      <rect class="s fy" x="20" y="184" width="130" height="24"></rect>
+      <path class="s fb" d="M180,118 C172,100 196,90 208,100 C216,86 240,90 243,104
+                            C260,101 266,120 252,128 C246,140 194,142 186,132 C174,129 173,123 180,118 Z"></path>
+      <rect class="s fy" x="270" y="103" width="80" height="34" rx="4"></rect>
+      <path class="s2" d="M252,120 h18"></path>
+      <rect class="s fy" x="440" y="58" width="60" height="26" rx="3"></rect>
+      <rect class="s fb" x="445" y="150" width="44" height="50" rx="3"></rect>
+      <path class="s2" d="M453,162 h28 M453,174 h28 M453,186 h28"></path>
+      <path class="s2" d="M350,112 L440,72 M350,130 L445,170"></path>
+    </g>
+    <text x="85" y="32" text-anchor="middle" class="sm red">Router: 1·2·3</text>
+    <text x="85" y="57" text-anchor="middle" class="sm">Ilova</text>
+    <text x="85" y="81" text-anchor="middle" class="sm">Taqdim</text>
+    <text x="85" y="105" text-anchor="middle" class="sm">Sessiya</text>
+    <text x="85" y="129" text-anchor="middle" class="sm">Transport</text>
+    <text x="85" y="153" text-anchor="middle" class="sm">Tarmoq</text>
+    <text x="85" y="177" text-anchor="middle" class="sm">Kanal</text>
+    <text x="85" y="201" text-anchor="middle" class="sm">Fizik</text>
+    <text x="212" y="124" text-anchor="middle">WAN</text>
+    <text x="310" y="125" text-anchor="middle" class="red">ROUTER</text>
+    <text x="470" y="76" text-anchor="middle">LAN</text>
+    <text x="467" y="144" text-anchor="middle" class="sm">server</text>
+    <text x="398" y="82" text-anchor="middle" class="sm">Ethernet</text>
+    <text x="212" y="168" text-anchor="middle" class="sm">seriya / optika</text>
+    <text x="400" y="220" text-anchor="middle" class="red">turli muhitlarni bog‘laydi</text>
+  </svg><p class="cap">2-rasm. Bir uchida seriya liniya, ikkinchisida Ethernet</p><h2>3. Kommutator qanday ishlaydi</h2><svg class="sk" viewBox="0 0 600 290" role="img" aria-label="Kommutatorlar va MAC jadvali">
+    <defs>
+      <filter id="r07-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="27" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a07-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r07-3)">
+      <rect class="s fy" x="190" y="60" width="70" height="28" rx="4"></rect>
+      <rect class="s fy" x="340" y="60" width="70" height="28" rx="4"></rect>
+      <path class="s2" d="M260,74 h80"></path>
+      <rect class="s fw" x="60" y="18" width="44" height="28" rx="3"></rect>
+      <path class="s2" d="M82,46 v6 M72,52 h20"></path>
+      <rect class="s fw" x="60" y="96" width="44" height="28" rx="3"></rect>
+      <path class="s2" d="M82,124 v6 M72,130 h20"></path>
+      <rect class="s fw" x="490" y="18" width="44" height="28" rx="3"></rect>
+      <path class="s2" d="M512,46 v6 M502,52 h20"></path>
+      <rect class="s fw" x="490" y="96" width="44" height="28" rx="3"></rect>
+      <path class="s2" d="M512,124 v6 M502,130 h20"></path>
+      <path class="s2" d="M104,32 L190,66 M104,110 L190,82 M490,32 L410,66 M490,110 L410,82"></path>
+      <path class="sr" marker-end="url(#a07-3)" d="M104,108 L186,80"></path>
+      <path class="sr" marker-end="url(#a07-3)" d="M262,72 L336,72"></path>
+      <path class="sr" marker-end="url(#a07-3)" d="M412,64 L486,32"></path>
+      <rect class="s fw" x="120" y="182" width="360" height="78"></rect>
+      <path class="s2" d="M120,208 h360 M120,234 h360 M300,182 v78"></path>
+    </g>
+    <text x="225" y="80" text-anchor="middle">SWA</text>
+    <text x="375" y="80" text-anchor="middle">SWB</text>
+    <text x="82" y="14" text-anchor="middle" class="sm">PCA</text>
+    <text x="82" y="146" text-anchor="middle" class="sm">PCB</text>
+    <text x="512" y="14" text-anchor="middle" class="sm">PCC</text>
+    <text x="512" y="146" text-anchor="middle" class="sm">PCD</text>
+    <text x="300" y="176" text-anchor="middle" class="red">SWA — MAC jadvali (o‘zi o‘rganadi)</text>
+    <text x="210" y="202" text-anchor="middle" class="sm">MAC manzil</text>
+    <text x="390" y="202" text-anchor="middle" class="sm">port</text>
+    <text x="210" y="228" text-anchor="middle" class="sm">00e0-fc00-1111</text>
+    <text x="390" y="228" text-anchor="middle" class="sm">G1/0/1</text>
+    <text x="210" y="254" text-anchor="middle" class="sm">00e0-fc00-2222</text>
+    <text x="390" y="254" text-anchor="middle" class="sm">G1/0/2</text>
+    <text x="300" y="282" text-anchor="middle" class="sm">mos keldi → o‘sha port; mos kelmadi → hamma portga flood</text>
+  </svg><p class="cap">3-rasm. PCB → PCC: kadr MAC manzil bo‘yicha uzatiladi, jarayon shaffof</p><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="box"><span class="lbl">MAC jadvali:</span> yozuvlar avtomatik o‘rganiladi — kommutatorlar bir-biriga hech narsa uzatmaydi.</div><h2>4. Router va kommutator</h2><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="Router va kommutator OSI qatlamlari">
+    <defs>
+      <filter id="r07-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="37" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r07-4)">
+      <rect class="s fw" x="90" y="56" width="135" height="175"></rect>
+      <rect class="s fy" x="90" y="156" width="135" height="75"></rect>
+      <rect class="s fw" x="375" y="56" width="135" height="175"></rect>
+      <rect class="s fg" x="375" y="181" width="135" height="50"></rect>
+      <rect class="s fw" x="225" y="56" width="150" height="175"></rect>
+      <path class="s2" d="M225,81 h150 M225,106 h150 M225,131 h150 M225,156 h150 M225,181 h150 M225,206 h150"></path>
+    </g>
+    <text x="157" y="46" text-anchor="middle" class="red">Router</text>
+    <text x="442" y="46" text-anchor="middle" class="red">Kommutator</text>
+    <text x="300" y="73" text-anchor="middle" class="sm">Ilova</text>
+    <text x="300" y="98" text-anchor="middle" class="sm">Taqdim</text>
+    <text x="300" y="123" text-anchor="middle" class="sm">Sessiya</text>
+    <text x="300" y="148" text-anchor="middle" class="sm">Transport</text>
+    <text x="300" y="173" text-anchor="middle" class="sm">Tarmoq</text>
+    <text x="300" y="198" text-anchor="middle" class="sm">Kanal</text>
+    <text x="300" y="223" text-anchor="middle" class="sm">Fizik</text>
+    <text x="157" y="173" text-anchor="middle">IP manzil</text>
+    <text x="442" y="198" text-anchor="middle">MAC manzil</text>
+    <text x="300" y="246" text-anchor="middle" class="red">L3 — router · L2 — kommutator</text>
+  </svg><p class="cap">4-rasm. Kommutator 3-qatlam manzilini ham, marshrutni ham ko‘rmaydi</p><table class="rot">
+    <tbody><tr><th></th><th>Router</th><th>Kommutator</th></tr>
+    <tr><td>Manzil</td><td>IP (L3)</td><td>MAC (L2)</td></tr>
+    <tr><td>Jadval</td><td>marshrut — almashinuv</td><td>MAC — o‘z-o‘zidan</td></tr>
+    <tr><td>Muhit</td><td>har xil</td><td>faqat Ethernet</td></tr>
+  </tbody></table><h2>5. Rivojlanish trendi</h2><svg class="sk" viewBox="0 0 600 190" role="img" aria-label="Router va kommutator funksiyalarining birlashuvi">
+    <defs>
+      <filter id="r07-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="47" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a07-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r07-5)">
+      <rect class="s fy" x="40" y="50" width="110" height="40" rx="4"></rect>
+      <rect class="s fy" x="40" y="110" width="110" height="40" rx="4"></rect>
+      <path class="sg" marker-end="url(#a07-5)" d="M175,100 h80"></path>
+      <rect class="s fw" x="290" y="50" width="250" height="100" rx="6"></rect>
+      <rect class="s fy" x="310" y="68" width="100" height="30" rx="3"></rect>
+      <rect class="s fy" x="430" y="68" width="100" height="30" rx="3"></rect>
+      <rect class="s fg" x="310" y="108" width="220" height="30" rx="3"></rect>
+    </g>
+    <text x="95" y="36" text-anchor="middle" class="red">oldin</text>
+    <text x="415" y="36" text-anchor="middle" class="red">hozir</text>
+    <text x="95" y="75" text-anchor="middle">Router L3</text>
+    <text x="95" y="135" text-anchor="middle">Switch L2</text>
+    <text x="215" y="92" text-anchor="middle" class="sm grn">birlashdi</text>
+    <text x="360" y="88" text-anchor="middle" class="sm">L2 switch</text>
+    <text x="480" y="88" text-anchor="middle" class="sm">L3 marshrut</text>
+    <text x="420" y="128" text-anchor="middle" class="sm">xavfsizlik · ovoz · Wi-Fi</text>
+    <text x="300" y="176" text-anchor="middle" class="sm">funksiya va xizmatlar birlashdi</text>
+  </svg><p class="cap">5-rasm. Turkumlash: yuqori/o‘rta/quyi daraja; yadro · tarqatish · kirish</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>6. H3C qurilmalari</h2><svg class="sk" viewBox="0 0 600 255" role="img" aria-label="H3C router va kommutator oilalari">
+    <defs>
+      <filter id="r07-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="57" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r07-6)">
+      <rect class="s fy" x="90" y="40" width="60" height="28" rx="3"></rect>
+      <rect class="s fy" x="75" y="72" width="90" height="28" rx="3"></rect>
+      <rect class="s fy" x="60" y="104" width="120" height="28" rx="3"></rect>
+      <rect class="s fy" x="45" y="136" width="150" height="28" rx="3"></rect>
+      <path class="s2" d="M196,54 h10 M166,86 h40 M181,118 h25 M196,150 h10"></path>
+      <path class="dash" d="M395,26 v150"></path>
+    </g>
+    <text x="120" y="30" text-anchor="middle" class="red">H3C routerlar</text>
+    <text x="120" y="60" text-anchor="middle">CR</text>
+    <text x="120" y="92" text-anchor="middle">SR</text>
+    <text x="120" y="124" text-anchor="middle">MSR</text>
+    <text x="120" y="156" text-anchor="middle">ER</text>
+    <text x="210" y="60" class="sm">yadro · 54,42 Tbps</text>
+    <text x="210" y="92" class="sm">SR8800 · SR6600</text>
+    <text x="210" y="124" class="sm">filial · korxona</text>
+    <text x="210" y="156" class="sm">tarqatish · kirish</text>
+    <text x="480" y="30" text-anchor="middle" class="red">Kommutatorlar</text>
+    <text x="410" y="60" class="sm">yadro: S12500 · S10500</text>
+    <text x="410" y="82" class="sm">S9500E · S7500E</text>
+    <text x="410" y="110" class="sm">o‘rta va kirish:</text>
+    <text x="410" y="132" class="sm">S5830 · S5820V2 · S5500</text>
+    <text x="410" y="154" class="sm">S3600V2 · S3100V2</text>
+    <text x="300" y="200" text-anchor="middle" class="red">kursda: MSR 36 va S5820V2</text>
+    <text x="300" y="236" text-anchor="middle" class="sm">S5820V2-54QS-GE: 48 GE + 4 SFP + 2 QSFP</text>
+  </svg><p class="cap">6-rasm. CR — magistral, SR — yuqori daraja, MSR — filial, ER — kirish</p><svg class="sk" viewBox="0 0 600 220" role="img" aria-label="MSR 36-40 va S5820V2 panellari">
+    <defs>
+      <filter id="r07-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="67" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r07-7)">
+      <rect class="s fw" x="30" y="50" width="520" height="60" rx="3"></rect>
+      <rect class="s fy" x="45" y="70" width="26" height="18" rx="2"></rect>
+      <rect class="s fw" x="85" y="68" width="34" height="22" rx="2"></rect>
+      <rect class="s fw" x="140" y="62" width="90" height="36" rx="2"></rect>
+      <rect class="s fw" x="240" y="62" width="90" height="36" rx="2"></rect>
+      <rect class="s fb" x="350" y="58" width="90" height="44" rx="2"></rect>
+      <rect class="s fb" x="450" y="58" width="90" height="44" rx="2"></rect>
+      <path class="s2" d="M58,70 v-18 M102,68 v-18 M185,62 v-12 M285,62 v-12 M395,58 v-8 M495,58 v-8"></path>
+      <rect class="s fw" x="30" y="140" width="520" height="50" rx="3"></rect>
+      <rect class="s fw" x="50" y="148" width="20" height="34"></rect>
+      <rect class="s fw" x="74" y="148" width="20" height="34"></rect>
+      <rect class="s fw" x="98" y="148" width="20" height="34"></rect>
+      <rect class="s fw" x="122" y="148" width="20" height="34"></rect>
+      <rect class="s fw" x="146" y="148" width="20" height="34"></rect>
+      <rect class="s fw" x="170" y="148" width="20" height="34"></rect>
+      <rect class="s fw" x="194" y="148" width="20" height="34"></rect>
+      <rect class="s fw" x="218" y="148" width="20" height="34"></rect>
+      <rect class="s fw" x="242" y="148" width="20" height="34"></rect>
+      <rect class="s fw" x="266" y="148" width="20" height="34"></rect>
+      <rect class="s fw" x="290" y="148" width="20" height="34"></rect>
+      <rect class="s fw" x="314" y="148" width="20" height="34"></rect>
+      <path class="s2" d="M50,165 h284"></path>
+      <rect class="s fb" x="350" y="152" width="20" height="26"></rect>
+      <rect class="s fb" x="374" y="152" width="20" height="26"></rect>
+      <rect class="s fb" x="398" y="152" width="20" height="26"></rect>
+      <rect class="s fb" x="422" y="152" width="20" height="26"></rect>
+      <rect class="s fg" x="456" y="152" width="26" height="26"></rect>
+      <rect class="s fg" x="486" y="152" width="26" height="26"></rect>
+      <rect class="s fy" x="522" y="155" width="22" height="20" rx="2"></rect>
+    </g>
+    <text x="300" y="26" text-anchor="middle" class="red">MSR 36-40 — old panel</text>
+    <text x="58" y="44" text-anchor="middle" class="sm">Console</text>
+    <text x="102" y="44" text-anchor="middle" class="sm">CF</text>
+    <text x="185" y="44" text-anchor="middle" class="sm">SIC</text>
+    <text x="285" y="44" text-anchor="middle" class="sm">SIC</text>
+    <text x="395" y="44" text-anchor="middle" class="sm">HMIM</text>
+    <text x="495" y="44" text-anchor="middle" class="sm">HMIM</text>
+    <text x="300" y="132" text-anchor="middle" class="red">S5820V2-54QS-GE</text>
+    <text x="192" y="208" text-anchor="middle" class="sm">48 × 1000Base-T</text>
+    <text x="396" y="208" text-anchor="middle" class="sm">4 SFP</text>
+    <text x="482" y="208" text-anchor="middle" class="sm">2 QSFP</text>
+    <text x="533" y="208" text-anchor="middle" class="sm">Console</text>
+  </svg><p class="cap">7-rasm. Modulli slotlar: SIC va HMIM; quvvat bloki orqa panelda</p><div class="box"><span class="lbl">Nomdan o‘qiladi:</span> port soni va turi model nomida ko‘rinadi.</div><h2>7. Comware operatsion tizimi</h2><p class="tight">H3C qurilmalarining <mark>yagona tarmoq OS</mark>i; kursda <mark class="g">Comware V5</mark>.</p><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 225" role="img" aria-label="Comware modulli tuzilishi">
+    <defs>
+      <filter id="r07-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="77" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a07-8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1d3461" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r07-8)">
+      <rect class="s fg" x="60" y="30" width="480" height="32" rx="4"></rect>
+      <rect class="s fw" x="70" y="70" width="105" height="46" rx="3"></rect>
+      <rect class="s fw" x="190" y="70" width="105" height="46" rx="3"></rect>
+      <rect class="s fw" x="310" y="70" width="105" height="46" rx="3"></rect>
+      <rect class="s fw" x="430" y="70" width="105" height="46" rx="3"></rect>
+      <rect class="s fy" x="60" y="130" width="480" height="34" rx="4"></rect>
+      <rect class="s fw" x="60" y="170" width="480" height="40" rx="4"></rect>
+      <path class="s2" marker-end="url(#a07-8)" d="M182,130 v-12"></path>
+      <path class="s2" marker-end="url(#a07-8)" d="M182,70 v-6"></path>
+    </g>
+    <text x="300" y="52" text-anchor="middle" class="sm">boshqaruv: CLI · ochiq interfeyslar</text>
+    <text x="122" y="98" text-anchor="middle" class="sm">kanal qatlami</text>
+    <text x="242" y="98" text-anchor="middle" class="sm">Ethernet switch</text>
+    <text x="362" y="98" text-anchor="middle" class="sm">IP marshrut</text>
+    <text x="482" y="98" text-anchor="middle" class="sm">xavfsizlik</text>
+    <text x="300" y="152" text-anchor="middle" class="sm">yagona programma interfeysi</text>
+    <text x="300" y="195" text-anchor="middle" class="sm">apparat + drayver</text>
+  </svg><p class="cap">8-rasm. Drayver va fizik qism yuqori modullar uchun shaffof</p><ul class="tight">
+    <li>IPv4 / IPv6 <b>ikki stek</b></li>
+    <li>ko‘p yadroli ishlov</li>
+    <li>marshrutlash va kommutatsiya — bitta platforma</li>
+    <li>yuqori tayyorlik: <b>IRF</b></li>
+    <li>modulli — kengaytiriladi va sozlanadi</li>
+  </ul><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>Router — L3 IP manzil, marshrut jadvali, turli muhit</li>
+      <li>Kommutator — L2 MAC manzil, jadval o‘z-o‘zidan, shaffof</li>
+      <li>Mos yozuv yo‘q → kadr hamma portga flood qilinadi</li>
+      <li>Trend: L2 va L3 hamda xizmatlar birlashmoqda</li>
+      <li>Comware — H3C qurilmalarining yadro dasturi</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>Router qaysi OSI qatlamlarida? <span class="ans">— 1, 2, 3</span></li>
+    <li>Kommutator jadvali qanday to‘ladi? <span class="ans">— avtomatik o‘rganadi</span></li>
+    <li>CR16K kommutatsiya sig‘imi? <span class="ans">— 54,42 Tbit/s</span></li>
+    <li>MSR36 modul turlari? <span class="ans">— SIC va HMIM</span></li>
+  </ol><div class="pg-num">— 5 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+</body>
+</html>

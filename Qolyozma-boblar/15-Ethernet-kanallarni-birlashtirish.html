@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>15-bob · Ethernet kanallarni birlashtirish</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">15-bob</div><h1 class="title">Ethernet kanallarni birlashtirish
+    <small>Ethernet Link Aggregation</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>Agregatsiya</b> — bir nechta kanalni bitta mantiqiy kanal qilish</li>
+      <li><b>Azo port (member)</b> — guruhga kirgan fizik interfeys</li>
+      <li><b>Yuk taqsimoti</b> — oqimlarni azo portlar orasida bo‘lish</li>
+      <li><b>Statik rejim</b> — qo‘lda yig‘iladi, LACP paket almashmaydi</li>
+      <li><b>LACP</b> — guruhni avtomatik kelishuv protokoli (802.3ad)</li>
+    </ul>
+  </div><h2>1. Agregatsiya nima?</h2><p class="tight">Bir nechta fizik Ethernet porti — <mark>bitta mantiqiy kanal</mark>
+    <span class="en">(aggregate interface)</span>.</p><svg class="sk" viewBox="0 0 600 360" role="img" aria-label="Uchta fizik kanal bitta mantiqiy kanalga birlashadi">
+    <defs>
+      <filter id="r15-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="5" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+      <marker id="a15-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r15-1)">
+      <rect class="s fy" x="70" y="50" width="110" height="46" rx="4"></rect>
+      <rect class="s fy" x="420" y="50" width="110" height="46" rx="4"></rect>
+      <path class="s2" d="M180,62 h240 M180,74 h240 M180,86 h240"></path>
+      <path class="sr" marker-end="url(#a15-1)" d="M300,112 v38"></path>
+      <rect class="s fy" x="70" y="200" width="110" height="46" rx="4"></rect>
+      <rect class="s fy" x="420" y="200" width="110" height="46" rx="4"></rect>
+      <path class="s fb" d="M180,206 h240 v34 h-240 z"></path>
+      <path class="dash" d="M20,290 h560"></path>
+      <path class="sg" d="M96,330 v-18 M110,330 v-28 M124,330 v-38 M88,330 h44"></path>
+      <path class="sr" d="M330,308 h56 M350,300 l16,16 M366,300 l-16,16"></path>
+      <path class="sg" d="M330,330 h56"></path>
+    </g>
+    <text x="300" y="40" text-anchor="middle" class="sm">3 × 1 Gbit/s</text>
+    <text x="125" y="80" text-anchor="middle" class="red">SWA</text>
+    <text x="475" y="80" text-anchor="middle" class="red">SWB</text>
+    <text x="372" y="138" text-anchor="middle" class="red">agregatsiya</text>
+    <text x="125" y="230" text-anchor="middle" class="red">SWA</text>
+    <text x="475" y="230" text-anchor="middle" class="red">SWB</text>
+    <text x="300" y="229" text-anchor="middle">Bridge-Aggregation 1</text>
+    <text x="300" y="272" text-anchor="middle" class="red">1 mantiqiy kanal · 3 Gbit/s</text>
+    <text x="180" y="320" class="grn">polosa oshadi</text>
+    <text x="170" y="350" text-anchor="middle" class="sm">trafik portlarga taqsimlanadi</text>
+    <text x="392" y="320" class="grn">ishonchlilik</text>
+    <text x="440" y="350" text-anchor="middle" class="sm">port yiqilsa — qolganlari</text>
+  </svg><p class="cap">1-rasm. Yuqori qatlam uchun bu — bitta kanal</p><ul class="tight">
+    <li><b>a’zo port</b> — guruhga kirgan fizik port</li>
+    <li><b>aggregate interface</b> — yuqori qatlam ko‘radigan mantiqiy interfeys</li>
+  </ul><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="box"><span class="lbl">Shart:</span> a’zo portlar bir xil tezlik va rejimda bo‘ladi.</div><h2>2. Yuk taqsimoti</h2><svg class="sk" viewBox="0 0 600 280" role="img" aria-label="Oqim boyicha yuk taqsimoti">
+    <defs>
+      <filter id="r15-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="13" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r15-2)">
+      <rect class="s fw" x="20" y="40" width="50" height="32" rx="2"></rect>
+      <path class="s2" d="M45,72 v8 M32,80 h26"></path>
+      <rect class="s fw" x="20" y="150" width="50" height="32" rx="2"></rect>
+      <path class="s2" d="M45,182 v8 M32,190 h26"></path>
+      <rect class="s fy" x="130" y="90" width="90" height="46" rx="4"></rect>
+      <rect class="s fy" x="380" y="90" width="90" height="46" rx="4"></rect>
+      <path class="s2" d="M70,56 L128,100 M70,166 L128,128"></path>
+      <path class="sr" d="M220,100 C280,80 320,80 380,100"></path>
+      <path class="sg" d="M220,112 C280,122 320,122 380,112"></path>
+      <path class="s2" d="M220,124 C280,142 320,142 380,124"></path>
+      <path class="s2" d="M470,112 h40"></path>
+      <rect class="s fw" x="510" y="84" width="52" height="58" rx="3"></rect>
+      <path class="s2" d="M520,100 h32 M520,114 h32 M520,128 h32"></path>
+    </g>
+    <text x="45" y="32" text-anchor="middle" class="sm">PCA</text>
+    <text x="45" y="206" text-anchor="middle" class="sm">PCB</text>
+    <text x="175" y="118" text-anchor="middle" class="red">SWA</text>
+    <text x="425" y="118" text-anchor="middle" class="red">SWB</text>
+    <text x="300" y="74" text-anchor="middle" class="red">1-oqim (PCA)</text>
+    <text x="300" y="162" text-anchor="middle" class="grn">2-oqim (PCB)</text>
+    <text x="536" y="160" text-anchor="middle" class="sm">server</text>
+    <text x="300" y="232" text-anchor="middle" class="red">bir oqim — doim bitta port</text>
+    <text x="300" y="264" text-anchor="middle" class="sm">L2: MAC · L3: IP bo‘yicha ajratiladi</text>
+  </svg><p class="cap">2-rasm. Har xil oqim — har xil a’zo port</p><ul class="tight">
+    <li><b>oqim</b> — paket maydonlari bo‘yicha aniqlanadi</li>
+    <li>L2 — manba/qabul <b>MAC</b>; L3 — manba/qabul <b>IP</b></li>
+  </ul><h2>3. Zaxiralash</h2><svg class="sk" viewBox="0 0 600 200" role="img" aria-label="Azo port yiqilsa trafik boshqa portlarga otadi">
+    <defs>
+      <filter id="r15-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="19" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a15-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r15-3)">
+      <rect class="s fy" x="90" y="70" width="90" height="46" rx="4"></rect>
+      <rect class="s fy" x="420" y="70" width="90" height="46" rx="4"></rect>
+      <path class="s2" d="M180,80 h240 M180,104 h240"></path>
+      <path class="dash" d="M180,92 h240"></path>
+      <path class="sr" d="M288,80 l24,24 M312,80 l-24,24"></path>
+      <path class="sg" marker-end="url(#a15-2)" d="M360,92 v-9"></path>
+      <path class="sg" marker-end="url(#a15-2)" d="M380,92 v9"></path>
+    </g>
+    <text x="135" y="98" text-anchor="middle" class="red">SWA</text>
+    <text x="465" y="98" text-anchor="middle" class="red">SWB</text>
+    <text x="300" y="58" text-anchor="middle" class="red">a’zo port yiqildi</text>
+    <text x="300" y="150" text-anchor="middle" class="grn">trafik qolgan portlarga o‘tadi</text>
+    <text x="300" y="182" text-anchor="middle" class="sm">yuqori qatlam uchun uzilish sezilmaydi</text>
+  </svg><p class="cap">3-rasm. A’zo portlar bir-birini dinamik zaxiralaydi</p><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>4. Ikki usul</h2><svg class="sk" viewBox="0 0 600 400" role="img" aria-label="Statik va dinamik agregatsiya">
+    <defs>
+      <filter id="r15-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="23" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a15-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r15-4)">
+      <!-- statik -->
+      <rect class="s fy" x="80" y="70" width="100" height="46" rx="4"></rect>
+      <rect class="s fy" x="400" y="70" width="100" height="46" rx="4"></rect>
+      <path class="s2" d="M180,80 h220 M180,92 h220 M180,104 h220"></path>
+      <rect class="s fw" x="270" y="126" width="40" height="22" rx="3"></rect>
+      <path class="sr" d="M274,128 l32,18 M306,128 l-32,18"></path>
+      <path class="dash" d="M20,205 h560"></path>
+      <!-- dinamik -->
+      <rect class="s fy" x="80" y="270" width="100" height="46" rx="4"></rect>
+      <rect class="s fy" x="400" y="270" width="100" height="46" rx="4"></rect>
+      <path class="s2" d="M180,280 h220 M180,292 h220 M180,304 h220"></path>
+      <rect class="s fg" x="250" y="326" width="36" height="20" rx="3"></rect>
+      <rect class="s fg" x="320" y="326" width="36" height="20" rx="3"></rect>
+      <path class="sg" marker-end="url(#a15-3)" d="M248,336 h-38"></path>
+      <path class="sg" marker-end="url(#a15-3)" d="M358,336 h38"></path>
+    </g>
+    <text x="300" y="40" text-anchor="middle" class="red">Statik agregatsiya</text>
+    <text x="130" y="98" text-anchor="middle" class="red">SWA</text>
+    <text x="450" y="98" text-anchor="middle" class="red">SWB</text>
+    <text x="290" y="170" text-anchor="middle" class="sm">LACPDU almashinmaydi</text>
+    <text x="300" y="194" text-anchor="middle" class="sm">kichik LAN · moslik muammosi yo‘q</text>
+    <text x="300" y="242" text-anchor="middle" class="red">Dinamik agregatsiya — LACP</text>
+    <text x="130" y="298" text-anchor="middle" class="red">SWA</text>
+    <text x="450" y="298" text-anchor="middle" class="red">SWB</text>
+    <text x="303" y="320" text-anchor="middle" class="sm">LACPDU</text>
+    <text x="300" y="372" text-anchor="middle" class="sm">IEEE 802.3ad · ikki tomon holatni kelishadi</text>
+  </svg><p class="cap">4-rasm. Kelishuvsiz va kelishuvli birlashtirish</p><table class="rot">
+    <tbody><tr><th></th><th>Statik</th><th>Dinamik</th></tr>
+    <tr><td>Protokol</td><td>yo‘q</td><td>LACP (802.3ad)</td></tr>
+    <tr><td>Port holati</td><td>kelishilmaydi</td><td>kelishiladi</td></tr>
+    <tr><td>Qachon</td><td>kichik LAN</td><td>ikki tomon qo‘llasa</td></tr>
+  </tbody></table><div class="box"><span class="lbl">LACP:</span> ikki tomon <b>LACPDU</b> almashib,
+    qaysi port faol bo‘lishini kelishadi.</div><h2>5. Statik guruh yaratish</h2><ul class="tight">
+    <li>1) tizim: <b>interface bridge-aggregation</b> raqam — shu raqamli guruh ham tug‘iladi</li>
+    <li>2) har bir fizik portda: <b>port link-aggregation group</b> raqam</li>
+  </ul><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><svg class="sk" viewBox="0 0 600 430" role="img" aria-label="Statik agregatsiya sozlash misoli">
+    <defs>
+      <filter id="r15-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="29" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r15-5)">
+      <rect class="s fy" x="60" y="52" width="120" height="72" rx="4"></rect>
+      <rect class="s fy" x="420" y="52" width="120" height="72" rx="4"></rect>
+      <path class="s2" d="M180,68 h240 M180,88 h240 M180,108 h240"></path>
+      <rect class="s fw" x="30" y="170" width="250" height="150" rx="6"></rect>
+      <path class="s2" d="M30,200 h250"></path>
+      <rect class="s fw" x="320" y="170" width="250" height="150" rx="6"></rect>
+      <path class="s2" d="M320,200 h250"></path>
+    </g>
+    <text x="300" y="32" text-anchor="middle" class="red">BAGG 1 — Bridge-Aggregation 1</text>
+    <text x="120" y="94" text-anchor="middle" class="red">SWA</text>
+    <text x="480" y="94" text-anchor="middle" class="red">SWB</text>
+    <text x="207" y="62" text-anchor="middle" class="sm">E1/0/1</text>
+    <text x="207" y="82" text-anchor="middle" class="sm">E1/0/2</text>
+    <text x="207" y="102" text-anchor="middle" class="sm">E1/0/3</text>
+    <text x="393" y="62" text-anchor="middle" class="sm">E1/0/1</text>
+    <text x="393" y="82" text-anchor="middle" class="sm">E1/0/2</text>
+    <text x="393" y="102" text-anchor="middle" class="sm">E1/0/3</text>
+    <text x="155" y="192" text-anchor="middle" class="red">SWA</text>
+    <text x="445" y="192" text-anchor="middle" class="red">SWB</text>
+    <text x="44" y="226" class="sm">interface bridge-aggregation 1</text>
+    <text x="44" y="254" class="sm">interface Ethernet 1/0/1</text>
+    <text x="44" y="278" class="sm">port link-aggregation group 1</text>
+    <text x="44" y="306" class="sm">1/0/2 va 1/0/3 uchun ham shunday</text>
+    <text x="334" y="226" class="sm">interface bridge-aggregation 1</text>
+    <text x="334" y="254" class="sm">interface Ethernet 1/0/1</text>
+    <text x="334" y="278" class="sm">port link-aggregation group 1</text>
+    <text x="334" y="306" class="sm">1/0/2 va 1/0/3 uchun ham shunday</text>
+    <text x="300" y="350" text-anchor="middle" class="red">ikkala tomonda ham bir xil sozlanadi</text>
+    <text x="300" y="382" text-anchor="middle" class="sm">statik usul kichik LAN’da eng ko‘p ishlatiladi</text>
+  </svg><p class="cap">5-rasm. SWA va SWB — uchta port BAGG 1 guruhida</p><table class="rot">
+    <tbody><tr><th>Mantiqiy interfeys</th><td>Bridge-Aggregation N <span class="en">(L2)</span></td></tr>
+    <tr><th>A’zo port</th><td>port link-aggregation group N</td></tr>
+  </tbody></table><div class="box"><span class="lbl">Nega statik:</span> protokol paketlari polosani egallamaydi
+    va moslik muammosi chiqmaydi.</div><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>6. Holatni ko‘rish</h2><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="display link-aggregation summary natijasi">
+    <defs>
+      <filter id="r15-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="31" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a15-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r15-6)">
+      <rect class="s fw" x="30" y="16" width="540" height="130" rx="6"></rect>
+      <path class="s2" d="M44,66 h512 M44,102 h512 M44,142 h512"></path>
+      <path class="s2" d="M44,66 v76 M156,66 v76 M266,66 v76 M386,66 v76 M478,66 v76 M556,66 v76"></path>
+      <path class="sr" marker-end="url(#a15-4)" d="M211,148 v42"></path>
+      <path class="sr" marker-end="url(#a15-4)" d="M326,148 v58"></path>
+    </g>
+    <text x="44" y="46" class="red">display link-aggregation summary</text>
+    <text x="100" y="90" text-anchor="middle" class="sm">Interface</text>
+    <text x="211" y="90" text-anchor="middle" class="sm">Mode</text>
+    <text x="326" y="90" text-anchor="middle" class="sm">Select</text>
+    <text x="432" y="90" text-anchor="middle" class="sm">Unselect</text>
+    <text x="517" y="90" text-anchor="middle" class="sm">Share</text>
+    <text x="100" y="128" text-anchor="middle">BAGG1</text>
+    <text x="211" y="128" text-anchor="middle">S</text>
+    <text x="326" y="128" text-anchor="middle">3</text>
+    <text x="432" y="128" text-anchor="middle">0</text>
+    <text x="517" y="128" text-anchor="middle">Shar</text>
+    <text x="180" y="212" text-anchor="middle" class="red">S — statik</text>
+    <text x="400" y="230" text-anchor="middle" class="red">3 ta selected port</text>
+  </svg><p class="cap">6-rasm. BAGG 1 — statik, 3 ta faol port, yuk taqsimlanadi</p><ul class="tight">
+    <li><b>S</b> — statik, <b>D</b> — dinamik; <b>Shar</b> — yuk taqsimlanadi</li>
+    <li>faqat <b>selected</b> portlar trafik uzatadi; fizik pastdagi port — unselected</li>
+  </ul><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>Agregatsiya: bir nechta fizik port → bitta mantiqiy kanal</li>
+      <li>Foyda: polosa oshadi + a’zo portlar bir-birini zaxiralaydi</li>
+      <li>Yuk taqsimoti oqim bo‘yicha: L2 — MAC, L3 — IP</li>
+      <li>Statik — kelishuvsiz; dinamik — LACP, IEEE 802.3ad</li>
+      <li>display link-aggregation summary — holatni ko‘rsatadi</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>Agregatsiyaning 2 foydasi? <span class="ans">— polosa va ishonchlilik</span></li>
+    <li>LACP standarti? <span class="ans">— IEEE 802.3ad</span></li>
+    <li>Oqim nima bo‘yicha aniqlanadi? <span class="ans">— MAC (L2) / IP (L3)</span></li>
+    <li>Qaysi portlar trafik uzatadi? <span class="ans">— faqat selected</span></li>
+  </ol><div class="pg-num">— 5 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+</body>
+</html>

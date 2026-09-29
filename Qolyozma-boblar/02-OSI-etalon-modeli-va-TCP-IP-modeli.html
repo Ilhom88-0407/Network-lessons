@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>02-bob · OSI etalon modeli va TCP/IP modeli</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= 1-sahifa ================= -->
+<section class="page"><div class="holes"><span></span><span></span><span></span></div><div class="date-line">2-bob</div><h1 class="title">OSI etalon modeli va TCP/IP modeli
+    <small>OSI Reference Model and TCP/IP Model</small>
+  </h1><div class="box red">
+    <span class="lbl">Asosiy atamalar</span>
+    <ul class="dash tight">
+      <li><b>OSI modeli</b> — ISO ning 7 qatlamli etalon modeli (1984)</li>
+      <li><b>Qatlam</b> — aniq bir vazifani bajaradigan mustaqil bosqich</li>
+      <li><b>PDU</b> — qatlamning ma’lumot birligi: segment · paket · kadr · bit</li>
+      <li><b>Sarlavha (header)</b> — qatlam qo‘shgan xizmat maydonlari</li>
+      <li><b>Enkapsulyatsiya</b> — har qatlam o‘z sarlavhasini qo‘shishi</li>
+      <li><b>TCP/IP modeli</b> — amalda ishlatiladigan 4 qatlamli model</li>
+    </ul>
+  </div><h2>1. Nega model kerak?</h2><p class="tight">Har vendor o‘z protokolini yozdi — qurilmalar <mark>bir-biri bilan ishlamadi</mark>.</p><p class="tight">ISO 1984-yilda <mark class="g">OSI</mark> etalon modelini chiqardi.</p><svg class="sk" viewBox="-40 0 680 250" role="img" aria-label="Tarqoq standartlar va umumiy OSI modeli">
+    <defs>
+      <filter id="r02-1" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"></feDisplacementMap>
+      </filter>
+      <marker id="a02-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r02-1)">
+      <rect class="s fw" x="16" y="72" width="86" height="26" rx="3"></rect>
+      <rect class="s fw" x="16" y="122" width="86" height="26" rx="3"></rect>
+      <rect class="s fw" x="16" y="172" width="86" height="26" rx="3"></rect>
+      <path class="sr" d="M124,78 l26,16 M150,78 l-26,16 M124,128 l26,16 M150,128 l-26,16
+                          M124,178 l26,16 M150,178 l-26,16"></path>
+      <path class="sg" marker-end="url(#a02-1)" d="M186,126 h54"></path>
+      <rect class="s fy" x="292" y="50" width="128" height="20" rx="2"></rect>
+      <rect class="s fw" x="292" y="70" width="128" height="20" rx="2"></rect>
+      <rect class="s fy" x="292" y="90" width="128" height="20" rx="2"></rect>
+      <rect class="s fw" x="292" y="110" width="128" height="20" rx="2"></rect>
+      <rect class="s fy" x="292" y="130" width="128" height="20" rx="2"></rect>
+      <rect class="s fw" x="292" y="150" width="128" height="20" rx="2"></rect>
+      <rect class="s fy" x="292" y="170" width="128" height="20" rx="2"></rect>
+      <rect class="s fw" x="500" y="56" width="76" height="24" rx="3"></rect>
+      <rect class="s fw" x="500" y="116" width="76" height="24" rx="3"></rect>
+      <rect class="s fw" x="500" y="176" width="76" height="24" rx="3"></rect>
+      <path class="s2" d="M420,68 C452,66 470,66 498,68 M420,128 h78 M420,188 C452,190 470,190 498,188"></path>
+    </g>
+    <text x="59" y="90" text-anchor="middle" class="sm">SNA</text>
+    <text x="59" y="140" text-anchor="middle" class="sm">IPX/SPX</text>
+    <text x="59" y="190" text-anchor="middle" class="sm">AppleTalk</text>
+    <text x="137" y="64" text-anchor="middle" class="red">mos emas</text>
+    <text x="213" y="116" text-anchor="middle" class="grn">ISO 1984</text>
+    <text x="356" y="42" text-anchor="middle" class="red">OSI — 7 qatlam</text>
+    <text x="538" y="46" text-anchor="middle" class="grn">hammasi mos</text>
+    <text x="300" y="228" text-anchor="middle" class="sm">bitta til — har xil vendor qurilmasi birga ishlaydi</text>
+  </svg><p class="cap">1-rasm. Tarqoq standartlar → bitta umumiy model</p><h2>2. Qatlamli tuzilma nima beradi</h2><ul class="tight">
+    <li>ochiq, standart interfeyslar</li>
+    <li>vendorlar orasida moslik</li>
+    <li>qatlamlar mustaqil — o‘rganish va yangilash oson</li>
+    <li>modulli ishlab chiqish, xarajat kam</li>
+    <li>nosozlikni qatlam bo‘yicha topish</li>
+  </ul><div class="pg-num">— 1 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>3. Yettita qatlam</h2><svg class="sk" viewBox="0 0 600 470" role="img" aria-label="OSI modelining yettita qatlami">
+    <defs>
+      <filter id="r02-2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="11" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r02-2)">
+      <rect class="s fg" x="14" y="32" width="572" height="54" rx="4"></rect>
+      <rect class="s fg" x="14" y="92" width="572" height="54" rx="4"></rect>
+      <rect class="s fg" x="14" y="152" width="572" height="54" rx="4"></rect>
+      <rect class="s fb" x="14" y="212" width="572" height="54" rx="4"></rect>
+      <rect class="s fb" x="14" y="272" width="572" height="54" rx="4"></rect>
+      <rect class="s fb" x="14" y="332" width="572" height="54" rx="4"></rect>
+      <rect class="s fb" x="14" y="392" width="572" height="54" rx="4"></rect>
+      <path class="s2" d="M52,32 v414 M210,32 v414 M452,32 v414"></path>
+    </g>
+    <text x="33" y="22" text-anchor="middle" class="sm">N</text>
+    <text x="60" y="22" class="sm">qatlam</text>
+    <text x="218" y="22" class="sm">vazifa</text>
+    <text x="519" y="22" text-anchor="middle" class="sm">PDU</text>
+
+    <text x="33" y="66" text-anchor="middle" class="red">7</text>
+    <text x="60" y="66">Amaliy</text>
+    <text x="218" y="66" class="sm">ilovalar aloqasi</text>
+    <text x="519" y="66" text-anchor="middle" class="sm">APDU</text>
+
+    <text x="33" y="126" text-anchor="middle" class="red">6</text>
+    <text x="60" y="126">Taqdim</text>
+    <text x="218" y="126" class="sm">format · shifrlash</text>
+    <text x="519" y="126" text-anchor="middle" class="sm">PPDU</text>
+
+    <text x="33" y="186" text-anchor="middle" class="red">5</text>
+    <text x="60" y="186">Seans</text>
+    <text x="218" y="186" class="sm">seansni boshqarish</text>
+    <text x="519" y="186" text-anchor="middle" class="sm">SPDU</text>
+
+    <text x="33" y="246" text-anchor="middle" class="red">4</text>
+    <text x="60" y="246">Transport</text>
+    <text x="218" y="246" class="sm">uchdan-uchga ulanish</text>
+    <text x="519" y="246" text-anchor="middle" class="sm">segment</text>
+
+    <text x="33" y="306" text-anchor="middle" class="red">3</text>
+    <text x="60" y="306">Tarmoq</text>
+    <text x="218" y="306" class="sm">adres · marshrut tanlash</text>
+    <text x="519" y="306" text-anchor="middle" class="sm">paket</text>
+
+    <text x="33" y="366" text-anchor="middle" class="red">2</text>
+    <text x="60" y="366">Kanal</text>
+    <text x="218" y="366" class="sm">muhitga kirish · link</text>
+    <text x="519" y="366" text-anchor="middle" class="sm">kadr</text>
+
+    <text x="33" y="426" text-anchor="middle" class="red">1</text>
+    <text x="60" y="426">Fizik</text>
+    <text x="218" y="426" class="sm">bit oqimini uzatish</text>
+    <text x="519" y="426" text-anchor="middle" class="sm">bit</text>
+  </svg><p class="cap">2-rasm. Qatlam · vazifa · ma’lumot birligi</p><ul class="tight">
+    <li><b>7–5</b> — ilova qatlamlari <span class="en">(yuqori)</span></li>
+    <li><b>4–1</b> — uzatish qatlamlari <span class="en">(pastki)</span></li>
+  </ul><div class="box"><span class="lbl">Qoida:</span> har qatlam faqat qo‘shni qatlam bilan almashadi.</div><div class="pg-num">— 2 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>4. Teng qatlamlar aloqasi</h2><svg class="sk" viewBox="0 0 600 300" role="img" aria-label="Teng qatlamlar orasidagi aloqa">
+    <defs>
+      <filter id="r02-3" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="5" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+      <marker id="a02-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r02-3)">
+      <rect class="s fw" x="30" y="20" width="140" height="32" rx="3"></rect>
+      <rect class="s fw" x="30" y="54" width="140" height="32" rx="3"></rect>
+      <rect class="s fw" x="30" y="88" width="140" height="32" rx="3"></rect>
+      <rect class="s fy" x="30" y="122" width="140" height="32" rx="3"></rect>
+      <rect class="s fy" x="30" y="156" width="140" height="32" rx="3"></rect>
+      <rect class="s fy" x="30" y="190" width="140" height="32" rx="3"></rect>
+      <rect class="s fy" x="30" y="224" width="140" height="32" rx="3"></rect>
+      <rect class="s fw" x="430" y="20" width="140" height="32" rx="3"></rect>
+      <rect class="s fw" x="430" y="54" width="140" height="32" rx="3"></rect>
+      <rect class="s fw" x="430" y="88" width="140" height="32" rx="3"></rect>
+      <rect class="s fy" x="430" y="122" width="140" height="32" rx="3"></rect>
+      <rect class="s fy" x="430" y="156" width="140" height="32" rx="3"></rect>
+      <rect class="s fy" x="430" y="190" width="140" height="32" rx="3"></rect>
+      <rect class="s fy" x="430" y="224" width="140" height="32" rx="3"></rect>
+      <path class="dash" d="M175,36 h95 M330,36 h95 M175,70 h95 M330,70 h95
+                            M175,104 h95 M330,104 h95 M175,138 h95 M330,138 h95
+                            M175,172 h95 M330,172 h95 M175,206 h95 M330,206 h95
+                            M175,240 h95 M330,240 h95"></path>
+      <path class="sr" marker-end="url(#a02-3)" d="M50,36 V272 H550 V46"></path>
+    </g>
+    <text x="100" y="14" text-anchor="middle" class="red">Host A</text>
+    <text x="500" y="14" text-anchor="middle" class="red">Host B</text>
+    <text x="110" y="41" text-anchor="middle">Amaliy</text>
+    <text x="110" y="75" text-anchor="middle">Taqdim</text>
+    <text x="110" y="109" text-anchor="middle">Seans</text>
+    <text x="110" y="143" text-anchor="middle">Transport</text>
+    <text x="110" y="177" text-anchor="middle">Tarmoq</text>
+    <text x="110" y="211" text-anchor="middle">Kanal</text>
+    <text x="110" y="245" text-anchor="middle">Fizik</text>
+    <text x="510" y="41" text-anchor="middle">Amaliy</text>
+    <text x="510" y="75" text-anchor="middle">Taqdim</text>
+    <text x="510" y="109" text-anchor="middle">Seans</text>
+    <text x="510" y="143" text-anchor="middle">Transport</text>
+    <text x="510" y="177" text-anchor="middle">Tarmoq</text>
+    <text x="510" y="211" text-anchor="middle">Kanal</text>
+    <text x="510" y="245" text-anchor="middle">Fizik</text>
+    <text x="300" y="41" text-anchor="middle" class="sm">APDU</text>
+    <text x="300" y="75" text-anchor="middle" class="sm">PPDU</text>
+    <text x="300" y="109" text-anchor="middle" class="sm">SPDU</text>
+    <text x="300" y="143" text-anchor="middle" class="sm">segment</text>
+    <text x="300" y="177" text-anchor="middle" class="sm">paket</text>
+    <text x="300" y="211" text-anchor="middle" class="sm">kadr</text>
+    <text x="300" y="245" text-anchor="middle" class="sm">bit</text>
+    <text x="300" y="292" text-anchor="middle" class="sm">aloqa faqat pastki qatlam orqali</text>
+  </svg><p class="cap">3-rasm. Punktir — mantiqiy aloqa, qizil — haqiqiy yo‘l</p><h2>5. Enkapsulyatsiya</h2><p class="tight">Har qatlam <mark>o‘z sarlavhasini qo‘shadi</mark>; qabul qilishda teskari.</p><svg class="sk" viewBox="0 0 600 250" role="img" aria-label="Enkapsulyatsiya bosqichlari">
+    <defs>
+      <filter id="r02-4" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="17" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a02-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#b5231f" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r02-4)">
+      <rect class="s fw" x="420" y="16" width="120" height="26" rx="2"></rect>
+      <rect class="s fy" x="376" y="52" width="44" height="26" rx="2"></rect>
+      <rect class="s fw" x="420" y="52" width="120" height="26" rx="2"></rect>
+      <rect class="s fy" x="332" y="88" width="44" height="26" rx="2"></rect>
+      <rect class="s fy" x="376" y="88" width="44" height="26" rx="2"></rect>
+      <rect class="s fw" x="420" y="88" width="120" height="26" rx="2"></rect>
+      <rect class="s fy" x="288" y="124" width="44" height="26" rx="2"></rect>
+      <rect class="s fy" x="332" y="124" width="44" height="26" rx="2"></rect>
+      <rect class="s fy" x="376" y="124" width="44" height="26" rx="2"></rect>
+      <rect class="s fw" x="420" y="124" width="120" height="26" rx="2"></rect>
+      <rect class="s fy" x="244" y="160" width="44" height="26" rx="2"></rect>
+      <rect class="s fy" x="288" y="160" width="44" height="26" rx="2"></rect>
+      <rect class="s fy" x="332" y="160" width="44" height="26" rx="2"></rect>
+      <rect class="s fy" x="376" y="160" width="44" height="26" rx="2"></rect>
+      <rect class="s fw" x="420" y="160" width="120" height="26" rx="2"></rect>
+      <rect class="s fg" x="540" y="160" width="32" height="26" rx="2"></rect>
+      <path class="s" d="M244,212 h14 v-12 h14 v12 h14 v-12 h14 v12 h14 v-12 h14 v12 h14 v-12
+                         h14 v12 h14 v-12 h14 v12 h14 v-12 h14 v12 h14 v-12 h14 v12 h14 v-12
+                         h14 v12 h14 v-12 h14 v12 h14 v-12 h14 v12 h14"></path>
+      <path class="sr" marker-end="url(#a02-4)" d="M170,24 v186"></path>
+    </g>
+    <text x="20" y="34">ma’lumot</text>
+    <text x="20" y="70">APDU</text>
+    <text x="20" y="106">segment</text>
+    <text x="20" y="142">paket</text>
+    <text x="20" y="178">kadr</text>
+    <text x="20" y="214">bit</text>
+    <text x="196" y="120" class="red">enkapsulyatsiya</text>
+    <text x="480" y="34" text-anchor="middle" class="sm">Data</text>
+    <text x="398" y="70" text-anchor="middle" class="sm">7·6·5</text>
+    <text x="354" y="106" text-anchor="middle" class="sm">H4</text>
+    <text x="310" y="142" text-anchor="middle" class="sm">H3</text>
+    <text x="266" y="178" text-anchor="middle" class="sm">H2</text>
+    <text x="556" y="178" text-anchor="middle" class="sm">FCS</text>
+  </svg><p class="cap">4-rasm. Sarlavhalar ketma-ket qo‘shiladi, data — foydali yuk</p><div class="pg-num">— 3 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>6. Fizik qatlam</h2><svg class="sk" viewBox="0 0 600 220" role="img" aria-label="Fizik qatlam muhitlari va standartlari">
+    <defs>
+      <filter id="r02-5" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="23" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r02-5)">
+      <path class="s" d="M30,64 h110"></path>
+      <path class="s2" d="M30,56 h110 M30,72 h110"></path>
+      <path class="s2" d="M180,56 C195,56 195,76 210,76 C225,76 225,56 240,56
+                          C255,56 255,76 270,76 C285,76 288,62 292,58"></path>
+      <path class="s2" d="M180,76 C195,76 195,56 210,56 C225,56 225,76 240,76
+                          C255,76 255,56 270,56 C285,56 288,70 292,74"></path>
+      <path class="s" d="M330,66 h110"></path>
+      <circle class="s fy" cx="352" cy="66" r="5"></circle>
+      <circle class="s fy" cx="386" cy="66" r="5"></circle>
+      <circle class="s fy" cx="420" cy="66" r="5"></circle>
+      <path class="s" d="M528,82 v-28 M528,54 l-9,-11 M528,54 l9,-11"></path>
+      <path class="s2" d="M540,48 a16,16 0 0,1 0,26 M550,42 a24,24 0 0,1 0,38"></path>
+      <rect class="s" x="24" y="124" width="264" height="72" rx="10"></rect>
+      <rect class="s" x="312" y="124" width="264" height="72" rx="10"></rect>
+    </g>
+    <text x="300" y="22" text-anchor="middle" class="red">mexanik · elektr · funksional · protsedura</text>
+    <text x="85" y="102" text-anchor="middle" class="sm">koaksial</text>
+    <text x="236" y="102" text-anchor="middle" class="sm">juftlik UTP·STP</text>
+    <text x="385" y="102" text-anchor="middle" class="sm">optika SM·MM</text>
+    <text x="536" y="102" text-anchor="middle" class="sm">radio</text>
+    <text x="156" y="146" text-anchor="middle">LAN fizik</text>
+    <text x="156" y="168" text-anchor="middle" class="sm">10Base-T · 100Base-TX/FX</text>
+    <text x="156" y="188" text-anchor="middle" class="sm">1000Base-T/SX · hub, repeater</text>
+    <text x="444" y="146" text-anchor="middle">WAN fizik</text>
+    <text x="444" y="168" text-anchor="middle" class="sm">RS-232 · V.24 · V.35</text>
+    <text x="444" y="188" text-anchor="middle" class="sm">modem</text>
+  </svg><p class="cap">5-rasm. Muhit, standart va qurilmalar</p><h2>7. Kanal qatlami</h2><svg class="sk" viewBox="0 0 600 200" role="img" aria-label="Kanal qatlamining LLC va MAC pastki qatlamlari">
+    <defs>
+      <filter id="r02-6" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="29" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r02-6)">
+      <rect class="s fw" x="110" y="8" width="190" height="28" rx="3"></rect>
+      <rect class="s fg" x="110" y="48" width="190" height="34" rx="3"></rect>
+      <rect class="s fy" x="110" y="86" width="190" height="34" rx="3"></rect>
+      <rect class="s fw" x="110" y="132" width="190" height="28" rx="3"></rect>
+      <path class="s2" d="M205,36 v12 M205,120 v12"></path>
+      <path class="s2" d="M304,50 h10 v68 h-10"></path>
+    </g>
+    <text x="205" y="28" text-anchor="middle" class="sm">tarmoq qatlami</text>
+    <text x="205" y="70" text-anchor="middle">LLC</text>
+    <text x="205" y="108" text-anchor="middle">MAC</text>
+    <text x="205" y="152" text-anchor="middle" class="sm">fizik qatlam</text>
+    <text x="312" y="88" class="red">kanal qatlami</text>
+    <text x="430" y="50" class="sm">802.2 — LLC</text>
+    <text x="430" y="74" class="sm">802.3 Ethernet</text>
+    <text x="430" y="98" class="sm">802.4 token bus</text>
+    <text x="430" y="122" class="sm">802.5 token ring</text>
+    <text x="300" y="184" text-anchor="middle" class="sm">kadr · xato nazorati · MAC adres · oqim nazorati</text>
+  </svg><table class="rot">
+    <tbody><tr><th>LLC</th><td>802.2 — yuqori qatlam protokolini belgilaydi</td></tr>
+    <tr><th>MAC</th><td>muhitga kirish · MAC adres · FCS</td></tr>
+    <tr><th>WAN</th><td>HDLC · PPP · X.25 · Frame Relay</td></tr>
+  </tbody></table><div class="pg-num">— 4 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>8. Tarmoq qatlami</h2><svg class="sk" viewBox="0 0 600 230" role="img" aria-label="Tarmoq qatlami adresi va marshrutlash">
+    <defs>
+      <filter id="r02-7" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="31" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r02-7)">
+      <rect class="s fb" x="24" y="40" width="100" height="30" rx="2"></rect>
+      <rect class="s fw" x="124" y="40" width="100" height="30" rx="2"></rect>
+      <rect class="s fy" x="330" y="44" width="56" height="26" rx="3"></rect>
+      <rect class="s fy" x="470" y="44" width="56" height="26" rx="3"></rect>
+      <path class="s2" d="M386,57 h84"></path>
+      <rect class="s fw" x="316" y="100" width="40" height="22" rx="2"></rect>
+      <rect class="s fw" x="500" y="100" width="40" height="22" rx="2"></rect>
+      <path class="s2" d="M336,100 C340,88 346,76 352,70 M520,100 C516,88 510,76 504,70"></path>
+    </g>
+    <text x="124" y="28" text-anchor="middle" class="red">IP adres = 4 bayt</text>
+    <text x="74" y="60" text-anchor="middle" class="sm">tarmoq</text>
+    <text x="174" y="60" text-anchor="middle" class="sm">host</text>
+    <text x="74" y="88" text-anchor="middle" class="sm">10.</text>
+    <text x="174" y="88" text-anchor="middle" class="sm">8.2.48</text>
+    <text x="358" y="36" text-anchor="middle" class="sm">RTA</text>
+    <text x="498" y="36" text-anchor="middle" class="sm">RTB</text>
+    <text x="428" y="92" text-anchor="middle" class="grn">RIP · OSPF · BGP</text>
+    <text x="300" y="152" text-anchor="middle" class="red">routed = IP · routing = RIP/OSPF/BGP</text>
+    <text x="300" y="182" text-anchor="middle" class="sm">adreslash · marshrut · tirbandlik · MTU</text>
+    <text x="300" y="208" text-anchor="middle" class="sm">OSI tarmoq qatlami — ulanishsiz xizmat</text>
+  </svg><p class="cap">6-rasm. Adres = tarmoq + host; marshrut jadval orqali</p><h2>9. Transport qatlami</h2><svg class="sk" viewBox="0 0 600 180" role="img" aria-label="Transport qatlamida segmentlash va tasdiqlash">
+    <defs>
+      <filter id="r02-8" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="37" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"></feDisplacementMap>
+      </filter>
+      <marker id="a02-8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10" fill="none" stroke="#1f6b3a" stroke-width="2"></path>
+      </marker>
+    </defs>
+    <g filter="url(#r02-8)">
+      <rect class="s fb" x="24" y="30" width="120" height="34" rx="3"></rect>
+      <path class="sg" marker-end="url(#a02-8)" d="M154,47 h32"></path>
+      <rect class="s fy" x="196" y="18" width="86" height="22" rx="2"></rect>
+      <rect class="s fy" x="196" y="46" width="86" height="22" rx="2"></rect>
+      <rect class="s fy" x="196" y="74" width="86" height="22" rx="2"></rect>
+      <rect class="s fw" x="470" y="38" width="56" height="40" rx="3"></rect>
+      <path class="s2" d="M282,29 C340,30 400,42 468,52 M282,57 h186 M282,85 C340,84 400,70 468,62"></path>
+      <path class="sg" marker-end="url(#a02-8)" d="M466,98 C400,106 340,106 288,100"></path>
+    </g>
+    <text x="84" y="52" text-anchor="middle" class="sm">katta blok</text>
+    <text x="239" y="33" text-anchor="middle" class="sm">seg 1</text>
+    <text x="239" y="61" text-anchor="middle" class="sm">seg 2</text>
+    <text x="239" y="89" text-anchor="middle" class="sm">seg 3</text>
+    <text x="498" y="30" text-anchor="middle" class="sm">B</text>
+    <text x="378" y="120" text-anchor="middle" class="grn">ACK · qayta yuborish</text>
+    <text x="300" y="146" text-anchor="middle" class="red">segmentlash · tartib raqami · oqim nazorati</text>
+    <text x="300" y="172" text-anchor="middle" class="sm">TCP — ishonchli · UDP — ishonchsiz</text>
+  </svg><table class="rot">
+    <tbody><tr><th></th><th>ulanishli</th><th>ulanishsiz</th></tr>
+    <tr><td>ulanish</td><td>oldin o‘rnatiladi</td><td>kerak emas</td></tr>
+    <tr><td>tartib, ACK, qayta yuborish</td><td>bor</td><td>yo‘q</td></tr>
+  </tbody></table><div class="pg-num">— 5 —</div></section><section class="page"><div class="holes"><span></span><span></span><span></span></div><h2>10. TCP/IP modeli</h2><svg class="sk" viewBox="0 0 600 300" role="img" aria-label="OSI va TCP/IP modellarining moslashuvi">
+    <defs>
+      <filter id="r02-9" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="41" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2"></feDisplacementMap>
+      </filter>
+    </defs>
+    <g filter="url(#r02-9)">
+      <rect class="s fg" x="20" y="30" width="170" height="34" rx="3"></rect>
+      <rect class="s fg" x="20" y="66" width="170" height="34" rx="3"></rect>
+      <rect class="s fg" x="20" y="102" width="170" height="34" rx="3"></rect>
+      <rect class="s fw" x="20" y="138" width="170" height="34" rx="3"></rect>
+      <rect class="s fb" x="20" y="174" width="170" height="34" rx="3"></rect>
+      <rect class="s fy" x="20" y="210" width="170" height="34" rx="3"></rect>
+      <rect class="s fy" x="20" y="246" width="170" height="34" rx="3"></rect>
+      <rect class="s fg" x="300" y="30" width="280" height="104" rx="4"></rect>
+      <rect class="s fw" x="300" y="138" width="280" height="44" rx="4"></rect>
+      <rect class="s fb" x="300" y="186" width="280" height="44" rx="4"></rect>
+      <rect class="s fy" x="300" y="234" width="280" height="58" rx="4"></rect>
+      <path class="dash" d="M190,47 C230,50 262,62 298,74 M190,83 h108
+                            M190,119 C230,116 262,104 298,92
+                            M190,155 C230,156 262,158 298,160
+                            M190,191 C230,194 262,202 298,208
+                            M190,227 C230,230 262,240 298,252
+                            M190,263 C230,262 262,258 298,256"></path>
+    </g>
+    <text x="105" y="20" text-anchor="middle" class="red">OSI · 7</text>
+    <text x="440" y="20" text-anchor="middle" class="red">TCP/IP · 4</text>
+    <text x="105" y="52" text-anchor="middle">Amaliy</text>
+    <text x="105" y="88" text-anchor="middle">Taqdim</text>
+    <text x="105" y="124" text-anchor="middle">Seans</text>
+    <text x="105" y="160" text-anchor="middle">Transport</text>
+    <text x="105" y="196" text-anchor="middle">Tarmoq</text>
+    <text x="105" y="232" text-anchor="middle">Kanal</text>
+    <text x="105" y="268" text-anchor="middle">Fizik</text>
+    <text x="440" y="58" text-anchor="middle">Amaliy</text>
+    <text x="440" y="84" text-anchor="middle" class="sm">Telnet · FTP · TFTP</text>
+    <text x="440" y="106" text-anchor="middle" class="sm">SMTP · POP3 · SNMP · HTTP</text>
+    <text x="440" y="158" text-anchor="middle">Transport</text>
+    <text x="440" y="178" text-anchor="middle" class="sm">TCP · UDP</text>
+    <text x="440" y="206" text-anchor="middle">Internet</text>
+    <text x="440" y="226" text-anchor="middle" class="sm">IP · ICMP · IGMP</text>
+    <text x="440" y="252" text-anchor="middle">Tarmoq interfeysi</text>
+    <text x="440" y="272" text-anchor="middle" class="sm">Ethernet · PPP · HDLC</text>
+    <text x="440" y="290" text-anchor="middle" class="sm">X.25 · FR · ATM</text>
+  </svg><h2>Xulosa</h2><div class="box">
+    <ul class="dash tight">
+      <li>OSI — ISO, 1984, nazariy 7 qatlam</li>
+      <li>PDU: APDU · PPDU · SPDU · segment · paket · kadr · bit</li>
+      <li>Enkapsulyatsiya — har qatlam sarlavha qo‘shadi</li>
+      <li>TCP/IP — amalda ishlatiladigan 4 qatlam</li>
+      <li>5+6+7 → Amaliy;  1+2 → Tarmoq interfeysi</li>
+    </ul>
+  </div><h3>Tekshirish</h3><ol class="qa tight">
+    <li>4-qatlam PDU nomi? <span class="ans">— segment</span></li>
+    <li>LLC standarti? <span class="ans">— IEEE 802.2</span></li>
+    <li>TCP/IP da Internet qatlami protokollari? <span class="ans">— IP, ICMP, IGMP</span></li>
+    <li>V.35 maksimal tezligi? <span class="ans">— 2 Mbit/s</span></li>
+  </ol><div class="pg-num">— 6 —</div></section>
+
+<!-- ================= 2-sahifa ================= -->
+
+
+<!-- ================= 3-sahifa ================= -->
+
+
+<!-- ================= 4-sahifa ================= -->
+
+
+<!-- ================= 5-sahifa ================= -->
+
+
+<!-- ================= 6-sahifa ================= -->
+
+</body>
+</html>
